@@ -10,8 +10,8 @@ website:
       href: sylb.html
     - text: "Computer setup"
       href: comp.html
-    - text: 'WS 1'
-      href: ws1.qmd
+    # - text: 'WS 1'
+    #   href: ws1.qmd
     # - text: 'WS 2'
     #   href: ws2.qmd
     # - text: 'WS 3'
