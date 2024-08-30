@@ -216,9 +216,10 @@ read.csv('data/LDWFBayAnchovy2007.csv')
 
 read_csv('data/LDWFBayAnchovy2007.csv')
 
+
 # read in data file from github
 # need to use raw file
-read_csv(url('https://raw.githubusercontent.com/BSC6926-B52-Fall2023/workshopScripts/main/data/LDWFBayAnchovy2007.csv'))
+read_csv(url('https://raw.githubusercontent.com/SeascapeEcologyLab-workshops/BSC6926-B52_Fall2024/main/data/LDWFBayAnchovy2007.csv'))
 
 # save dataframe or tibble as new csv
 write.csv(df, 'data/df.csv')
@@ -274,4 +275,4 @@ d$cyl[1]
 # 
 # 4.    Save the `data.frame`/`tibble` created in exercise 3 as a .csv
 # 
-# 5.    Load in files a.csv and b.csv (found on [github](https://github.com/BSC6926-B52-Fall2023/workshopScripts/tree/main/data) and canvas) and assign each as an object.
+# 5.    Load in files a.csv and b.csv (found on [github](https://github.com/SeascapeEcologyLab-workshops/BSC6926-B52_Fall2024/tree/main/data) and canvas) and assign each as an object.
