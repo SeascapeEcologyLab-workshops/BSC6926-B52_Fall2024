@@ -1,7 +1,7 @@
 ---
 title: "Workshop 1: Introduction to R"
 author: "BSC 6926 B52"
-date: "9/3/2023"
+date: "9/3/2024"
 format: 
   html:
     toc: true
@@ -28,7 +28,7 @@ This example gives a basic intro into R syntax that can be useful for ecological
 7.  Indexing
 8.  Exercises
 
-R script: [github](https://github.com/BSC6926-B52-Fall2023/workshopScripts/blob/main/workshop1.R)
+R script: [github](https://github.com/SeascapeEcologyLab-workshops/BSC6926-B52_Fall2024/blob/main/workshopScripts/workshop1.R)
       
 [R script of workshop 1](workshopScripts/workshop1.R)
 
@@ -243,7 +243,7 @@ read_csv('data/LDWFBayAnchovy2007.csv')
 
 # read in data file from github
 # need to use raw file
-read_csv(url('https://raw.githubusercontent.com/BSC6926-B52-Fall2023/workshopScripts/main/data/LDWFBayAnchovy2007.csv'))
+read_csv(url('https://raw.githubusercontent.com/SeascapeEcologyLab-workshops/BSC6926-B52_Fall2024/main/data/LDWFBayAnchovy2007.csv'))
 
 # save dataframe or tibble as new csv
 write.csv(df, 'data/df.csv')
