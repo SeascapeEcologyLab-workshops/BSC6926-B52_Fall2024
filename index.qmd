@@ -10,8 +10,7 @@ This is the course website for the R workshop that coincides with PCB 5423 (Adva
 ### Class Resources
 
 -   [Zoom link](https://fiu.zoom.us/j/94001884298?pwd=b25VZTh6eHFlOVdjRDhrbUV6OTBVZz09)
--   [Github repository for workshop R scripts](https://github.com/BSC6926-B52-Fall2023/workshopScripts)
--   [Website Github repository](https://github.com/BSC6926-B52-Fall2023/BSC6926-B52-Fall2023.github.io)
+-   [Github repository](https://github.com/SeascapeEcologyLab-workshops/BSC6926-B52_Fall2024)
 -   Textbook for R exercises (S) Stevens, M.H.H. 2010. A primer of ecology with R. ISBN 978-0-387-89881-0 (Electronically available at FIU Library) [E-book version](https://hankstevens.github.io/Primer-of-Ecology/)
 
 ### R Resources
@@ -21,4 +20,4 @@ This is the course website for the R workshop that coincides with PCB 5423 (Adva
 -   RStudio Cloud Training Exercises: <https://rstudio.cloud/learn/primers>\
 -   Virtual Ecology Portal/EcoVirtual R Package: Website that provides various examples of population and community models that will be discussed in class and the workshop. There is also an R package (EcoVirtual) you can use to run various models included on this website: <http://ecovirtual.ib.usp.br/doku.php?id=start>\
 -   ModernDive: Introductory book on R and statistical inference: <https://moderndive.com/index.html>
--   Rstudio: learn R https://education.rstudio.com/learn/beginner/
+-   Rstudio: learn R <https://education.rstudio.com/learn/beginner/>
