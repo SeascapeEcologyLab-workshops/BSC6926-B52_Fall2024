@@ -12,8 +12,8 @@ website:
       href: comp.html
     - text: 'WS 1'
       href: ws1.qmd
-    # - text: 'WS 2'
-    #   href: ws2.qmd
+    - text: 'WS 2'
+      href: ws2.qmd
     # - text: 'WS 3'
     #   href: ws3.qmd
     # - text: 'WS 4'
