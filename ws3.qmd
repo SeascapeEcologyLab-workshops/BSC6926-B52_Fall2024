@@ -6,38 +6,45 @@ format:
   html:
     toc: true
     theme: yeti
+editor: 
+  markdown: 
+    wrap: sentence
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(collapse = T, cache = T)
 ```
 
-## Conditional statements, for loops, vector operations, quarto/rmardown 
+## Conditional statements, for loops, vector operations, quarto/rmardown
+
 This workshop continues basics of R working more with conditional statements, for loops, vector operations, and quarto/rmarkdown:
 
 1.  Conditional statements
-      + base R
-      + `dpylr`
+    -   base R
+    -   `dpylr`
 2.  For loops
 3.  Vector operations
-      + dates with `lubridate`
-      + `purr`
+    -   dates with `lubridate`
+    -   `purr`
 4.  Quarto/rmarkdown
-5.  Exercises 
+5.  Exercises
 
-R script: [github]https://github.com/SeascapeEcologyLab-workshops/BSC6926-B52_Fall2024/blob/main/workshopScripts/workshop3.R)
-      
+R script: \[github\]https://github.com/SeascapeEcologyLab-workshops/BSC6926-B52_Fall2024/blob/main/workshopScripts/workshop3.R)
+
 [R script of workshop 3](workshopScripts/workshop3.R)
-
 
 ```{r}
 library(tidyverse)
 ```
 
 ## Conditional statements
-In programing there are times that if something is true then you want an operation to occur, but not when a condition is not true. 
-### Base R
-These can be done with `if` and `if else` statements in base R. These are written if a condition is true then the operation is done. They can be built upon with `else if` if the first condition is false to do test a second condition. If you want it to be If true and if false do something else then `if` and `else` structure can be used. 
+
+In programing there are times that if something is true then you want an operation to occur, but not when a condition is not true.
+### Base R These can be done with `if` and `if else` statements in base R.
+These are written if a condition is true then the operation is done.
+They can be built upon with `else if` if the first condition is false to do test a second condition.
+If you want it to be If true and if false do something else then `if` and `else` structure can be used.
+
 ```{r}
 b = 5 
 
@@ -69,7 +76,11 @@ if (b == 10){
 ```
 
 ### `dplyr` functions
-`dplyr` has two functions that are very useful for conditional statements. Because they are a function they can be vectorized which will be useful as you see below. `if_else()` is a function that based on if the input is `TRUE` or `FALSE` produces a different answer. `case_when()` is more flexible and allows for multple outputs based on conditions being `TRUE`
+
+`dplyr` has two functions that are very useful for conditional statements.
+Because they are a function they can be vectorized which will be useful as you see below.
+`if_else()` is a function that based on if the input is `TRUE` or `FALSE` produces a different answer.
+`case_when()` is more flexible and allows for multple outputs based on conditions being `TRUE`
 
 ```{r}
 x = 1:20
@@ -84,8 +95,13 @@ case_when(x < 6 ~ 'x < 6',
           x > 15 ~ 'x > 15')
 ```
 
-##  For loops
-Another useful tool in programming is `for` loops. For loops repeat a process for a certain number of iterations. These can be useful iterate over a dataset or when using information in a time series. The `for` loop works over the number sequence indicated and does the code within the loop (inside of `{}`) for each number in the sequence. The iteration is typically indicated with `i`, but is just an object that is replaced at the begining of each loop and can be anything.
+## For loops
+
+Another useful tool in programming is `for` loops.
+For loops repeat a process for a certain number of iterations.
+These can be useful iterate over a dataset or when using information in a time series.
+The `for` loop works over the number sequence indicated and does the code within the loop (inside of `{}`) for each number in the sequence.
+The iteration is typically indicated with `i`, but is just an object that is replaced at the begining of each loop and can be anything.
 
 ```{r}
 for(i in 1:10){ #Sequence - i object within the sequence from 1 to 10
@@ -136,8 +152,12 @@ for (t in 1:10){ #sequence
 pop
 ```
 
-##  Vector operations 
-As we have seen above, we can do operations over vectors. We sometimes want to do this to vectors stored in dataframes/tibbles, and the `mutate()` function makes this easy. This can be applied to multiple columns at once with `across()`
+## Vector operations
+
+As we have seen above, we can do operations over vectors.
+We sometimes want to do this to vectors stored in dataframes/tibbles, and the `mutate()` function makes this easy.
+This can be applied to multiple columns at once with `across()`
+
 ```{r}
 iris |> 
   mutate(petalArea = Petal.Length*Petal.Width)
@@ -167,7 +187,9 @@ iris |>
 ```
 
 ### dates with `lubridate`
-`lubridate` is a package that is apart of the `tidyverse` that is very useful for dates. Check out the [R for data science](https://r4ds.hadley.nz/datetimes) chapter and for the [R cheat sheet](https://evoldyn.gitlab.io/evomics-2018/ref-sheets/R_lubridate.pdf) for working with dates.
+
+`lubridate` is a package that is apart of the `tidyverse` that is very useful for dates.
+Check out the [R for data science](https://r4ds.hadley.nz/datetimes) chapter and for the [R cheat sheet](https://evoldyn.gitlab.io/evomics-2018/ref-sheets/R_lubridate.pdf) for working with dates.
 
 ```{r}
 ## lubridate and dates
@@ -189,12 +211,15 @@ df = df |>
 ```
 
 ### `purr`
-The newest and new standard package with `tidyverse` is `purr` with its set of `map()` functions. Some similarity to `plyr` (and base) and `dplyr` functions but with more consistent names and arguments. Notice that map function can have some specification for the type of output.
-  + `map()` makes a list.
-  + `map_lgl()` makes a logical vector.
-  + `map_int()` makes an integer vector.
-  + `map_dbl()` makes a double vector.
-  + `map_chr()` makes a character vector.
+
+The newest and new standard package with `tidyverse` is `purr` with its set of `map()` functions.
+Some similarity to `plyr` (and base) and `dplyr` functions but with more consistent names and arguments.
+Notice that map function can have some specification for the type of output.
++ `map()` makes a list.
++ `map_lgl()` makes a logical vector.
++ `map_int()` makes an integer vector.
++ `map_dbl()` makes a double vector.
++ `map_chr()` makes a character vector.
 
 ```{r, error = T}
 df = iris  |> 
@@ -205,7 +230,8 @@ map_dbl(df, median)
 map_dbl(df, sd)
 ```
 
-You can also use map in a tibble to apply to a nested column with `mutate()`. Nested columns are one of the differences between `data.frame()` and `tibble()`.
+You can also use map in a tibble to apply to a nested column with `mutate()`.
+Nested columns are one of the differences between `data.frame()` and `tibble()`.
 
 ```{r, error = T}
 #Creating models by group
@@ -256,9 +282,17 @@ args2 |>
 ```
 
 ## Quarto/rmardown
-There are times when we want to inbed R into a document to make it easier to read. This can be done with quarto (`.qmd`) or rmarkdown (`.rmd`) files. These file types are more similar to word documents, have their own syntax, and can embed programming languages (not just R) into the document. These files can be output as html, pdf, or docx files. These are very flexible and can be used to make single documents, books, websites, and presentations. Resources about [quarto](https://quarto.org/docs/reference/) and [rmarkdown](https://rmarkdown.rstudio.com/lesson-1.html)
 
-For PDFs in [Quarto](https://quarto.org/docs/output-formats/pdf-basics.html) and [Rmarkdown](https://bookdown.org/yihui/rmarkdown/pdf-document.html). You will need to download some form of LaTex to write the PDFs. R recommends the following code
+There are times when we want to inbed R into a document to make it easier to read.
+This can be done with quarto (`.qmd`) or rmarkdown (`.rmd`) files.
+These file types are more similar to word documents, have their own syntax, and can embed programming languages (not just R) into the document.
+These files can be output as html, pdf, or docx files.
+These are very flexible and can be used to make single documents, books, websites, and presentations.
+Resources about [quarto](https://quarto.org/docs/reference/) and [rmarkdown](https://rmarkdown.rstudio.com/lesson-1.html)
+
+For PDFs in [Quarto](https://quarto.org/docs/output-formats/pdf-basics.html) and [Rmarkdown](https://bookdown.org/yihui/rmarkdown/pdf-document.html).
+You will need to download some form of LaTex to write the PDFs.
+R recommends the following code
 
 ```{r, eval = F}
 install.packages('tinytex')
@@ -267,10 +301,11 @@ tinytex::install_tinytex()
 ```
 
 ## Exercises
-1. Using the iris data create a new tibble or dataframe that calculates the median value of all petal and sepal measurements for each species. 
 
-2. Simulate population growth over 25 years of a population that has random growth from a mean of 10 individuals and a sd of 5 individuals that starts at a population size of 100. 
+1.  Using the iris data create a new tibble or dataframe that calculates the median value of all petal and sepal measurements for each species.
 
-3. Plot population size over time
+2.  Simulate population growth over 25 years of a population that has random growth from a mean of 10 individuals and a sd of 5 individuals that starts at a population size of 100.
 
-4. Create a quarto or rmarkdown document of the exercises.
+3.  Plot population size over time
+
+4.  Create a quarto or rmarkdown document of the exercises.

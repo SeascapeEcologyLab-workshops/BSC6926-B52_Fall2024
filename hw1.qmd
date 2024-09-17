@@ -15,7 +15,7 @@ Please reach out if you have any questions about the hw or how to make a pdf usi
 
 ## Data for questions
 
-For this homework, you will be using a fisheries dataset from Everglades National Park in Florida Bay. The dataset [ENP_catch.csv](https://github.com/BSC6926-B52-Fall2023/workshopScripts/blob/main/data/rankinSAV.csv) contains catch per unit effort (CPUE) data for three species (Red drum, Spotted seatrout, and Crevalle Jack) species in Everglades National Park between between 1980-2017. This data is on github and should be downloaded to complete the homework.
+For this homework, you will be using a fisheries dataset from Everglades National Park in Florida Bay. The dataset [ENP_catch.csv](https://github.com/SeascapeEcologyLab-workshops/BSC6926-B52_Fall2024/blob/main/data/ENP_catch.csv) contains catch per unit effort (CPUE) data for three species (Red drum, Spotted seatrout, and Crevalle Jack) species in Everglades National Park between between 1980-2017. This data is on github and should be downloaded to complete the homework.
 
 ## Questions
 
