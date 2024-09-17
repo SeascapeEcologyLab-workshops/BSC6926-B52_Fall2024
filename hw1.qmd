@@ -1,0 +1,37 @@
+---
+title: "Homework 1"
+format: 
+  html:
+    toc: true
+    theme: yeti
+---
+## Instructions
+
+Please, using quarto or rmarkdown, answer the questions below. You can use the class notes, the recommended books, and other web materials to help answer the questions. You can work on the homework in groups, but please independently submit pdf or html document containing answers and code.
+
+**In two weeks (09/30/24 by 11:59pm)**, please submit your pdf file to CANVAS using the following filename structure LastName_HW1_Filetype_Date (e.g., Santos_HW1_R_20230927). Again, you can share and work together on the code, but independently, submit your answers to the short answer questions in your own words and as markdown text under each question. Here are links to resources about [quarto](https://r4ds.hadley.nz/quarto) and [rmarkdown](https://rmarkdown.rstudio.com/lesson-1.html).
+
+Please reach out if you have any questions about the hw or how to make a pdf using quarto or rmarkdown.
+
+## Data for questions
+
+For this homework, you will be using a fisheries dataset from Everglades National Park in Florida Bay. The dataset [ENP_catch.csv](https://github.com/BSC6926-B52-Fall2023/workshopScripts/blob/main/data/rankinSAV.csv) contains catch per unit effort (CPUE) data for three species (Red drum, Spotted seatrout, and Crevalle Jack) species in Everglades National Park between between 1980-2017. This data is on github and should be downloaded to complete the homework.
+
+## Questions
+
+1. (2 pts) Load the ENP_catch.csv dataset as a dataframe or tibble. Short answer question 1: What are the dimension of the dataset?\
+
+2. (2 pts) Convert the tibble/dataframe so that there is a column for species and one for CPUE.
+
+3. (2 pts) Calculate the mean and SD of CPUE for each year. Short answer question 3: What are the years with the highest and lowest CPUE? Is the species with the highest and lowest CPUE the same for each year?\
+
+4. (4 pts) Add 2 new columns to the dataframe/tibble from question 2. One column should contain the proportion of the yearly total CPUE for each species. The other column should scale CPUE so that the yearly catch is relative to the maximum CPUE for that species.  \
+
+5. (5 pts) Plot the metrics (proportion of total catch, CPUE, and scaled CPUE) for each species as a multi-panel plot (one metric per panel). The plot should show the distribution of data (e.g. boxplot, point range) and not use the default color scheme.\
+
+6. (2 pts) Classify the CPUE for each species as a below average (< 40% quantile), average (between 40-60% quantile), or above average year.\
+
+7.  (5 pts) Create a conditional (i.e. `TRUE`/`FALSE`) vector to compare if CPUE cover is higher compared to the previous year before for each species.\
+***Hint** - this can be done with a for loop*\
+
+8.  (3 pts) Plot the count of years where CPUE is higher than the previous year and the count of years where CPUE cover is lower than the previous year for each species.\

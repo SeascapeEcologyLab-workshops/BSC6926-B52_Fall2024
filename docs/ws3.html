@@ -1,0 +1,1611 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.353">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="BSC 6926 B52">
+<meta name="dcterms.date" content="2024-09-17">
+
+<title>BSC6926fall2024 - Workshop 3: Introduction to R</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">BSC6926fall2024</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./sylb.html" rel="" target="">
+ <span class="menu-text">Syllabus</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./comp.html" rel="" target="">
+ <span class="menu-text">Computer setup</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./ws1.html" rel="" target="">
+ <span class="menu-text">WS 1</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./ws2.html" rel="" target="">
+ <span class="menu-text">WS 2</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./ws3.html" rel="" target="" aria-current="page">
+ <span class="menu-text">WS 3</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./hw1.html" rel="" target="">
+ <span class="menu-text">HW 1</span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#conditional-statements-for-loops-vector-operations-quartormardown" id="toc-conditional-statements-for-loops-vector-operations-quartormardown" class="nav-link active" data-scroll-target="#conditional-statements-for-loops-vector-operations-quartormardown">Conditional statements, for loops, vector operations, quarto/rmardown</a></li>
+  <li><a href="#conditional-statements" id="toc-conditional-statements" class="nav-link" data-scroll-target="#conditional-statements">Conditional statements</a>
+  <ul class="collapse">
+  <li><a href="#dplyr-functions" id="toc-dplyr-functions" class="nav-link" data-scroll-target="#dplyr-functions"><code>dplyr</code> functions</a></li>
+  </ul></li>
+  <li><a href="#for-loops" id="toc-for-loops" class="nav-link" data-scroll-target="#for-loops">For loops</a></li>
+  <li><a href="#vector-operations" id="toc-vector-operations" class="nav-link" data-scroll-target="#vector-operations">Vector operations</a>
+  <ul class="collapse">
+  <li><a href="#dates-with-lubridate" id="toc-dates-with-lubridate" class="nav-link" data-scroll-target="#dates-with-lubridate">dates with <code>lubridate</code></a></li>
+  <li><a href="#purr" id="toc-purr" class="nav-link" data-scroll-target="#purr"><code>purr</code></a></li>
+  </ul></li>
+  <li><a href="#quartormardown" id="toc-quartormardown" class="nav-link" data-scroll-target="#quartormardown">Quarto/rmardown</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Workshop 3: Introduction to R</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>BSC 6926 B52 </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">September 17, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="conditional-statements-for-loops-vector-operations-quartormardown" class="level2">
+<h2 class="anchored" data-anchor-id="conditional-statements-for-loops-vector-operations-quartormardown">Conditional statements, for loops, vector operations, quarto/rmardown</h2>
+<p>This workshop continues basics of R working more with conditional statements, for loops, vector operations, and quarto/rmarkdown:</p>
+<ol type="1">
+<li>Conditional statements
+<ul>
+<li>base R</li>
+<li><code>dpylr</code></li>
+</ul></li>
+<li>For loops</li>
+<li>Vector operations
+<ul>
+<li>dates with <code>lubridate</code></li>
+<li><code>purr</code></li>
+</ul></li>
+<li>Quarto/rmarkdown</li>
+<li>Exercises</li>
+</ol>
+<p>R script: [github]https://github.com/SeascapeEcologyLab-workshops/BSC6926-B52_Fall2024/blob/main/workshopScripts/workshop3.R)</p>
+<p><a href="workshopScripts/workshop3.R">R script of workshop 3</a></p>
+<div class="cell" data-hash="ws3_cache/html/unnamed-chunk-1_77c6507480dc63ada84b821b7cd349fb">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="do">## ✔ dplyr     1.1.4     ✔ readr     2.1.5</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">## ✔ forcats   1.0.0     ✔ stringr   1.5.1</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="do">## ✔ ggplot2   3.5.1     ✔ tibble    3.2.1</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="do">## ✔ lubridate 1.9.3     ✔ tidyr     1.3.1</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="do">## ✔ purrr     1.0.2     </span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="do">## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="do">## ✖ dplyr::filter() masks stats::filter()</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="do">## ✖ dplyr::lag()    masks stats::lag()</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="do">## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="conditional-statements" class="level2">
+<h2 class="anchored" data-anchor-id="conditional-statements">Conditional statements</h2>
+<p>In programing there are times that if something is true then you want an operation to occur, but not when a condition is not true. ### Base R These can be done with <code>if</code> and <code>if else</code> statements in base R. These are written if a condition is true then the operation is done. They can be built upon with <code>else if</code> if the first condition is false to do test a second condition. If you want it to be If true and if false do something else then <code>if</code> and <code>else</code> structure can be used.</p>
+<div class="cell" data-hash="ws3_cache/html/unnamed-chunk-2_712704f98c2d90c66a7286f56f6dfd33">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>b <span class="ot">=</span> <span class="dv">5</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (b <span class="sc">==</span> <span class="dv">5</span>){</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">'b = 5 </span><span class="sc">\n</span><span class="st">'</span>) <span class="co"># \n is carriage return to end line when printing</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="do">## b = 5</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="cn">TRUE</span>){</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  c <span class="ot">=</span> <span class="dv">6</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>}<span class="cf">else</span>(</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">c =</span> <span class="dv">10</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>c </span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 6</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (F){</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  c <span class="ot">=</span> <span class="dv">6</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>}<span class="cf">else</span>(</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">c =</span> <span class="dv">10</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 10</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>c </span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 10</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (b <span class="sc">==</span> <span class="dv">10</span>){</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">'b = 10 </span><span class="sc">\n</span><span class="st">'</span>)</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>}<span class="cf">else</span> <span class="cf">if</span> (b <span class="sc">==</span> <span class="dv">5</span>){</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">'it worked </span><span class="sc">\n</span><span class="st">'</span>)</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>}<span class="cf">else</span>{</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">'nothing </span><span class="sc">\n</span><span class="st">'</span>)</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="do">## it worked</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="dplyr-functions" class="level3">
+<h3 class="anchored" data-anchor-id="dplyr-functions"><code>dplyr</code> functions</h3>
+<p><code>dplyr</code> has two functions that are very useful for conditional statements. Because they are a function they can be vectorized which will be useful as you see below. <code>if_else()</code> is a function that based on if the input is <code>TRUE</code> or <code>FALSE</code> produces a different answer. <code>case_when()</code> is more flexible and allows for multple outputs based on conditions being <code>TRUE</code></p>
+<div class="cell" data-hash="ws3_cache/html/unnamed-chunk-3_2b80956f681237d3ed036fa137d19d60">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">20</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">if_else</span>(x <span class="sc">&gt;</span> <span class="dv">10</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">'x &gt; 10'</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">'x &lt; 10'</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] "x &lt; 10" "x &lt; 10" "x &lt; 10" "x &lt; 10" "x &lt; 10" "x &lt; 10" "x &lt; 10" "x &lt; 10"</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  [9] "x &lt; 10" "x &lt; 10" "x &gt; 10" "x &gt; 10" "x &gt; 10" "x &gt; 10" "x &gt; 10" "x &gt; 10"</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [17] "x &gt; 10" "x &gt; 10" "x &gt; 10" "x &gt; 10"</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="fu">case_when</span>(x <span class="sc">&lt;</span> <span class="dv">6</span> <span class="sc">~</span> <span class="st">'x &lt; 6'</span>,</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>          <span class="fu">between</span>(x, <span class="dv">6</span>, <span class="dv">15</span>) <span class="sc">~</span> <span class="st">'6 &lt;= x &lt;= 15'</span>,</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>          x <span class="sc">&gt;</span> <span class="dv">15</span> <span class="sc">~</span> <span class="st">'x &gt; 15'</span>)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] "x &lt; 6"        "x &lt; 6"        "x &lt; 6"        "x &lt; 6"        "x &lt; 6"       </span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  [6] "6 &lt;= x &lt;= 15" "6 &lt;= x &lt;= 15" "6 &lt;= x &lt;= 15" "6 &lt;= x &lt;= 15" "6 &lt;= x &lt;= 15"</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="do">## [11] "6 &lt;= x &lt;= 15" "6 &lt;= x &lt;= 15" "6 &lt;= x &lt;= 15" "6 &lt;= x &lt;= 15" "6 &lt;= x &lt;= 15"</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="do">## [16] "x &gt; 15"       "x &gt; 15"       "x &gt; 15"       "x &gt; 15"       "x &gt; 15"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="for-loops" class="level2">
+<h2 class="anchored" data-anchor-id="for-loops">For loops</h2>
+<p>Another useful tool in programming is <code>for</code> loops. For loops repeat a process for a certain number of iterations. These can be useful iterate over a dataset or when using information in a time series. The <code>for</code> loop works over the number sequence indicated and does the code within the loop (inside of <code>{}</code>) for each number in the sequence. The iteration is typically indicated with <code>i</code>, but is just an object that is replaced at the begining of each loop and can be anything.</p>
+<div class="cell" data-hash="ws3_cache/html/unnamed-chunk-4_fcafb47d627d69d772db2310f0f10b95">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>){ <span class="co">#Sequence - i object within the sequence from 1 to 10</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(i)      <span class="co">#body - the operation to do something (function, operation, etc)</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 2</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 3</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 4</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 5</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 6</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 7</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 8</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 9</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 10</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co">#The iterator could be assigned to any letter or word assigment</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(turtle <span class="cf">in</span> <span class="dv">5</span><span class="sc">:</span><span class="dv">10</span>){</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(turtle)</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 5</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 6</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 7</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 8</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 9</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 10</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(flower <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(iris)){</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">'The species for this iteration is '</span>,     <span class="co">#Adding text per row based on name species</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>      <span class="fu">as.character</span>(iris<span class="sc">$</span>Species[flower]), <span class="st">'</span><span class="sc">\n</span><span class="st">'</span>) <span class="co">#note of importance of "\n</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  setosa </span></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  setosa </span></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  setosa </span></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  setosa </span></span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  setosa </span></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  setosa </span></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  setosa </span></span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  setosa </span></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  setosa </span></span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  setosa </span></span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  setosa </span></span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  setosa </span></span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  setosa </span></span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  setosa </span></span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  setosa </span></span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  setosa </span></span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  setosa </span></span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  setosa </span></span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  setosa </span></span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  setosa </span></span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  setosa </span></span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  setosa </span></span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  setosa </span></span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  setosa </span></span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  setosa </span></span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  setosa </span></span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  setosa </span></span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  setosa </span></span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  setosa </span></span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  setosa </span></span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  setosa </span></span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  setosa </span></span>
+<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  setosa </span></span>
+<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  setosa </span></span>
+<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  setosa </span></span>
+<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  setosa </span></span>
+<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  setosa </span></span>
+<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  setosa </span></span>
+<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  setosa </span></span>
+<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  setosa </span></span>
+<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  setosa </span></span>
+<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  setosa </span></span>
+<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  setosa </span></span>
+<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  setosa </span></span>
+<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  setosa </span></span>
+<span id="cb4-75"><a href="#cb4-75" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  setosa </span></span>
+<span id="cb4-76"><a href="#cb4-76" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  setosa </span></span>
+<span id="cb4-77"><a href="#cb4-77" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  setosa </span></span>
+<span id="cb4-78"><a href="#cb4-78" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  setosa </span></span>
+<span id="cb4-79"><a href="#cb4-79" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  setosa </span></span>
+<span id="cb4-80"><a href="#cb4-80" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  versicolor </span></span>
+<span id="cb4-81"><a href="#cb4-81" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  versicolor </span></span>
+<span id="cb4-82"><a href="#cb4-82" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  versicolor </span></span>
+<span id="cb4-83"><a href="#cb4-83" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  versicolor </span></span>
+<span id="cb4-84"><a href="#cb4-84" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  versicolor </span></span>
+<span id="cb4-85"><a href="#cb4-85" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  versicolor </span></span>
+<span id="cb4-86"><a href="#cb4-86" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  versicolor </span></span>
+<span id="cb4-87"><a href="#cb4-87" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  versicolor </span></span>
+<span id="cb4-88"><a href="#cb4-88" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  versicolor </span></span>
+<span id="cb4-89"><a href="#cb4-89" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  versicolor </span></span>
+<span id="cb4-90"><a href="#cb4-90" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  versicolor </span></span>
+<span id="cb4-91"><a href="#cb4-91" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  versicolor </span></span>
+<span id="cb4-92"><a href="#cb4-92" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  versicolor </span></span>
+<span id="cb4-93"><a href="#cb4-93" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  versicolor </span></span>
+<span id="cb4-94"><a href="#cb4-94" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  versicolor </span></span>
+<span id="cb4-95"><a href="#cb4-95" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  versicolor </span></span>
+<span id="cb4-96"><a href="#cb4-96" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  versicolor </span></span>
+<span id="cb4-97"><a href="#cb4-97" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  versicolor </span></span>
+<span id="cb4-98"><a href="#cb4-98" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  versicolor </span></span>
+<span id="cb4-99"><a href="#cb4-99" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  versicolor </span></span>
+<span id="cb4-100"><a href="#cb4-100" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  versicolor </span></span>
+<span id="cb4-101"><a href="#cb4-101" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  versicolor </span></span>
+<span id="cb4-102"><a href="#cb4-102" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  versicolor </span></span>
+<span id="cb4-103"><a href="#cb4-103" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  versicolor </span></span>
+<span id="cb4-104"><a href="#cb4-104" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  versicolor </span></span>
+<span id="cb4-105"><a href="#cb4-105" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  versicolor </span></span>
+<span id="cb4-106"><a href="#cb4-106" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  versicolor </span></span>
+<span id="cb4-107"><a href="#cb4-107" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  versicolor </span></span>
+<span id="cb4-108"><a href="#cb4-108" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  versicolor </span></span>
+<span id="cb4-109"><a href="#cb4-109" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  versicolor </span></span>
+<span id="cb4-110"><a href="#cb4-110" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  versicolor </span></span>
+<span id="cb4-111"><a href="#cb4-111" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  versicolor </span></span>
+<span id="cb4-112"><a href="#cb4-112" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  versicolor </span></span>
+<span id="cb4-113"><a href="#cb4-113" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  versicolor </span></span>
+<span id="cb4-114"><a href="#cb4-114" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  versicolor </span></span>
+<span id="cb4-115"><a href="#cb4-115" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  versicolor </span></span>
+<span id="cb4-116"><a href="#cb4-116" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  versicolor </span></span>
+<span id="cb4-117"><a href="#cb4-117" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  versicolor </span></span>
+<span id="cb4-118"><a href="#cb4-118" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  versicolor </span></span>
+<span id="cb4-119"><a href="#cb4-119" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  versicolor </span></span>
+<span id="cb4-120"><a href="#cb4-120" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  versicolor </span></span>
+<span id="cb4-121"><a href="#cb4-121" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  versicolor </span></span>
+<span id="cb4-122"><a href="#cb4-122" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  versicolor </span></span>
+<span id="cb4-123"><a href="#cb4-123" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  versicolor </span></span>
+<span id="cb4-124"><a href="#cb4-124" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  versicolor </span></span>
+<span id="cb4-125"><a href="#cb4-125" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  versicolor </span></span>
+<span id="cb4-126"><a href="#cb4-126" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  versicolor </span></span>
+<span id="cb4-127"><a href="#cb4-127" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  versicolor </span></span>
+<span id="cb4-128"><a href="#cb4-128" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  versicolor </span></span>
+<span id="cb4-129"><a href="#cb4-129" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  versicolor </span></span>
+<span id="cb4-130"><a href="#cb4-130" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  virginica </span></span>
+<span id="cb4-131"><a href="#cb4-131" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  virginica </span></span>
+<span id="cb4-132"><a href="#cb4-132" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  virginica </span></span>
+<span id="cb4-133"><a href="#cb4-133" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  virginica </span></span>
+<span id="cb4-134"><a href="#cb4-134" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  virginica </span></span>
+<span id="cb4-135"><a href="#cb4-135" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  virginica </span></span>
+<span id="cb4-136"><a href="#cb4-136" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  virginica </span></span>
+<span id="cb4-137"><a href="#cb4-137" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  virginica </span></span>
+<span id="cb4-138"><a href="#cb4-138" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  virginica </span></span>
+<span id="cb4-139"><a href="#cb4-139" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  virginica </span></span>
+<span id="cb4-140"><a href="#cb4-140" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  virginica </span></span>
+<span id="cb4-141"><a href="#cb4-141" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  virginica </span></span>
+<span id="cb4-142"><a href="#cb4-142" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  virginica </span></span>
+<span id="cb4-143"><a href="#cb4-143" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  virginica </span></span>
+<span id="cb4-144"><a href="#cb4-144" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  virginica </span></span>
+<span id="cb4-145"><a href="#cb4-145" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  virginica </span></span>
+<span id="cb4-146"><a href="#cb4-146" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  virginica </span></span>
+<span id="cb4-147"><a href="#cb4-147" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  virginica </span></span>
+<span id="cb4-148"><a href="#cb4-148" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  virginica </span></span>
+<span id="cb4-149"><a href="#cb4-149" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  virginica </span></span>
+<span id="cb4-150"><a href="#cb4-150" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  virginica </span></span>
+<span id="cb4-151"><a href="#cb4-151" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  virginica </span></span>
+<span id="cb4-152"><a href="#cb4-152" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  virginica </span></span>
+<span id="cb4-153"><a href="#cb4-153" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  virginica </span></span>
+<span id="cb4-154"><a href="#cb4-154" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  virginica </span></span>
+<span id="cb4-155"><a href="#cb4-155" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  virginica </span></span>
+<span id="cb4-156"><a href="#cb4-156" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  virginica </span></span>
+<span id="cb4-157"><a href="#cb4-157" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  virginica </span></span>
+<span id="cb4-158"><a href="#cb4-158" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  virginica </span></span>
+<span id="cb4-159"><a href="#cb4-159" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  virginica </span></span>
+<span id="cb4-160"><a href="#cb4-160" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  virginica </span></span>
+<span id="cb4-161"><a href="#cb4-161" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  virginica </span></span>
+<span id="cb4-162"><a href="#cb4-162" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  virginica </span></span>
+<span id="cb4-163"><a href="#cb4-163" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  virginica </span></span>
+<span id="cb4-164"><a href="#cb4-164" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  virginica </span></span>
+<span id="cb4-165"><a href="#cb4-165" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  virginica </span></span>
+<span id="cb4-166"><a href="#cb4-166" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  virginica </span></span>
+<span id="cb4-167"><a href="#cb4-167" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  virginica </span></span>
+<span id="cb4-168"><a href="#cb4-168" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  virginica </span></span>
+<span id="cb4-169"><a href="#cb4-169" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  virginica </span></span>
+<span id="cb4-170"><a href="#cb4-170" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  virginica </span></span>
+<span id="cb4-171"><a href="#cb4-171" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  virginica </span></span>
+<span id="cb4-172"><a href="#cb4-172" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  virginica </span></span>
+<span id="cb4-173"><a href="#cb4-173" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  virginica </span></span>
+<span id="cb4-174"><a href="#cb4-174" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  virginica </span></span>
+<span id="cb4-175"><a href="#cb4-175" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  virginica </span></span>
+<span id="cb4-176"><a href="#cb4-176" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  virginica </span></span>
+<span id="cb4-177"><a href="#cb4-177" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  virginica </span></span>
+<span id="cb4-178"><a href="#cb4-178" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  virginica </span></span>
+<span id="cb4-179"><a href="#cb4-179" aria-hidden="true" tabindex="-1"></a><span class="do">## The species for this iteration is  virginica</span></span>
+<span id="cb4-180"><a href="#cb4-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-181"><a href="#cb4-181" aria-hidden="true" tabindex="-1"></a>d <span class="ot">=</span> <span class="fu">seq</span>(<span class="dv">1</span>,<span class="dv">15</span>, <span class="dv">2</span>) <span class="co">#8 elements</span></span>
+<span id="cb4-182"><a href="#cb4-182" aria-hidden="true" tabindex="-1"></a>d</span>
+<span id="cb4-183"><a href="#cb4-183" aria-hidden="true" tabindex="-1"></a><span class="do">## [1]  1  3  5  7  9 11 13 15</span></span>
+<span id="cb4-184"><a href="#cb4-184" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(d)){</span>
+<span id="cb4-185"><a href="#cb4-185" aria-hidden="true" tabindex="-1"></a>  b <span class="ot">=</span> d[i] <span class="sc">+</span> <span class="dv">1</span>                            <span class="co">#for each i add 1</span></span>
+<span id="cb4-186"><a href="#cb4-186" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">'d ='</span>,d[i], <span class="st">'b = d + 1 ='</span>, b, <span class="st">'</span><span class="sc">\n</span><span class="st">'</span> )<span class="co">#then add string</span></span>
+<span id="cb4-187"><a href="#cb4-187" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-188"><a href="#cb4-188" aria-hidden="true" tabindex="-1"></a><span class="do">## d = 1 b = d + 1 = 2 </span></span>
+<span id="cb4-189"><a href="#cb4-189" aria-hidden="true" tabindex="-1"></a><span class="do">## d = 3 b = d + 1 = 4 </span></span>
+<span id="cb4-190"><a href="#cb4-190" aria-hidden="true" tabindex="-1"></a><span class="do">## d = 5 b = d + 1 = 6 </span></span>
+<span id="cb4-191"><a href="#cb4-191" aria-hidden="true" tabindex="-1"></a><span class="do">## d = 7 b = d + 1 = 8 </span></span>
+<span id="cb4-192"><a href="#cb4-192" aria-hidden="true" tabindex="-1"></a><span class="do">## d = 9 b = d + 1 = 10 </span></span>
+<span id="cb4-193"><a href="#cb4-193" aria-hidden="true" tabindex="-1"></a><span class="do">## d = 11 b = d + 1 = 12 </span></span>
+<span id="cb4-194"><a href="#cb4-194" aria-hidden="true" tabindex="-1"></a><span class="do">## d = 13 b = d + 1 = 14 </span></span>
+<span id="cb4-195"><a href="#cb4-195" aria-hidden="true" tabindex="-1"></a><span class="do">## d = 15 b = d + 1 = 16</span></span>
+<span id="cb4-196"><a href="#cb4-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-197"><a href="#cb4-197" aria-hidden="true" tabindex="-1"></a><span class="co">#Using seq_along</span></span>
+<span id="cb4-198"><a href="#cb4-198" aria-hidden="true" tabindex="-1"></a>d <span class="ot">=</span> <span class="fu">seq</span>(<span class="dv">1</span>,<span class="dv">15</span>, <span class="dv">2</span>) <span class="co">#8 elements</span></span>
+<span id="cb4-199"><a href="#cb4-199" aria-hidden="true" tabindex="-1"></a>d</span>
+<span id="cb4-200"><a href="#cb4-200" aria-hidden="true" tabindex="-1"></a><span class="do">## [1]  1  3  5  7  9 11 13 15</span></span>
+<span id="cb4-201"><a href="#cb4-201" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="fu">seq_along</span>(d)){</span>
+<span id="cb4-202"><a href="#cb4-202" aria-hidden="true" tabindex="-1"></a>  b <span class="ot">=</span> d[i] <span class="sc">+</span> <span class="dv">1</span>                            <span class="co">#for each i add 1</span></span>
+<span id="cb4-203"><a href="#cb4-203" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">'d ='</span>,d[i], <span class="st">'b = d + 1 ='</span>, b, <span class="st">'</span><span class="sc">\n</span><span class="st">'</span> )<span class="co">#then add string</span></span>
+<span id="cb4-204"><a href="#cb4-204" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-205"><a href="#cb4-205" aria-hidden="true" tabindex="-1"></a><span class="do">## d = 1 b = d + 1 = 2 </span></span>
+<span id="cb4-206"><a href="#cb4-206" aria-hidden="true" tabindex="-1"></a><span class="do">## d = 3 b = d + 1 = 4 </span></span>
+<span id="cb4-207"><a href="#cb4-207" aria-hidden="true" tabindex="-1"></a><span class="do">## d = 5 b = d + 1 = 6 </span></span>
+<span id="cb4-208"><a href="#cb4-208" aria-hidden="true" tabindex="-1"></a><span class="do">## d = 7 b = d + 1 = 8 </span></span>
+<span id="cb4-209"><a href="#cb4-209" aria-hidden="true" tabindex="-1"></a><span class="do">## d = 9 b = d + 1 = 10 </span></span>
+<span id="cb4-210"><a href="#cb4-210" aria-hidden="true" tabindex="-1"></a><span class="do">## d = 11 b = d + 1 = 12 </span></span>
+<span id="cb4-211"><a href="#cb4-211" aria-hidden="true" tabindex="-1"></a><span class="do">## d = 13 b = d + 1 = 14 </span></span>
+<span id="cb4-212"><a href="#cb4-212" aria-hidden="true" tabindex="-1"></a><span class="do">## d = 15 b = d + 1 = 16</span></span>
+<span id="cb4-213"><a href="#cb4-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-214"><a href="#cb4-214" aria-hidden="true" tabindex="-1"></a>b <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span></span>
+<span id="cb4-215"><a href="#cb4-215" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">10</span>){    <span class="co">#Call a section of vector to start sequence</span></span>
+<span id="cb4-216"><a href="#cb4-216" aria-hidden="true" tabindex="-1"></a>  z <span class="ot">=</span> b[i] <span class="sc">-</span> b[i<span class="dv">-1</span>]</span>
+<span id="cb4-217"><a href="#cb4-217" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-218"><a href="#cb4-218" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">'z ='</span>, z, <span class="st">'b[i] ='</span>, b[i], <span class="st">'b[i-1] ='</span>, b[i<span class="dv">-1</span>], <span class="st">'</span><span class="sc">\n</span><span class="st">'</span>)</span>
+<span id="cb4-219"><a href="#cb4-219" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-220"><a href="#cb4-220" aria-hidden="true" tabindex="-1"></a><span class="do">## z = 1 b[i] = 2 b[i-1] = 1 </span></span>
+<span id="cb4-221"><a href="#cb4-221" aria-hidden="true" tabindex="-1"></a><span class="do">## z = 1 b[i] = 3 b[i-1] = 2 </span></span>
+<span id="cb4-222"><a href="#cb4-222" aria-hidden="true" tabindex="-1"></a><span class="do">## z = 1 b[i] = 4 b[i-1] = 3 </span></span>
+<span id="cb4-223"><a href="#cb4-223" aria-hidden="true" tabindex="-1"></a><span class="do">## z = 1 b[i] = 5 b[i-1] = 4 </span></span>
+<span id="cb4-224"><a href="#cb4-224" aria-hidden="true" tabindex="-1"></a><span class="do">## z = 1 b[i] = 6 b[i-1] = 5 </span></span>
+<span id="cb4-225"><a href="#cb4-225" aria-hidden="true" tabindex="-1"></a><span class="do">## z = 1 b[i] = 7 b[i-1] = 6 </span></span>
+<span id="cb4-226"><a href="#cb4-226" aria-hidden="true" tabindex="-1"></a><span class="do">## z = 1 b[i] = 8 b[i-1] = 7 </span></span>
+<span id="cb4-227"><a href="#cb4-227" aria-hidden="true" tabindex="-1"></a><span class="do">## z = 1 b[i] = 9 b[i-1] = 8 </span></span>
+<span id="cb4-228"><a href="#cb4-228" aria-hidden="true" tabindex="-1"></a><span class="do">## z = 1 b[i] = 10 b[i-1] = 9</span></span>
+<span id="cb4-229"><a href="#cb4-229" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-230"><a href="#cb4-230" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-231"><a href="#cb4-231" aria-hidden="true" tabindex="-1"></a>start <span class="ot">=</span> <span class="dv">10</span> </span>
+<span id="cb4-232"><a href="#cb4-232" aria-hidden="true" tabindex="-1"></a>pop <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">time =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">n =</span> <span class="cn">NA</span>) <span class="co">#Output vector size 10</span></span>
+<span id="cb4-233"><a href="#cb4-233" aria-hidden="true" tabindex="-1"></a>pop<span class="sc">$</span>n[pop<span class="sc">$</span>time <span class="sc">==</span> <span class="dv">0</span>] <span class="ot">=</span> start</span>
+<span id="cb4-234"><a href="#cb4-234" aria-hidden="true" tabindex="-1"></a>pop</span>
+<span id="cb4-235"><a href="#cb4-235" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 11 × 2</span></span>
+<span id="cb4-236"><a href="#cb4-236" aria-hidden="true" tabindex="-1"></a><span class="do">##     time     n</span></span>
+<span id="cb4-237"><a href="#cb4-237" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;int&gt; &lt;dbl&gt;</span></span>
+<span id="cb4-238"><a href="#cb4-238" aria-hidden="true" tabindex="-1"></a><span class="do">##  1     0    10</span></span>
+<span id="cb4-239"><a href="#cb4-239" aria-hidden="true" tabindex="-1"></a><span class="do">##  2     1    NA</span></span>
+<span id="cb4-240"><a href="#cb4-240" aria-hidden="true" tabindex="-1"></a><span class="do">##  3     2    NA</span></span>
+<span id="cb4-241"><a href="#cb4-241" aria-hidden="true" tabindex="-1"></a><span class="do">##  4     3    NA</span></span>
+<span id="cb4-242"><a href="#cb4-242" aria-hidden="true" tabindex="-1"></a><span class="do">##  5     4    NA</span></span>
+<span id="cb4-243"><a href="#cb4-243" aria-hidden="true" tabindex="-1"></a><span class="do">##  6     5    NA</span></span>
+<span id="cb4-244"><a href="#cb4-244" aria-hidden="true" tabindex="-1"></a><span class="do">##  7     6    NA</span></span>
+<span id="cb4-245"><a href="#cb4-245" aria-hidden="true" tabindex="-1"></a><span class="do">##  8     7    NA</span></span>
+<span id="cb4-246"><a href="#cb4-246" aria-hidden="true" tabindex="-1"></a><span class="do">##  9     8    NA</span></span>
+<span id="cb4-247"><a href="#cb4-247" aria-hidden="true" tabindex="-1"></a><span class="do">## 10     9    NA</span></span>
+<span id="cb4-248"><a href="#cb4-248" aria-hidden="true" tabindex="-1"></a><span class="do">## 11    10    NA</span></span>
+<span id="cb4-249"><a href="#cb4-249" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (t <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>){ <span class="co">#sequence </span></span>
+<span id="cb4-250"><a href="#cb4-250" aria-hidden="true" tabindex="-1"></a>  growth <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="at">n =</span><span class="dv">1</span>, <span class="at">mean =</span> <span class="dv">3</span>, <span class="at">sd =</span> <span class="dv">1</span>) <span class="co">#extracting random value normal dist</span></span>
+<span id="cb4-251"><a href="#cb4-251" aria-hidden="true" tabindex="-1"></a>  pop<span class="sc">$</span>n[pop<span class="sc">$</span>time <span class="sc">==</span> t] <span class="ot">=</span> growth <span class="sc">+</span> pop<span class="sc">$</span>n[pop<span class="sc">$</span>time <span class="sc">==</span> (t<span class="dv">-1</span>)]</span>
+<span id="cb4-252"><a href="#cb4-252" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-253"><a href="#cb4-253" aria-hidden="true" tabindex="-1"></a>pop</span>
+<span id="cb4-254"><a href="#cb4-254" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 11 × 2</span></span>
+<span id="cb4-255"><a href="#cb4-255" aria-hidden="true" tabindex="-1"></a><span class="do">##     time     n</span></span>
+<span id="cb4-256"><a href="#cb4-256" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;int&gt; &lt;dbl&gt;</span></span>
+<span id="cb4-257"><a href="#cb4-257" aria-hidden="true" tabindex="-1"></a><span class="do">##  1     0  10  </span></span>
+<span id="cb4-258"><a href="#cb4-258" aria-hidden="true" tabindex="-1"></a><span class="do">##  2     1  15.2</span></span>
+<span id="cb4-259"><a href="#cb4-259" aria-hidden="true" tabindex="-1"></a><span class="do">##  3     2  19.6</span></span>
+<span id="cb4-260"><a href="#cb4-260" aria-hidden="true" tabindex="-1"></a><span class="do">##  4     3  23.1</span></span>
+<span id="cb4-261"><a href="#cb4-261" aria-hidden="true" tabindex="-1"></a><span class="do">##  5     4  26.5</span></span>
+<span id="cb4-262"><a href="#cb4-262" aria-hidden="true" tabindex="-1"></a><span class="do">##  6     5  30.5</span></span>
+<span id="cb4-263"><a href="#cb4-263" aria-hidden="true" tabindex="-1"></a><span class="do">##  7     6  35.5</span></span>
+<span id="cb4-264"><a href="#cb4-264" aria-hidden="true" tabindex="-1"></a><span class="do">##  8     7  38.5</span></span>
+<span id="cb4-265"><a href="#cb4-265" aria-hidden="true" tabindex="-1"></a><span class="do">##  9     8  42.5</span></span>
+<span id="cb4-266"><a href="#cb4-266" aria-hidden="true" tabindex="-1"></a><span class="do">## 10     9  46.6</span></span>
+<span id="cb4-267"><a href="#cb4-267" aria-hidden="true" tabindex="-1"></a><span class="do">## 11    10  50.0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="vector-operations" class="level2">
+<h2 class="anchored" data-anchor-id="vector-operations">Vector operations</h2>
+<p>As we have seen above, we can do operations over vectors. We sometimes want to do this to vectors stored in dataframes/tibbles, and the <code>mutate()</code> function makes this easy. This can be applied to multiple columns at once with <code>across()</code></p>
+<div class="cell" data-hash="ws3_cache/html/unnamed-chunk-5_1bf536457035ae9d073c2e8ce6ada770">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">petalArea =</span> Petal.Length<span class="sc">*</span>Petal.Width)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="do">##     Sepal.Length Sepal.Width Petal.Length Petal.Width    Species petalArea</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 1            5.1         3.5          1.4         0.2     setosa      0.28</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 2            4.9         3.0          1.4         0.2     setosa      0.28</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 3            4.7         3.2          1.3         0.2     setosa      0.26</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 4            4.6         3.1          1.5         0.2     setosa      0.30</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 5            5.0         3.6          1.4         0.2     setosa      0.28</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 6            5.4         3.9          1.7         0.4     setosa      0.68</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 7            4.6         3.4          1.4         0.3     setosa      0.42</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 8            5.0         3.4          1.5         0.2     setosa      0.30</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 9            4.4         2.9          1.4         0.2     setosa      0.28</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 10           4.9         3.1          1.5         0.1     setosa      0.15</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 11           5.4         3.7          1.5         0.2     setosa      0.30</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 12           4.8         3.4          1.6         0.2     setosa      0.32</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="do">## 13           4.8         3.0          1.4         0.1     setosa      0.14</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="do">## 14           4.3         3.0          1.1         0.1     setosa      0.11</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="do">## 15           5.8         4.0          1.2         0.2     setosa      0.24</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="do">## 16           5.7         4.4          1.5         0.4     setosa      0.60</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="do">## 17           5.4         3.9          1.3         0.4     setosa      0.52</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="do">## 18           5.1         3.5          1.4         0.3     setosa      0.42</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="do">## 19           5.7         3.8          1.7         0.3     setosa      0.51</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="do">## 20           5.1         3.8          1.5         0.3     setosa      0.45</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="do">## 21           5.4         3.4          1.7         0.2     setosa      0.34</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="do">## 22           5.1         3.7          1.5         0.4     setosa      0.60</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="do">## 23           4.6         3.6          1.0         0.2     setosa      0.20</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="do">## 24           5.1         3.3          1.7         0.5     setosa      0.85</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="do">## 25           4.8         3.4          1.9         0.2     setosa      0.38</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a><span class="do">## 26           5.0         3.0          1.6         0.2     setosa      0.32</span></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="do">## 27           5.0         3.4          1.6         0.4     setosa      0.64</span></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="do">## 28           5.2         3.5          1.5         0.2     setosa      0.30</span></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a><span class="do">## 29           5.2         3.4          1.4         0.2     setosa      0.28</span></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a><span class="do">## 30           4.7         3.2          1.6         0.2     setosa      0.32</span></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a><span class="do">## 31           4.8         3.1          1.6         0.2     setosa      0.32</span></span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a><span class="do">## 32           5.4         3.4          1.5         0.4     setosa      0.60</span></span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a><span class="do">## 33           5.2         4.1          1.5         0.1     setosa      0.15</span></span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a><span class="do">## 34           5.5         4.2          1.4         0.2     setosa      0.28</span></span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a><span class="do">## 35           4.9         3.1          1.5         0.2     setosa      0.30</span></span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a><span class="do">## 36           5.0         3.2          1.2         0.2     setosa      0.24</span></span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a><span class="do">## 37           5.5         3.5          1.3         0.2     setosa      0.26</span></span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a><span class="do">## 38           4.9         3.6          1.4         0.1     setosa      0.14</span></span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a><span class="do">## 39           4.4         3.0          1.3         0.2     setosa      0.26</span></span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a><span class="do">## 40           5.1         3.4          1.5         0.2     setosa      0.30</span></span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a><span class="do">## 41           5.0         3.5          1.3         0.3     setosa      0.39</span></span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a><span class="do">## 42           4.5         2.3          1.3         0.3     setosa      0.39</span></span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a><span class="do">## 43           4.4         3.2          1.3         0.2     setosa      0.26</span></span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a><span class="do">## 44           5.0         3.5          1.6         0.6     setosa      0.96</span></span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a><span class="do">## 45           5.1         3.8          1.9         0.4     setosa      0.76</span></span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a><span class="do">## 46           4.8         3.0          1.4         0.3     setosa      0.42</span></span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a><span class="do">## 47           5.1         3.8          1.6         0.2     setosa      0.32</span></span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a><span class="do">## 48           4.6         3.2          1.4         0.2     setosa      0.28</span></span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a><span class="do">## 49           5.3         3.7          1.5         0.2     setosa      0.30</span></span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a><span class="do">## 50           5.0         3.3          1.4         0.2     setosa      0.28</span></span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a><span class="do">## 51           7.0         3.2          4.7         1.4 versicolor      6.58</span></span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a><span class="do">## 52           6.4         3.2          4.5         1.5 versicolor      6.75</span></span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a><span class="do">## 53           6.9         3.1          4.9         1.5 versicolor      7.35</span></span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a><span class="do">## 54           5.5         2.3          4.0         1.3 versicolor      5.20</span></span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a><span class="do">## 55           6.5         2.8          4.6         1.5 versicolor      6.90</span></span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a><span class="do">## 56           5.7         2.8          4.5         1.3 versicolor      5.85</span></span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a><span class="do">## 57           6.3         3.3          4.7         1.6 versicolor      7.52</span></span>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a><span class="do">## 58           4.9         2.4          3.3         1.0 versicolor      3.30</span></span>
+<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a><span class="do">## 59           6.6         2.9          4.6         1.3 versicolor      5.98</span></span>
+<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a><span class="do">## 60           5.2         2.7          3.9         1.4 versicolor      5.46</span></span>
+<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a><span class="do">## 61           5.0         2.0          3.5         1.0 versicolor      3.50</span></span>
+<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a><span class="do">## 62           5.9         3.0          4.2         1.5 versicolor      6.30</span></span>
+<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a><span class="do">## 63           6.0         2.2          4.0         1.0 versicolor      4.00</span></span>
+<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a><span class="do">## 64           6.1         2.9          4.7         1.4 versicolor      6.58</span></span>
+<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a><span class="do">## 65           5.6         2.9          3.6         1.3 versicolor      4.68</span></span>
+<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a><span class="do">## 66           6.7         3.1          4.4         1.4 versicolor      6.16</span></span>
+<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a><span class="do">## 67           5.6         3.0          4.5         1.5 versicolor      6.75</span></span>
+<span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a><span class="do">## 68           5.8         2.7          4.1         1.0 versicolor      4.10</span></span>
+<span id="cb5-72"><a href="#cb5-72" aria-hidden="true" tabindex="-1"></a><span class="do">## 69           6.2         2.2          4.5         1.5 versicolor      6.75</span></span>
+<span id="cb5-73"><a href="#cb5-73" aria-hidden="true" tabindex="-1"></a><span class="do">## 70           5.6         2.5          3.9         1.1 versicolor      4.29</span></span>
+<span id="cb5-74"><a href="#cb5-74" aria-hidden="true" tabindex="-1"></a><span class="do">## 71           5.9         3.2          4.8         1.8 versicolor      8.64</span></span>
+<span id="cb5-75"><a href="#cb5-75" aria-hidden="true" tabindex="-1"></a><span class="do">## 72           6.1         2.8          4.0         1.3 versicolor      5.20</span></span>
+<span id="cb5-76"><a href="#cb5-76" aria-hidden="true" tabindex="-1"></a><span class="do">## 73           6.3         2.5          4.9         1.5 versicolor      7.35</span></span>
+<span id="cb5-77"><a href="#cb5-77" aria-hidden="true" tabindex="-1"></a><span class="do">## 74           6.1         2.8          4.7         1.2 versicolor      5.64</span></span>
+<span id="cb5-78"><a href="#cb5-78" aria-hidden="true" tabindex="-1"></a><span class="do">## 75           6.4         2.9          4.3         1.3 versicolor      5.59</span></span>
+<span id="cb5-79"><a href="#cb5-79" aria-hidden="true" tabindex="-1"></a><span class="do">## 76           6.6         3.0          4.4         1.4 versicolor      6.16</span></span>
+<span id="cb5-80"><a href="#cb5-80" aria-hidden="true" tabindex="-1"></a><span class="do">## 77           6.8         2.8          4.8         1.4 versicolor      6.72</span></span>
+<span id="cb5-81"><a href="#cb5-81" aria-hidden="true" tabindex="-1"></a><span class="do">## 78           6.7         3.0          5.0         1.7 versicolor      8.50</span></span>
+<span id="cb5-82"><a href="#cb5-82" aria-hidden="true" tabindex="-1"></a><span class="do">## 79           6.0         2.9          4.5         1.5 versicolor      6.75</span></span>
+<span id="cb5-83"><a href="#cb5-83" aria-hidden="true" tabindex="-1"></a><span class="do">## 80           5.7         2.6          3.5         1.0 versicolor      3.50</span></span>
+<span id="cb5-84"><a href="#cb5-84" aria-hidden="true" tabindex="-1"></a><span class="do">## 81           5.5         2.4          3.8         1.1 versicolor      4.18</span></span>
+<span id="cb5-85"><a href="#cb5-85" aria-hidden="true" tabindex="-1"></a><span class="do">## 82           5.5         2.4          3.7         1.0 versicolor      3.70</span></span>
+<span id="cb5-86"><a href="#cb5-86" aria-hidden="true" tabindex="-1"></a><span class="do">## 83           5.8         2.7          3.9         1.2 versicolor      4.68</span></span>
+<span id="cb5-87"><a href="#cb5-87" aria-hidden="true" tabindex="-1"></a><span class="do">## 84           6.0         2.7          5.1         1.6 versicolor      8.16</span></span>
+<span id="cb5-88"><a href="#cb5-88" aria-hidden="true" tabindex="-1"></a><span class="do">## 85           5.4         3.0          4.5         1.5 versicolor      6.75</span></span>
+<span id="cb5-89"><a href="#cb5-89" aria-hidden="true" tabindex="-1"></a><span class="do">## 86           6.0         3.4          4.5         1.6 versicolor      7.20</span></span>
+<span id="cb5-90"><a href="#cb5-90" aria-hidden="true" tabindex="-1"></a><span class="do">## 87           6.7         3.1          4.7         1.5 versicolor      7.05</span></span>
+<span id="cb5-91"><a href="#cb5-91" aria-hidden="true" tabindex="-1"></a><span class="do">## 88           6.3         2.3          4.4         1.3 versicolor      5.72</span></span>
+<span id="cb5-92"><a href="#cb5-92" aria-hidden="true" tabindex="-1"></a><span class="do">## 89           5.6         3.0          4.1         1.3 versicolor      5.33</span></span>
+<span id="cb5-93"><a href="#cb5-93" aria-hidden="true" tabindex="-1"></a><span class="do">## 90           5.5         2.5          4.0         1.3 versicolor      5.20</span></span>
+<span id="cb5-94"><a href="#cb5-94" aria-hidden="true" tabindex="-1"></a><span class="do">## 91           5.5         2.6          4.4         1.2 versicolor      5.28</span></span>
+<span id="cb5-95"><a href="#cb5-95" aria-hidden="true" tabindex="-1"></a><span class="do">## 92           6.1         3.0          4.6         1.4 versicolor      6.44</span></span>
+<span id="cb5-96"><a href="#cb5-96" aria-hidden="true" tabindex="-1"></a><span class="do">## 93           5.8         2.6          4.0         1.2 versicolor      4.80</span></span>
+<span id="cb5-97"><a href="#cb5-97" aria-hidden="true" tabindex="-1"></a><span class="do">## 94           5.0         2.3          3.3         1.0 versicolor      3.30</span></span>
+<span id="cb5-98"><a href="#cb5-98" aria-hidden="true" tabindex="-1"></a><span class="do">## 95           5.6         2.7          4.2         1.3 versicolor      5.46</span></span>
+<span id="cb5-99"><a href="#cb5-99" aria-hidden="true" tabindex="-1"></a><span class="do">## 96           5.7         3.0          4.2         1.2 versicolor      5.04</span></span>
+<span id="cb5-100"><a href="#cb5-100" aria-hidden="true" tabindex="-1"></a><span class="do">## 97           5.7         2.9          4.2         1.3 versicolor      5.46</span></span>
+<span id="cb5-101"><a href="#cb5-101" aria-hidden="true" tabindex="-1"></a><span class="do">## 98           6.2         2.9          4.3         1.3 versicolor      5.59</span></span>
+<span id="cb5-102"><a href="#cb5-102" aria-hidden="true" tabindex="-1"></a><span class="do">## 99           5.1         2.5          3.0         1.1 versicolor      3.30</span></span>
+<span id="cb5-103"><a href="#cb5-103" aria-hidden="true" tabindex="-1"></a><span class="do">## 100          5.7         2.8          4.1         1.3 versicolor      5.33</span></span>
+<span id="cb5-104"><a href="#cb5-104" aria-hidden="true" tabindex="-1"></a><span class="do">## 101          6.3         3.3          6.0         2.5  virginica     15.00</span></span>
+<span id="cb5-105"><a href="#cb5-105" aria-hidden="true" tabindex="-1"></a><span class="do">## 102          5.8         2.7          5.1         1.9  virginica      9.69</span></span>
+<span id="cb5-106"><a href="#cb5-106" aria-hidden="true" tabindex="-1"></a><span class="do">## 103          7.1         3.0          5.9         2.1  virginica     12.39</span></span>
+<span id="cb5-107"><a href="#cb5-107" aria-hidden="true" tabindex="-1"></a><span class="do">## 104          6.3         2.9          5.6         1.8  virginica     10.08</span></span>
+<span id="cb5-108"><a href="#cb5-108" aria-hidden="true" tabindex="-1"></a><span class="do">## 105          6.5         3.0          5.8         2.2  virginica     12.76</span></span>
+<span id="cb5-109"><a href="#cb5-109" aria-hidden="true" tabindex="-1"></a><span class="do">## 106          7.6         3.0          6.6         2.1  virginica     13.86</span></span>
+<span id="cb5-110"><a href="#cb5-110" aria-hidden="true" tabindex="-1"></a><span class="do">## 107          4.9         2.5          4.5         1.7  virginica      7.65</span></span>
+<span id="cb5-111"><a href="#cb5-111" aria-hidden="true" tabindex="-1"></a><span class="do">## 108          7.3         2.9          6.3         1.8  virginica     11.34</span></span>
+<span id="cb5-112"><a href="#cb5-112" aria-hidden="true" tabindex="-1"></a><span class="do">## 109          6.7         2.5          5.8         1.8  virginica     10.44</span></span>
+<span id="cb5-113"><a href="#cb5-113" aria-hidden="true" tabindex="-1"></a><span class="do">## 110          7.2         3.6          6.1         2.5  virginica     15.25</span></span>
+<span id="cb5-114"><a href="#cb5-114" aria-hidden="true" tabindex="-1"></a><span class="do">## 111          6.5         3.2          5.1         2.0  virginica     10.20</span></span>
+<span id="cb5-115"><a href="#cb5-115" aria-hidden="true" tabindex="-1"></a><span class="do">## 112          6.4         2.7          5.3         1.9  virginica     10.07</span></span>
+<span id="cb5-116"><a href="#cb5-116" aria-hidden="true" tabindex="-1"></a><span class="do">## 113          6.8         3.0          5.5         2.1  virginica     11.55</span></span>
+<span id="cb5-117"><a href="#cb5-117" aria-hidden="true" tabindex="-1"></a><span class="do">## 114          5.7         2.5          5.0         2.0  virginica     10.00</span></span>
+<span id="cb5-118"><a href="#cb5-118" aria-hidden="true" tabindex="-1"></a><span class="do">## 115          5.8         2.8          5.1         2.4  virginica     12.24</span></span>
+<span id="cb5-119"><a href="#cb5-119" aria-hidden="true" tabindex="-1"></a><span class="do">## 116          6.4         3.2          5.3         2.3  virginica     12.19</span></span>
+<span id="cb5-120"><a href="#cb5-120" aria-hidden="true" tabindex="-1"></a><span class="do">## 117          6.5         3.0          5.5         1.8  virginica      9.90</span></span>
+<span id="cb5-121"><a href="#cb5-121" aria-hidden="true" tabindex="-1"></a><span class="do">## 118          7.7         3.8          6.7         2.2  virginica     14.74</span></span>
+<span id="cb5-122"><a href="#cb5-122" aria-hidden="true" tabindex="-1"></a><span class="do">## 119          7.7         2.6          6.9         2.3  virginica     15.87</span></span>
+<span id="cb5-123"><a href="#cb5-123" aria-hidden="true" tabindex="-1"></a><span class="do">## 120          6.0         2.2          5.0         1.5  virginica      7.50</span></span>
+<span id="cb5-124"><a href="#cb5-124" aria-hidden="true" tabindex="-1"></a><span class="do">## 121          6.9         3.2          5.7         2.3  virginica     13.11</span></span>
+<span id="cb5-125"><a href="#cb5-125" aria-hidden="true" tabindex="-1"></a><span class="do">## 122          5.6         2.8          4.9         2.0  virginica      9.80</span></span>
+<span id="cb5-126"><a href="#cb5-126" aria-hidden="true" tabindex="-1"></a><span class="do">## 123          7.7         2.8          6.7         2.0  virginica     13.40</span></span>
+<span id="cb5-127"><a href="#cb5-127" aria-hidden="true" tabindex="-1"></a><span class="do">## 124          6.3         2.7          4.9         1.8  virginica      8.82</span></span>
+<span id="cb5-128"><a href="#cb5-128" aria-hidden="true" tabindex="-1"></a><span class="do">## 125          6.7         3.3          5.7         2.1  virginica     11.97</span></span>
+<span id="cb5-129"><a href="#cb5-129" aria-hidden="true" tabindex="-1"></a><span class="do">## 126          7.2         3.2          6.0         1.8  virginica     10.80</span></span>
+<span id="cb5-130"><a href="#cb5-130" aria-hidden="true" tabindex="-1"></a><span class="do">## 127          6.2         2.8          4.8         1.8  virginica      8.64</span></span>
+<span id="cb5-131"><a href="#cb5-131" aria-hidden="true" tabindex="-1"></a><span class="do">## 128          6.1         3.0          4.9         1.8  virginica      8.82</span></span>
+<span id="cb5-132"><a href="#cb5-132" aria-hidden="true" tabindex="-1"></a><span class="do">## 129          6.4         2.8          5.6         2.1  virginica     11.76</span></span>
+<span id="cb5-133"><a href="#cb5-133" aria-hidden="true" tabindex="-1"></a><span class="do">## 130          7.2         3.0          5.8         1.6  virginica      9.28</span></span>
+<span id="cb5-134"><a href="#cb5-134" aria-hidden="true" tabindex="-1"></a><span class="do">## 131          7.4         2.8          6.1         1.9  virginica     11.59</span></span>
+<span id="cb5-135"><a href="#cb5-135" aria-hidden="true" tabindex="-1"></a><span class="do">## 132          7.9         3.8          6.4         2.0  virginica     12.80</span></span>
+<span id="cb5-136"><a href="#cb5-136" aria-hidden="true" tabindex="-1"></a><span class="do">## 133          6.4         2.8          5.6         2.2  virginica     12.32</span></span>
+<span id="cb5-137"><a href="#cb5-137" aria-hidden="true" tabindex="-1"></a><span class="do">## 134          6.3         2.8          5.1         1.5  virginica      7.65</span></span>
+<span id="cb5-138"><a href="#cb5-138" aria-hidden="true" tabindex="-1"></a><span class="do">## 135          6.1         2.6          5.6         1.4  virginica      7.84</span></span>
+<span id="cb5-139"><a href="#cb5-139" aria-hidden="true" tabindex="-1"></a><span class="do">## 136          7.7         3.0          6.1         2.3  virginica     14.03</span></span>
+<span id="cb5-140"><a href="#cb5-140" aria-hidden="true" tabindex="-1"></a><span class="do">## 137          6.3         3.4          5.6         2.4  virginica     13.44</span></span>
+<span id="cb5-141"><a href="#cb5-141" aria-hidden="true" tabindex="-1"></a><span class="do">## 138          6.4         3.1          5.5         1.8  virginica      9.90</span></span>
+<span id="cb5-142"><a href="#cb5-142" aria-hidden="true" tabindex="-1"></a><span class="do">## 139          6.0         3.0          4.8         1.8  virginica      8.64</span></span>
+<span id="cb5-143"><a href="#cb5-143" aria-hidden="true" tabindex="-1"></a><span class="do">## 140          6.9         3.1          5.4         2.1  virginica     11.34</span></span>
+<span id="cb5-144"><a href="#cb5-144" aria-hidden="true" tabindex="-1"></a><span class="do">## 141          6.7         3.1          5.6         2.4  virginica     13.44</span></span>
+<span id="cb5-145"><a href="#cb5-145" aria-hidden="true" tabindex="-1"></a><span class="do">## 142          6.9         3.1          5.1         2.3  virginica     11.73</span></span>
+<span id="cb5-146"><a href="#cb5-146" aria-hidden="true" tabindex="-1"></a><span class="do">## 143          5.8         2.7          5.1         1.9  virginica      9.69</span></span>
+<span id="cb5-147"><a href="#cb5-147" aria-hidden="true" tabindex="-1"></a><span class="do">## 144          6.8         3.2          5.9         2.3  virginica     13.57</span></span>
+<span id="cb5-148"><a href="#cb5-148" aria-hidden="true" tabindex="-1"></a><span class="do">## 145          6.7         3.3          5.7         2.5  virginica     14.25</span></span>
+<span id="cb5-149"><a href="#cb5-149" aria-hidden="true" tabindex="-1"></a><span class="do">## 146          6.7         3.0          5.2         2.3  virginica     11.96</span></span>
+<span id="cb5-150"><a href="#cb5-150" aria-hidden="true" tabindex="-1"></a><span class="do">## 147          6.3         2.5          5.0         1.9  virginica      9.50</span></span>
+<span id="cb5-151"><a href="#cb5-151" aria-hidden="true" tabindex="-1"></a><span class="do">## 148          6.5         3.0          5.2         2.0  virginica     10.40</span></span>
+<span id="cb5-152"><a href="#cb5-152" aria-hidden="true" tabindex="-1"></a><span class="do">## 149          6.2         3.4          5.4         2.3  virginica     12.42</span></span>
+<span id="cb5-153"><a href="#cb5-153" aria-hidden="true" tabindex="-1"></a><span class="do">## 150          5.9         3.0          5.1         1.8  virginica      9.18</span></span>
+<span id="cb5-154"><a href="#cb5-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-155"><a href="#cb5-155" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span></span>
+<span id="cb5-156"><a href="#cb5-156" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">petalArea =</span> Petal.Length<span class="sc">*</span>Petal.Width,</span>
+<span id="cb5-157"><a href="#cb5-157" aria-hidden="true" tabindex="-1"></a>         <span class="at">PetalSize =</span> <span class="fu">if_else</span>(<span class="at">condition =</span> petalArea <span class="sc">&gt;</span> <span class="fl">0.2</span>, <span class="at">true =</span><span class="st">'big'</span>,</span>
+<span id="cb5-158"><a href="#cb5-158" aria-hidden="true" tabindex="-1"></a>                             <span class="at">false =</span> <span class="st">'small'</span>))</span>
+<span id="cb5-159"><a href="#cb5-159" aria-hidden="true" tabindex="-1"></a><span class="do">##     Sepal.Length Sepal.Width Petal.Length Petal.Width    Species petalArea</span></span>
+<span id="cb5-160"><a href="#cb5-160" aria-hidden="true" tabindex="-1"></a><span class="do">## 1            5.1         3.5          1.4         0.2     setosa      0.28</span></span>
+<span id="cb5-161"><a href="#cb5-161" aria-hidden="true" tabindex="-1"></a><span class="do">## 2            4.9         3.0          1.4         0.2     setosa      0.28</span></span>
+<span id="cb5-162"><a href="#cb5-162" aria-hidden="true" tabindex="-1"></a><span class="do">## 3            4.7         3.2          1.3         0.2     setosa      0.26</span></span>
+<span id="cb5-163"><a href="#cb5-163" aria-hidden="true" tabindex="-1"></a><span class="do">## 4            4.6         3.1          1.5         0.2     setosa      0.30</span></span>
+<span id="cb5-164"><a href="#cb5-164" aria-hidden="true" tabindex="-1"></a><span class="do">## 5            5.0         3.6          1.4         0.2     setosa      0.28</span></span>
+<span id="cb5-165"><a href="#cb5-165" aria-hidden="true" tabindex="-1"></a><span class="do">## 6            5.4         3.9          1.7         0.4     setosa      0.68</span></span>
+<span id="cb5-166"><a href="#cb5-166" aria-hidden="true" tabindex="-1"></a><span class="do">## 7            4.6         3.4          1.4         0.3     setosa      0.42</span></span>
+<span id="cb5-167"><a href="#cb5-167" aria-hidden="true" tabindex="-1"></a><span class="do">## 8            5.0         3.4          1.5         0.2     setosa      0.30</span></span>
+<span id="cb5-168"><a href="#cb5-168" aria-hidden="true" tabindex="-1"></a><span class="do">## 9            4.4         2.9          1.4         0.2     setosa      0.28</span></span>
+<span id="cb5-169"><a href="#cb5-169" aria-hidden="true" tabindex="-1"></a><span class="do">## 10           4.9         3.1          1.5         0.1     setosa      0.15</span></span>
+<span id="cb5-170"><a href="#cb5-170" aria-hidden="true" tabindex="-1"></a><span class="do">## 11           5.4         3.7          1.5         0.2     setosa      0.30</span></span>
+<span id="cb5-171"><a href="#cb5-171" aria-hidden="true" tabindex="-1"></a><span class="do">## 12           4.8         3.4          1.6         0.2     setosa      0.32</span></span>
+<span id="cb5-172"><a href="#cb5-172" aria-hidden="true" tabindex="-1"></a><span class="do">## 13           4.8         3.0          1.4         0.1     setosa      0.14</span></span>
+<span id="cb5-173"><a href="#cb5-173" aria-hidden="true" tabindex="-1"></a><span class="do">## 14           4.3         3.0          1.1         0.1     setosa      0.11</span></span>
+<span id="cb5-174"><a href="#cb5-174" aria-hidden="true" tabindex="-1"></a><span class="do">## 15           5.8         4.0          1.2         0.2     setosa      0.24</span></span>
+<span id="cb5-175"><a href="#cb5-175" aria-hidden="true" tabindex="-1"></a><span class="do">## 16           5.7         4.4          1.5         0.4     setosa      0.60</span></span>
+<span id="cb5-176"><a href="#cb5-176" aria-hidden="true" tabindex="-1"></a><span class="do">## 17           5.4         3.9          1.3         0.4     setosa      0.52</span></span>
+<span id="cb5-177"><a href="#cb5-177" aria-hidden="true" tabindex="-1"></a><span class="do">## 18           5.1         3.5          1.4         0.3     setosa      0.42</span></span>
+<span id="cb5-178"><a href="#cb5-178" aria-hidden="true" tabindex="-1"></a><span class="do">## 19           5.7         3.8          1.7         0.3     setosa      0.51</span></span>
+<span id="cb5-179"><a href="#cb5-179" aria-hidden="true" tabindex="-1"></a><span class="do">## 20           5.1         3.8          1.5         0.3     setosa      0.45</span></span>
+<span id="cb5-180"><a href="#cb5-180" aria-hidden="true" tabindex="-1"></a><span class="do">## 21           5.4         3.4          1.7         0.2     setosa      0.34</span></span>
+<span id="cb5-181"><a href="#cb5-181" aria-hidden="true" tabindex="-1"></a><span class="do">## 22           5.1         3.7          1.5         0.4     setosa      0.60</span></span>
+<span id="cb5-182"><a href="#cb5-182" aria-hidden="true" tabindex="-1"></a><span class="do">## 23           4.6         3.6          1.0         0.2     setosa      0.20</span></span>
+<span id="cb5-183"><a href="#cb5-183" aria-hidden="true" tabindex="-1"></a><span class="do">## 24           5.1         3.3          1.7         0.5     setosa      0.85</span></span>
+<span id="cb5-184"><a href="#cb5-184" aria-hidden="true" tabindex="-1"></a><span class="do">## 25           4.8         3.4          1.9         0.2     setosa      0.38</span></span>
+<span id="cb5-185"><a href="#cb5-185" aria-hidden="true" tabindex="-1"></a><span class="do">## 26           5.0         3.0          1.6         0.2     setosa      0.32</span></span>
+<span id="cb5-186"><a href="#cb5-186" aria-hidden="true" tabindex="-1"></a><span class="do">## 27           5.0         3.4          1.6         0.4     setosa      0.64</span></span>
+<span id="cb5-187"><a href="#cb5-187" aria-hidden="true" tabindex="-1"></a><span class="do">## 28           5.2         3.5          1.5         0.2     setosa      0.30</span></span>
+<span id="cb5-188"><a href="#cb5-188" aria-hidden="true" tabindex="-1"></a><span class="do">## 29           5.2         3.4          1.4         0.2     setosa      0.28</span></span>
+<span id="cb5-189"><a href="#cb5-189" aria-hidden="true" tabindex="-1"></a><span class="do">## 30           4.7         3.2          1.6         0.2     setosa      0.32</span></span>
+<span id="cb5-190"><a href="#cb5-190" aria-hidden="true" tabindex="-1"></a><span class="do">## 31           4.8         3.1          1.6         0.2     setosa      0.32</span></span>
+<span id="cb5-191"><a href="#cb5-191" aria-hidden="true" tabindex="-1"></a><span class="do">## 32           5.4         3.4          1.5         0.4     setosa      0.60</span></span>
+<span id="cb5-192"><a href="#cb5-192" aria-hidden="true" tabindex="-1"></a><span class="do">## 33           5.2         4.1          1.5         0.1     setosa      0.15</span></span>
+<span id="cb5-193"><a href="#cb5-193" aria-hidden="true" tabindex="-1"></a><span class="do">## 34           5.5         4.2          1.4         0.2     setosa      0.28</span></span>
+<span id="cb5-194"><a href="#cb5-194" aria-hidden="true" tabindex="-1"></a><span class="do">## 35           4.9         3.1          1.5         0.2     setosa      0.30</span></span>
+<span id="cb5-195"><a href="#cb5-195" aria-hidden="true" tabindex="-1"></a><span class="do">## 36           5.0         3.2          1.2         0.2     setosa      0.24</span></span>
+<span id="cb5-196"><a href="#cb5-196" aria-hidden="true" tabindex="-1"></a><span class="do">## 37           5.5         3.5          1.3         0.2     setosa      0.26</span></span>
+<span id="cb5-197"><a href="#cb5-197" aria-hidden="true" tabindex="-1"></a><span class="do">## 38           4.9         3.6          1.4         0.1     setosa      0.14</span></span>
+<span id="cb5-198"><a href="#cb5-198" aria-hidden="true" tabindex="-1"></a><span class="do">## 39           4.4         3.0          1.3         0.2     setosa      0.26</span></span>
+<span id="cb5-199"><a href="#cb5-199" aria-hidden="true" tabindex="-1"></a><span class="do">## 40           5.1         3.4          1.5         0.2     setosa      0.30</span></span>
+<span id="cb5-200"><a href="#cb5-200" aria-hidden="true" tabindex="-1"></a><span class="do">## 41           5.0         3.5          1.3         0.3     setosa      0.39</span></span>
+<span id="cb5-201"><a href="#cb5-201" aria-hidden="true" tabindex="-1"></a><span class="do">## 42           4.5         2.3          1.3         0.3     setosa      0.39</span></span>
+<span id="cb5-202"><a href="#cb5-202" aria-hidden="true" tabindex="-1"></a><span class="do">## 43           4.4         3.2          1.3         0.2     setosa      0.26</span></span>
+<span id="cb5-203"><a href="#cb5-203" aria-hidden="true" tabindex="-1"></a><span class="do">## 44           5.0         3.5          1.6         0.6     setosa      0.96</span></span>
+<span id="cb5-204"><a href="#cb5-204" aria-hidden="true" tabindex="-1"></a><span class="do">## 45           5.1         3.8          1.9         0.4     setosa      0.76</span></span>
+<span id="cb5-205"><a href="#cb5-205" aria-hidden="true" tabindex="-1"></a><span class="do">## 46           4.8         3.0          1.4         0.3     setosa      0.42</span></span>
+<span id="cb5-206"><a href="#cb5-206" aria-hidden="true" tabindex="-1"></a><span class="do">## 47           5.1         3.8          1.6         0.2     setosa      0.32</span></span>
+<span id="cb5-207"><a href="#cb5-207" aria-hidden="true" tabindex="-1"></a><span class="do">## 48           4.6         3.2          1.4         0.2     setosa      0.28</span></span>
+<span id="cb5-208"><a href="#cb5-208" aria-hidden="true" tabindex="-1"></a><span class="do">## 49           5.3         3.7          1.5         0.2     setosa      0.30</span></span>
+<span id="cb5-209"><a href="#cb5-209" aria-hidden="true" tabindex="-1"></a><span class="do">## 50           5.0         3.3          1.4         0.2     setosa      0.28</span></span>
+<span id="cb5-210"><a href="#cb5-210" aria-hidden="true" tabindex="-1"></a><span class="do">## 51           7.0         3.2          4.7         1.4 versicolor      6.58</span></span>
+<span id="cb5-211"><a href="#cb5-211" aria-hidden="true" tabindex="-1"></a><span class="do">## 52           6.4         3.2          4.5         1.5 versicolor      6.75</span></span>
+<span id="cb5-212"><a href="#cb5-212" aria-hidden="true" tabindex="-1"></a><span class="do">## 53           6.9         3.1          4.9         1.5 versicolor      7.35</span></span>
+<span id="cb5-213"><a href="#cb5-213" aria-hidden="true" tabindex="-1"></a><span class="do">## 54           5.5         2.3          4.0         1.3 versicolor      5.20</span></span>
+<span id="cb5-214"><a href="#cb5-214" aria-hidden="true" tabindex="-1"></a><span class="do">## 55           6.5         2.8          4.6         1.5 versicolor      6.90</span></span>
+<span id="cb5-215"><a href="#cb5-215" aria-hidden="true" tabindex="-1"></a><span class="do">## 56           5.7         2.8          4.5         1.3 versicolor      5.85</span></span>
+<span id="cb5-216"><a href="#cb5-216" aria-hidden="true" tabindex="-1"></a><span class="do">## 57           6.3         3.3          4.7         1.6 versicolor      7.52</span></span>
+<span id="cb5-217"><a href="#cb5-217" aria-hidden="true" tabindex="-1"></a><span class="do">## 58           4.9         2.4          3.3         1.0 versicolor      3.30</span></span>
+<span id="cb5-218"><a href="#cb5-218" aria-hidden="true" tabindex="-1"></a><span class="do">## 59           6.6         2.9          4.6         1.3 versicolor      5.98</span></span>
+<span id="cb5-219"><a href="#cb5-219" aria-hidden="true" tabindex="-1"></a><span class="do">## 60           5.2         2.7          3.9         1.4 versicolor      5.46</span></span>
+<span id="cb5-220"><a href="#cb5-220" aria-hidden="true" tabindex="-1"></a><span class="do">## 61           5.0         2.0          3.5         1.0 versicolor      3.50</span></span>
+<span id="cb5-221"><a href="#cb5-221" aria-hidden="true" tabindex="-1"></a><span class="do">## 62           5.9         3.0          4.2         1.5 versicolor      6.30</span></span>
+<span id="cb5-222"><a href="#cb5-222" aria-hidden="true" tabindex="-1"></a><span class="do">## 63           6.0         2.2          4.0         1.0 versicolor      4.00</span></span>
+<span id="cb5-223"><a href="#cb5-223" aria-hidden="true" tabindex="-1"></a><span class="do">## 64           6.1         2.9          4.7         1.4 versicolor      6.58</span></span>
+<span id="cb5-224"><a href="#cb5-224" aria-hidden="true" tabindex="-1"></a><span class="do">## 65           5.6         2.9          3.6         1.3 versicolor      4.68</span></span>
+<span id="cb5-225"><a href="#cb5-225" aria-hidden="true" tabindex="-1"></a><span class="do">## 66           6.7         3.1          4.4         1.4 versicolor      6.16</span></span>
+<span id="cb5-226"><a href="#cb5-226" aria-hidden="true" tabindex="-1"></a><span class="do">## 67           5.6         3.0          4.5         1.5 versicolor      6.75</span></span>
+<span id="cb5-227"><a href="#cb5-227" aria-hidden="true" tabindex="-1"></a><span class="do">## 68           5.8         2.7          4.1         1.0 versicolor      4.10</span></span>
+<span id="cb5-228"><a href="#cb5-228" aria-hidden="true" tabindex="-1"></a><span class="do">## 69           6.2         2.2          4.5         1.5 versicolor      6.75</span></span>
+<span id="cb5-229"><a href="#cb5-229" aria-hidden="true" tabindex="-1"></a><span class="do">## 70           5.6         2.5          3.9         1.1 versicolor      4.29</span></span>
+<span id="cb5-230"><a href="#cb5-230" aria-hidden="true" tabindex="-1"></a><span class="do">## 71           5.9         3.2          4.8         1.8 versicolor      8.64</span></span>
+<span id="cb5-231"><a href="#cb5-231" aria-hidden="true" tabindex="-1"></a><span class="do">## 72           6.1         2.8          4.0         1.3 versicolor      5.20</span></span>
+<span id="cb5-232"><a href="#cb5-232" aria-hidden="true" tabindex="-1"></a><span class="do">## 73           6.3         2.5          4.9         1.5 versicolor      7.35</span></span>
+<span id="cb5-233"><a href="#cb5-233" aria-hidden="true" tabindex="-1"></a><span class="do">## 74           6.1         2.8          4.7         1.2 versicolor      5.64</span></span>
+<span id="cb5-234"><a href="#cb5-234" aria-hidden="true" tabindex="-1"></a><span class="do">## 75           6.4         2.9          4.3         1.3 versicolor      5.59</span></span>
+<span id="cb5-235"><a href="#cb5-235" aria-hidden="true" tabindex="-1"></a><span class="do">## 76           6.6         3.0          4.4         1.4 versicolor      6.16</span></span>
+<span id="cb5-236"><a href="#cb5-236" aria-hidden="true" tabindex="-1"></a><span class="do">## 77           6.8         2.8          4.8         1.4 versicolor      6.72</span></span>
+<span id="cb5-237"><a href="#cb5-237" aria-hidden="true" tabindex="-1"></a><span class="do">## 78           6.7         3.0          5.0         1.7 versicolor      8.50</span></span>
+<span id="cb5-238"><a href="#cb5-238" aria-hidden="true" tabindex="-1"></a><span class="do">## 79           6.0         2.9          4.5         1.5 versicolor      6.75</span></span>
+<span id="cb5-239"><a href="#cb5-239" aria-hidden="true" tabindex="-1"></a><span class="do">## 80           5.7         2.6          3.5         1.0 versicolor      3.50</span></span>
+<span id="cb5-240"><a href="#cb5-240" aria-hidden="true" tabindex="-1"></a><span class="do">## 81           5.5         2.4          3.8         1.1 versicolor      4.18</span></span>
+<span id="cb5-241"><a href="#cb5-241" aria-hidden="true" tabindex="-1"></a><span class="do">## 82           5.5         2.4          3.7         1.0 versicolor      3.70</span></span>
+<span id="cb5-242"><a href="#cb5-242" aria-hidden="true" tabindex="-1"></a><span class="do">## 83           5.8         2.7          3.9         1.2 versicolor      4.68</span></span>
+<span id="cb5-243"><a href="#cb5-243" aria-hidden="true" tabindex="-1"></a><span class="do">## 84           6.0         2.7          5.1         1.6 versicolor      8.16</span></span>
+<span id="cb5-244"><a href="#cb5-244" aria-hidden="true" tabindex="-1"></a><span class="do">## 85           5.4         3.0          4.5         1.5 versicolor      6.75</span></span>
+<span id="cb5-245"><a href="#cb5-245" aria-hidden="true" tabindex="-1"></a><span class="do">## 86           6.0         3.4          4.5         1.6 versicolor      7.20</span></span>
+<span id="cb5-246"><a href="#cb5-246" aria-hidden="true" tabindex="-1"></a><span class="do">## 87           6.7         3.1          4.7         1.5 versicolor      7.05</span></span>
+<span id="cb5-247"><a href="#cb5-247" aria-hidden="true" tabindex="-1"></a><span class="do">## 88           6.3         2.3          4.4         1.3 versicolor      5.72</span></span>
+<span id="cb5-248"><a href="#cb5-248" aria-hidden="true" tabindex="-1"></a><span class="do">## 89           5.6         3.0          4.1         1.3 versicolor      5.33</span></span>
+<span id="cb5-249"><a href="#cb5-249" aria-hidden="true" tabindex="-1"></a><span class="do">## 90           5.5         2.5          4.0         1.3 versicolor      5.20</span></span>
+<span id="cb5-250"><a href="#cb5-250" aria-hidden="true" tabindex="-1"></a><span class="do">## 91           5.5         2.6          4.4         1.2 versicolor      5.28</span></span>
+<span id="cb5-251"><a href="#cb5-251" aria-hidden="true" tabindex="-1"></a><span class="do">## 92           6.1         3.0          4.6         1.4 versicolor      6.44</span></span>
+<span id="cb5-252"><a href="#cb5-252" aria-hidden="true" tabindex="-1"></a><span class="do">## 93           5.8         2.6          4.0         1.2 versicolor      4.80</span></span>
+<span id="cb5-253"><a href="#cb5-253" aria-hidden="true" tabindex="-1"></a><span class="do">## 94           5.0         2.3          3.3         1.0 versicolor      3.30</span></span>
+<span id="cb5-254"><a href="#cb5-254" aria-hidden="true" tabindex="-1"></a><span class="do">## 95           5.6         2.7          4.2         1.3 versicolor      5.46</span></span>
+<span id="cb5-255"><a href="#cb5-255" aria-hidden="true" tabindex="-1"></a><span class="do">## 96           5.7         3.0          4.2         1.2 versicolor      5.04</span></span>
+<span id="cb5-256"><a href="#cb5-256" aria-hidden="true" tabindex="-1"></a><span class="do">## 97           5.7         2.9          4.2         1.3 versicolor      5.46</span></span>
+<span id="cb5-257"><a href="#cb5-257" aria-hidden="true" tabindex="-1"></a><span class="do">## 98           6.2         2.9          4.3         1.3 versicolor      5.59</span></span>
+<span id="cb5-258"><a href="#cb5-258" aria-hidden="true" tabindex="-1"></a><span class="do">## 99           5.1         2.5          3.0         1.1 versicolor      3.30</span></span>
+<span id="cb5-259"><a href="#cb5-259" aria-hidden="true" tabindex="-1"></a><span class="do">## 100          5.7         2.8          4.1         1.3 versicolor      5.33</span></span>
+<span id="cb5-260"><a href="#cb5-260" aria-hidden="true" tabindex="-1"></a><span class="do">## 101          6.3         3.3          6.0         2.5  virginica     15.00</span></span>
+<span id="cb5-261"><a href="#cb5-261" aria-hidden="true" tabindex="-1"></a><span class="do">## 102          5.8         2.7          5.1         1.9  virginica      9.69</span></span>
+<span id="cb5-262"><a href="#cb5-262" aria-hidden="true" tabindex="-1"></a><span class="do">## 103          7.1         3.0          5.9         2.1  virginica     12.39</span></span>
+<span id="cb5-263"><a href="#cb5-263" aria-hidden="true" tabindex="-1"></a><span class="do">## 104          6.3         2.9          5.6         1.8  virginica     10.08</span></span>
+<span id="cb5-264"><a href="#cb5-264" aria-hidden="true" tabindex="-1"></a><span class="do">## 105          6.5         3.0          5.8         2.2  virginica     12.76</span></span>
+<span id="cb5-265"><a href="#cb5-265" aria-hidden="true" tabindex="-1"></a><span class="do">## 106          7.6         3.0          6.6         2.1  virginica     13.86</span></span>
+<span id="cb5-266"><a href="#cb5-266" aria-hidden="true" tabindex="-1"></a><span class="do">## 107          4.9         2.5          4.5         1.7  virginica      7.65</span></span>
+<span id="cb5-267"><a href="#cb5-267" aria-hidden="true" tabindex="-1"></a><span class="do">## 108          7.3         2.9          6.3         1.8  virginica     11.34</span></span>
+<span id="cb5-268"><a href="#cb5-268" aria-hidden="true" tabindex="-1"></a><span class="do">## 109          6.7         2.5          5.8         1.8  virginica     10.44</span></span>
+<span id="cb5-269"><a href="#cb5-269" aria-hidden="true" tabindex="-1"></a><span class="do">## 110          7.2         3.6          6.1         2.5  virginica     15.25</span></span>
+<span id="cb5-270"><a href="#cb5-270" aria-hidden="true" tabindex="-1"></a><span class="do">## 111          6.5         3.2          5.1         2.0  virginica     10.20</span></span>
+<span id="cb5-271"><a href="#cb5-271" aria-hidden="true" tabindex="-1"></a><span class="do">## 112          6.4         2.7          5.3         1.9  virginica     10.07</span></span>
+<span id="cb5-272"><a href="#cb5-272" aria-hidden="true" tabindex="-1"></a><span class="do">## 113          6.8         3.0          5.5         2.1  virginica     11.55</span></span>
+<span id="cb5-273"><a href="#cb5-273" aria-hidden="true" tabindex="-1"></a><span class="do">## 114          5.7         2.5          5.0         2.0  virginica     10.00</span></span>
+<span id="cb5-274"><a href="#cb5-274" aria-hidden="true" tabindex="-1"></a><span class="do">## 115          5.8         2.8          5.1         2.4  virginica     12.24</span></span>
+<span id="cb5-275"><a href="#cb5-275" aria-hidden="true" tabindex="-1"></a><span class="do">## 116          6.4         3.2          5.3         2.3  virginica     12.19</span></span>
+<span id="cb5-276"><a href="#cb5-276" aria-hidden="true" tabindex="-1"></a><span class="do">## 117          6.5         3.0          5.5         1.8  virginica      9.90</span></span>
+<span id="cb5-277"><a href="#cb5-277" aria-hidden="true" tabindex="-1"></a><span class="do">## 118          7.7         3.8          6.7         2.2  virginica     14.74</span></span>
+<span id="cb5-278"><a href="#cb5-278" aria-hidden="true" tabindex="-1"></a><span class="do">## 119          7.7         2.6          6.9         2.3  virginica     15.87</span></span>
+<span id="cb5-279"><a href="#cb5-279" aria-hidden="true" tabindex="-1"></a><span class="do">## 120          6.0         2.2          5.0         1.5  virginica      7.50</span></span>
+<span id="cb5-280"><a href="#cb5-280" aria-hidden="true" tabindex="-1"></a><span class="do">## 121          6.9         3.2          5.7         2.3  virginica     13.11</span></span>
+<span id="cb5-281"><a href="#cb5-281" aria-hidden="true" tabindex="-1"></a><span class="do">## 122          5.6         2.8          4.9         2.0  virginica      9.80</span></span>
+<span id="cb5-282"><a href="#cb5-282" aria-hidden="true" tabindex="-1"></a><span class="do">## 123          7.7         2.8          6.7         2.0  virginica     13.40</span></span>
+<span id="cb5-283"><a href="#cb5-283" aria-hidden="true" tabindex="-1"></a><span class="do">## 124          6.3         2.7          4.9         1.8  virginica      8.82</span></span>
+<span id="cb5-284"><a href="#cb5-284" aria-hidden="true" tabindex="-1"></a><span class="do">## 125          6.7         3.3          5.7         2.1  virginica     11.97</span></span>
+<span id="cb5-285"><a href="#cb5-285" aria-hidden="true" tabindex="-1"></a><span class="do">## 126          7.2         3.2          6.0         1.8  virginica     10.80</span></span>
+<span id="cb5-286"><a href="#cb5-286" aria-hidden="true" tabindex="-1"></a><span class="do">## 127          6.2         2.8          4.8         1.8  virginica      8.64</span></span>
+<span id="cb5-287"><a href="#cb5-287" aria-hidden="true" tabindex="-1"></a><span class="do">## 128          6.1         3.0          4.9         1.8  virginica      8.82</span></span>
+<span id="cb5-288"><a href="#cb5-288" aria-hidden="true" tabindex="-1"></a><span class="do">## 129          6.4         2.8          5.6         2.1  virginica     11.76</span></span>
+<span id="cb5-289"><a href="#cb5-289" aria-hidden="true" tabindex="-1"></a><span class="do">## 130          7.2         3.0          5.8         1.6  virginica      9.28</span></span>
+<span id="cb5-290"><a href="#cb5-290" aria-hidden="true" tabindex="-1"></a><span class="do">## 131          7.4         2.8          6.1         1.9  virginica     11.59</span></span>
+<span id="cb5-291"><a href="#cb5-291" aria-hidden="true" tabindex="-1"></a><span class="do">## 132          7.9         3.8          6.4         2.0  virginica     12.80</span></span>
+<span id="cb5-292"><a href="#cb5-292" aria-hidden="true" tabindex="-1"></a><span class="do">## 133          6.4         2.8          5.6         2.2  virginica     12.32</span></span>
+<span id="cb5-293"><a href="#cb5-293" aria-hidden="true" tabindex="-1"></a><span class="do">## 134          6.3         2.8          5.1         1.5  virginica      7.65</span></span>
+<span id="cb5-294"><a href="#cb5-294" aria-hidden="true" tabindex="-1"></a><span class="do">## 135          6.1         2.6          5.6         1.4  virginica      7.84</span></span>
+<span id="cb5-295"><a href="#cb5-295" aria-hidden="true" tabindex="-1"></a><span class="do">## 136          7.7         3.0          6.1         2.3  virginica     14.03</span></span>
+<span id="cb5-296"><a href="#cb5-296" aria-hidden="true" tabindex="-1"></a><span class="do">## 137          6.3         3.4          5.6         2.4  virginica     13.44</span></span>
+<span id="cb5-297"><a href="#cb5-297" aria-hidden="true" tabindex="-1"></a><span class="do">## 138          6.4         3.1          5.5         1.8  virginica      9.90</span></span>
+<span id="cb5-298"><a href="#cb5-298" aria-hidden="true" tabindex="-1"></a><span class="do">## 139          6.0         3.0          4.8         1.8  virginica      8.64</span></span>
+<span id="cb5-299"><a href="#cb5-299" aria-hidden="true" tabindex="-1"></a><span class="do">## 140          6.9         3.1          5.4         2.1  virginica     11.34</span></span>
+<span id="cb5-300"><a href="#cb5-300" aria-hidden="true" tabindex="-1"></a><span class="do">## 141          6.7         3.1          5.6         2.4  virginica     13.44</span></span>
+<span id="cb5-301"><a href="#cb5-301" aria-hidden="true" tabindex="-1"></a><span class="do">## 142          6.9         3.1          5.1         2.3  virginica     11.73</span></span>
+<span id="cb5-302"><a href="#cb5-302" aria-hidden="true" tabindex="-1"></a><span class="do">## 143          5.8         2.7          5.1         1.9  virginica      9.69</span></span>
+<span id="cb5-303"><a href="#cb5-303" aria-hidden="true" tabindex="-1"></a><span class="do">## 144          6.8         3.2          5.9         2.3  virginica     13.57</span></span>
+<span id="cb5-304"><a href="#cb5-304" aria-hidden="true" tabindex="-1"></a><span class="do">## 145          6.7         3.3          5.7         2.5  virginica     14.25</span></span>
+<span id="cb5-305"><a href="#cb5-305" aria-hidden="true" tabindex="-1"></a><span class="do">## 146          6.7         3.0          5.2         2.3  virginica     11.96</span></span>
+<span id="cb5-306"><a href="#cb5-306" aria-hidden="true" tabindex="-1"></a><span class="do">## 147          6.3         2.5          5.0         1.9  virginica      9.50</span></span>
+<span id="cb5-307"><a href="#cb5-307" aria-hidden="true" tabindex="-1"></a><span class="do">## 148          6.5         3.0          5.2         2.0  virginica     10.40</span></span>
+<span id="cb5-308"><a href="#cb5-308" aria-hidden="true" tabindex="-1"></a><span class="do">## 149          6.2         3.4          5.4         2.3  virginica     12.42</span></span>
+<span id="cb5-309"><a href="#cb5-309" aria-hidden="true" tabindex="-1"></a><span class="do">## 150          5.9         3.0          5.1         1.8  virginica      9.18</span></span>
+<span id="cb5-310"><a href="#cb5-310" aria-hidden="true" tabindex="-1"></a><span class="do">##     PetalSize</span></span>
+<span id="cb5-311"><a href="#cb5-311" aria-hidden="true" tabindex="-1"></a><span class="do">## 1         big</span></span>
+<span id="cb5-312"><a href="#cb5-312" aria-hidden="true" tabindex="-1"></a><span class="do">## 2         big</span></span>
+<span id="cb5-313"><a href="#cb5-313" aria-hidden="true" tabindex="-1"></a><span class="do">## 3         big</span></span>
+<span id="cb5-314"><a href="#cb5-314" aria-hidden="true" tabindex="-1"></a><span class="do">## 4         big</span></span>
+<span id="cb5-315"><a href="#cb5-315" aria-hidden="true" tabindex="-1"></a><span class="do">## 5         big</span></span>
+<span id="cb5-316"><a href="#cb5-316" aria-hidden="true" tabindex="-1"></a><span class="do">## 6         big</span></span>
+<span id="cb5-317"><a href="#cb5-317" aria-hidden="true" tabindex="-1"></a><span class="do">## 7         big</span></span>
+<span id="cb5-318"><a href="#cb5-318" aria-hidden="true" tabindex="-1"></a><span class="do">## 8         big</span></span>
+<span id="cb5-319"><a href="#cb5-319" aria-hidden="true" tabindex="-1"></a><span class="do">## 9         big</span></span>
+<span id="cb5-320"><a href="#cb5-320" aria-hidden="true" tabindex="-1"></a><span class="do">## 10      small</span></span>
+<span id="cb5-321"><a href="#cb5-321" aria-hidden="true" tabindex="-1"></a><span class="do">## 11        big</span></span>
+<span id="cb5-322"><a href="#cb5-322" aria-hidden="true" tabindex="-1"></a><span class="do">## 12        big</span></span>
+<span id="cb5-323"><a href="#cb5-323" aria-hidden="true" tabindex="-1"></a><span class="do">## 13      small</span></span>
+<span id="cb5-324"><a href="#cb5-324" aria-hidden="true" tabindex="-1"></a><span class="do">## 14      small</span></span>
+<span id="cb5-325"><a href="#cb5-325" aria-hidden="true" tabindex="-1"></a><span class="do">## 15        big</span></span>
+<span id="cb5-326"><a href="#cb5-326" aria-hidden="true" tabindex="-1"></a><span class="do">## 16        big</span></span>
+<span id="cb5-327"><a href="#cb5-327" aria-hidden="true" tabindex="-1"></a><span class="do">## 17        big</span></span>
+<span id="cb5-328"><a href="#cb5-328" aria-hidden="true" tabindex="-1"></a><span class="do">## 18        big</span></span>
+<span id="cb5-329"><a href="#cb5-329" aria-hidden="true" tabindex="-1"></a><span class="do">## 19        big</span></span>
+<span id="cb5-330"><a href="#cb5-330" aria-hidden="true" tabindex="-1"></a><span class="do">## 20        big</span></span>
+<span id="cb5-331"><a href="#cb5-331" aria-hidden="true" tabindex="-1"></a><span class="do">## 21        big</span></span>
+<span id="cb5-332"><a href="#cb5-332" aria-hidden="true" tabindex="-1"></a><span class="do">## 22        big</span></span>
+<span id="cb5-333"><a href="#cb5-333" aria-hidden="true" tabindex="-1"></a><span class="do">## 23      small</span></span>
+<span id="cb5-334"><a href="#cb5-334" aria-hidden="true" tabindex="-1"></a><span class="do">## 24        big</span></span>
+<span id="cb5-335"><a href="#cb5-335" aria-hidden="true" tabindex="-1"></a><span class="do">## 25        big</span></span>
+<span id="cb5-336"><a href="#cb5-336" aria-hidden="true" tabindex="-1"></a><span class="do">## 26        big</span></span>
+<span id="cb5-337"><a href="#cb5-337" aria-hidden="true" tabindex="-1"></a><span class="do">## 27        big</span></span>
+<span id="cb5-338"><a href="#cb5-338" aria-hidden="true" tabindex="-1"></a><span class="do">## 28        big</span></span>
+<span id="cb5-339"><a href="#cb5-339" aria-hidden="true" tabindex="-1"></a><span class="do">## 29        big</span></span>
+<span id="cb5-340"><a href="#cb5-340" aria-hidden="true" tabindex="-1"></a><span class="do">## 30        big</span></span>
+<span id="cb5-341"><a href="#cb5-341" aria-hidden="true" tabindex="-1"></a><span class="do">## 31        big</span></span>
+<span id="cb5-342"><a href="#cb5-342" aria-hidden="true" tabindex="-1"></a><span class="do">## 32        big</span></span>
+<span id="cb5-343"><a href="#cb5-343" aria-hidden="true" tabindex="-1"></a><span class="do">## 33      small</span></span>
+<span id="cb5-344"><a href="#cb5-344" aria-hidden="true" tabindex="-1"></a><span class="do">## 34        big</span></span>
+<span id="cb5-345"><a href="#cb5-345" aria-hidden="true" tabindex="-1"></a><span class="do">## 35        big</span></span>
+<span id="cb5-346"><a href="#cb5-346" aria-hidden="true" tabindex="-1"></a><span class="do">## 36        big</span></span>
+<span id="cb5-347"><a href="#cb5-347" aria-hidden="true" tabindex="-1"></a><span class="do">## 37        big</span></span>
+<span id="cb5-348"><a href="#cb5-348" aria-hidden="true" tabindex="-1"></a><span class="do">## 38      small</span></span>
+<span id="cb5-349"><a href="#cb5-349" aria-hidden="true" tabindex="-1"></a><span class="do">## 39        big</span></span>
+<span id="cb5-350"><a href="#cb5-350" aria-hidden="true" tabindex="-1"></a><span class="do">## 40        big</span></span>
+<span id="cb5-351"><a href="#cb5-351" aria-hidden="true" tabindex="-1"></a><span class="do">## 41        big</span></span>
+<span id="cb5-352"><a href="#cb5-352" aria-hidden="true" tabindex="-1"></a><span class="do">## 42        big</span></span>
+<span id="cb5-353"><a href="#cb5-353" aria-hidden="true" tabindex="-1"></a><span class="do">## 43        big</span></span>
+<span id="cb5-354"><a href="#cb5-354" aria-hidden="true" tabindex="-1"></a><span class="do">## 44        big</span></span>
+<span id="cb5-355"><a href="#cb5-355" aria-hidden="true" tabindex="-1"></a><span class="do">## 45        big</span></span>
+<span id="cb5-356"><a href="#cb5-356" aria-hidden="true" tabindex="-1"></a><span class="do">## 46        big</span></span>
+<span id="cb5-357"><a href="#cb5-357" aria-hidden="true" tabindex="-1"></a><span class="do">## 47        big</span></span>
+<span id="cb5-358"><a href="#cb5-358" aria-hidden="true" tabindex="-1"></a><span class="do">## 48        big</span></span>
+<span id="cb5-359"><a href="#cb5-359" aria-hidden="true" tabindex="-1"></a><span class="do">## 49        big</span></span>
+<span id="cb5-360"><a href="#cb5-360" aria-hidden="true" tabindex="-1"></a><span class="do">## 50        big</span></span>
+<span id="cb5-361"><a href="#cb5-361" aria-hidden="true" tabindex="-1"></a><span class="do">## 51        big</span></span>
+<span id="cb5-362"><a href="#cb5-362" aria-hidden="true" tabindex="-1"></a><span class="do">## 52        big</span></span>
+<span id="cb5-363"><a href="#cb5-363" aria-hidden="true" tabindex="-1"></a><span class="do">## 53        big</span></span>
+<span id="cb5-364"><a href="#cb5-364" aria-hidden="true" tabindex="-1"></a><span class="do">## 54        big</span></span>
+<span id="cb5-365"><a href="#cb5-365" aria-hidden="true" tabindex="-1"></a><span class="do">## 55        big</span></span>
+<span id="cb5-366"><a href="#cb5-366" aria-hidden="true" tabindex="-1"></a><span class="do">## 56        big</span></span>
+<span id="cb5-367"><a href="#cb5-367" aria-hidden="true" tabindex="-1"></a><span class="do">## 57        big</span></span>
+<span id="cb5-368"><a href="#cb5-368" aria-hidden="true" tabindex="-1"></a><span class="do">## 58        big</span></span>
+<span id="cb5-369"><a href="#cb5-369" aria-hidden="true" tabindex="-1"></a><span class="do">## 59        big</span></span>
+<span id="cb5-370"><a href="#cb5-370" aria-hidden="true" tabindex="-1"></a><span class="do">## 60        big</span></span>
+<span id="cb5-371"><a href="#cb5-371" aria-hidden="true" tabindex="-1"></a><span class="do">## 61        big</span></span>
+<span id="cb5-372"><a href="#cb5-372" aria-hidden="true" tabindex="-1"></a><span class="do">## 62        big</span></span>
+<span id="cb5-373"><a href="#cb5-373" aria-hidden="true" tabindex="-1"></a><span class="do">## 63        big</span></span>
+<span id="cb5-374"><a href="#cb5-374" aria-hidden="true" tabindex="-1"></a><span class="do">## 64        big</span></span>
+<span id="cb5-375"><a href="#cb5-375" aria-hidden="true" tabindex="-1"></a><span class="do">## 65        big</span></span>
+<span id="cb5-376"><a href="#cb5-376" aria-hidden="true" tabindex="-1"></a><span class="do">## 66        big</span></span>
+<span id="cb5-377"><a href="#cb5-377" aria-hidden="true" tabindex="-1"></a><span class="do">## 67        big</span></span>
+<span id="cb5-378"><a href="#cb5-378" aria-hidden="true" tabindex="-1"></a><span class="do">## 68        big</span></span>
+<span id="cb5-379"><a href="#cb5-379" aria-hidden="true" tabindex="-1"></a><span class="do">## 69        big</span></span>
+<span id="cb5-380"><a href="#cb5-380" aria-hidden="true" tabindex="-1"></a><span class="do">## 70        big</span></span>
+<span id="cb5-381"><a href="#cb5-381" aria-hidden="true" tabindex="-1"></a><span class="do">## 71        big</span></span>
+<span id="cb5-382"><a href="#cb5-382" aria-hidden="true" tabindex="-1"></a><span class="do">## 72        big</span></span>
+<span id="cb5-383"><a href="#cb5-383" aria-hidden="true" tabindex="-1"></a><span class="do">## 73        big</span></span>
+<span id="cb5-384"><a href="#cb5-384" aria-hidden="true" tabindex="-1"></a><span class="do">## 74        big</span></span>
+<span id="cb5-385"><a href="#cb5-385" aria-hidden="true" tabindex="-1"></a><span class="do">## 75        big</span></span>
+<span id="cb5-386"><a href="#cb5-386" aria-hidden="true" tabindex="-1"></a><span class="do">## 76        big</span></span>
+<span id="cb5-387"><a href="#cb5-387" aria-hidden="true" tabindex="-1"></a><span class="do">## 77        big</span></span>
+<span id="cb5-388"><a href="#cb5-388" aria-hidden="true" tabindex="-1"></a><span class="do">## 78        big</span></span>
+<span id="cb5-389"><a href="#cb5-389" aria-hidden="true" tabindex="-1"></a><span class="do">## 79        big</span></span>
+<span id="cb5-390"><a href="#cb5-390" aria-hidden="true" tabindex="-1"></a><span class="do">## 80        big</span></span>
+<span id="cb5-391"><a href="#cb5-391" aria-hidden="true" tabindex="-1"></a><span class="do">## 81        big</span></span>
+<span id="cb5-392"><a href="#cb5-392" aria-hidden="true" tabindex="-1"></a><span class="do">## 82        big</span></span>
+<span id="cb5-393"><a href="#cb5-393" aria-hidden="true" tabindex="-1"></a><span class="do">## 83        big</span></span>
+<span id="cb5-394"><a href="#cb5-394" aria-hidden="true" tabindex="-1"></a><span class="do">## 84        big</span></span>
+<span id="cb5-395"><a href="#cb5-395" aria-hidden="true" tabindex="-1"></a><span class="do">## 85        big</span></span>
+<span id="cb5-396"><a href="#cb5-396" aria-hidden="true" tabindex="-1"></a><span class="do">## 86        big</span></span>
+<span id="cb5-397"><a href="#cb5-397" aria-hidden="true" tabindex="-1"></a><span class="do">## 87        big</span></span>
+<span id="cb5-398"><a href="#cb5-398" aria-hidden="true" tabindex="-1"></a><span class="do">## 88        big</span></span>
+<span id="cb5-399"><a href="#cb5-399" aria-hidden="true" tabindex="-1"></a><span class="do">## 89        big</span></span>
+<span id="cb5-400"><a href="#cb5-400" aria-hidden="true" tabindex="-1"></a><span class="do">## 90        big</span></span>
+<span id="cb5-401"><a href="#cb5-401" aria-hidden="true" tabindex="-1"></a><span class="do">## 91        big</span></span>
+<span id="cb5-402"><a href="#cb5-402" aria-hidden="true" tabindex="-1"></a><span class="do">## 92        big</span></span>
+<span id="cb5-403"><a href="#cb5-403" aria-hidden="true" tabindex="-1"></a><span class="do">## 93        big</span></span>
+<span id="cb5-404"><a href="#cb5-404" aria-hidden="true" tabindex="-1"></a><span class="do">## 94        big</span></span>
+<span id="cb5-405"><a href="#cb5-405" aria-hidden="true" tabindex="-1"></a><span class="do">## 95        big</span></span>
+<span id="cb5-406"><a href="#cb5-406" aria-hidden="true" tabindex="-1"></a><span class="do">## 96        big</span></span>
+<span id="cb5-407"><a href="#cb5-407" aria-hidden="true" tabindex="-1"></a><span class="do">## 97        big</span></span>
+<span id="cb5-408"><a href="#cb5-408" aria-hidden="true" tabindex="-1"></a><span class="do">## 98        big</span></span>
+<span id="cb5-409"><a href="#cb5-409" aria-hidden="true" tabindex="-1"></a><span class="do">## 99        big</span></span>
+<span id="cb5-410"><a href="#cb5-410" aria-hidden="true" tabindex="-1"></a><span class="do">## 100       big</span></span>
+<span id="cb5-411"><a href="#cb5-411" aria-hidden="true" tabindex="-1"></a><span class="do">## 101       big</span></span>
+<span id="cb5-412"><a href="#cb5-412" aria-hidden="true" tabindex="-1"></a><span class="do">## 102       big</span></span>
+<span id="cb5-413"><a href="#cb5-413" aria-hidden="true" tabindex="-1"></a><span class="do">## 103       big</span></span>
+<span id="cb5-414"><a href="#cb5-414" aria-hidden="true" tabindex="-1"></a><span class="do">## 104       big</span></span>
+<span id="cb5-415"><a href="#cb5-415" aria-hidden="true" tabindex="-1"></a><span class="do">## 105       big</span></span>
+<span id="cb5-416"><a href="#cb5-416" aria-hidden="true" tabindex="-1"></a><span class="do">## 106       big</span></span>
+<span id="cb5-417"><a href="#cb5-417" aria-hidden="true" tabindex="-1"></a><span class="do">## 107       big</span></span>
+<span id="cb5-418"><a href="#cb5-418" aria-hidden="true" tabindex="-1"></a><span class="do">## 108       big</span></span>
+<span id="cb5-419"><a href="#cb5-419" aria-hidden="true" tabindex="-1"></a><span class="do">## 109       big</span></span>
+<span id="cb5-420"><a href="#cb5-420" aria-hidden="true" tabindex="-1"></a><span class="do">## 110       big</span></span>
+<span id="cb5-421"><a href="#cb5-421" aria-hidden="true" tabindex="-1"></a><span class="do">## 111       big</span></span>
+<span id="cb5-422"><a href="#cb5-422" aria-hidden="true" tabindex="-1"></a><span class="do">## 112       big</span></span>
+<span id="cb5-423"><a href="#cb5-423" aria-hidden="true" tabindex="-1"></a><span class="do">## 113       big</span></span>
+<span id="cb5-424"><a href="#cb5-424" aria-hidden="true" tabindex="-1"></a><span class="do">## 114       big</span></span>
+<span id="cb5-425"><a href="#cb5-425" aria-hidden="true" tabindex="-1"></a><span class="do">## 115       big</span></span>
+<span id="cb5-426"><a href="#cb5-426" aria-hidden="true" tabindex="-1"></a><span class="do">## 116       big</span></span>
+<span id="cb5-427"><a href="#cb5-427" aria-hidden="true" tabindex="-1"></a><span class="do">## 117       big</span></span>
+<span id="cb5-428"><a href="#cb5-428" aria-hidden="true" tabindex="-1"></a><span class="do">## 118       big</span></span>
+<span id="cb5-429"><a href="#cb5-429" aria-hidden="true" tabindex="-1"></a><span class="do">## 119       big</span></span>
+<span id="cb5-430"><a href="#cb5-430" aria-hidden="true" tabindex="-1"></a><span class="do">## 120       big</span></span>
+<span id="cb5-431"><a href="#cb5-431" aria-hidden="true" tabindex="-1"></a><span class="do">## 121       big</span></span>
+<span id="cb5-432"><a href="#cb5-432" aria-hidden="true" tabindex="-1"></a><span class="do">## 122       big</span></span>
+<span id="cb5-433"><a href="#cb5-433" aria-hidden="true" tabindex="-1"></a><span class="do">## 123       big</span></span>
+<span id="cb5-434"><a href="#cb5-434" aria-hidden="true" tabindex="-1"></a><span class="do">## 124       big</span></span>
+<span id="cb5-435"><a href="#cb5-435" aria-hidden="true" tabindex="-1"></a><span class="do">## 125       big</span></span>
+<span id="cb5-436"><a href="#cb5-436" aria-hidden="true" tabindex="-1"></a><span class="do">## 126       big</span></span>
+<span id="cb5-437"><a href="#cb5-437" aria-hidden="true" tabindex="-1"></a><span class="do">## 127       big</span></span>
+<span id="cb5-438"><a href="#cb5-438" aria-hidden="true" tabindex="-1"></a><span class="do">## 128       big</span></span>
+<span id="cb5-439"><a href="#cb5-439" aria-hidden="true" tabindex="-1"></a><span class="do">## 129       big</span></span>
+<span id="cb5-440"><a href="#cb5-440" aria-hidden="true" tabindex="-1"></a><span class="do">## 130       big</span></span>
+<span id="cb5-441"><a href="#cb5-441" aria-hidden="true" tabindex="-1"></a><span class="do">## 131       big</span></span>
+<span id="cb5-442"><a href="#cb5-442" aria-hidden="true" tabindex="-1"></a><span class="do">## 132       big</span></span>
+<span id="cb5-443"><a href="#cb5-443" aria-hidden="true" tabindex="-1"></a><span class="do">## 133       big</span></span>
+<span id="cb5-444"><a href="#cb5-444" aria-hidden="true" tabindex="-1"></a><span class="do">## 134       big</span></span>
+<span id="cb5-445"><a href="#cb5-445" aria-hidden="true" tabindex="-1"></a><span class="do">## 135       big</span></span>
+<span id="cb5-446"><a href="#cb5-446" aria-hidden="true" tabindex="-1"></a><span class="do">## 136       big</span></span>
+<span id="cb5-447"><a href="#cb5-447" aria-hidden="true" tabindex="-1"></a><span class="do">## 137       big</span></span>
+<span id="cb5-448"><a href="#cb5-448" aria-hidden="true" tabindex="-1"></a><span class="do">## 138       big</span></span>
+<span id="cb5-449"><a href="#cb5-449" aria-hidden="true" tabindex="-1"></a><span class="do">## 139       big</span></span>
+<span id="cb5-450"><a href="#cb5-450" aria-hidden="true" tabindex="-1"></a><span class="do">## 140       big</span></span>
+<span id="cb5-451"><a href="#cb5-451" aria-hidden="true" tabindex="-1"></a><span class="do">## 141       big</span></span>
+<span id="cb5-452"><a href="#cb5-452" aria-hidden="true" tabindex="-1"></a><span class="do">## 142       big</span></span>
+<span id="cb5-453"><a href="#cb5-453" aria-hidden="true" tabindex="-1"></a><span class="do">## 143       big</span></span>
+<span id="cb5-454"><a href="#cb5-454" aria-hidden="true" tabindex="-1"></a><span class="do">## 144       big</span></span>
+<span id="cb5-455"><a href="#cb5-455" aria-hidden="true" tabindex="-1"></a><span class="do">## 145       big</span></span>
+<span id="cb5-456"><a href="#cb5-456" aria-hidden="true" tabindex="-1"></a><span class="do">## 146       big</span></span>
+<span id="cb5-457"><a href="#cb5-457" aria-hidden="true" tabindex="-1"></a><span class="do">## 147       big</span></span>
+<span id="cb5-458"><a href="#cb5-458" aria-hidden="true" tabindex="-1"></a><span class="do">## 148       big</span></span>
+<span id="cb5-459"><a href="#cb5-459" aria-hidden="true" tabindex="-1"></a><span class="do">## 149       big</span></span>
+<span id="cb5-460"><a href="#cb5-460" aria-hidden="true" tabindex="-1"></a><span class="do">## 150       big</span></span>
+<span id="cb5-461"><a href="#cb5-461" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-462"><a href="#cb5-462" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span></span>
+<span id="cb5-463"><a href="#cb5-463" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">petalArea =</span> Petal.Length<span class="sc">*</span>Petal.Width,</span>
+<span id="cb5-464"><a href="#cb5-464" aria-hidden="true" tabindex="-1"></a>         <span class="at">PetalSize =</span> <span class="fu">if_else</span>(<span class="at">condition =</span> petalArea <span class="sc">&gt;</span> <span class="fl">0.2</span>, <span class="at">true =</span><span class="st">'big'</span>,</span>
+<span id="cb5-465"><a href="#cb5-465" aria-hidden="true" tabindex="-1"></a>                             <span class="at">false =</span> <span class="st">'small'</span>))<span class="sc">|&gt;</span></span>
+<span id="cb5-466"><a href="#cb5-466" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(PetalSize)<span class="sc">|&gt;</span></span>
+<span id="cb5-467"><a href="#cb5-467" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean =</span> <span class="fu">mean</span>(Petal.Width),</span>
+<span id="cb5-468"><a href="#cb5-468" aria-hidden="true" tabindex="-1"></a>            <span class="at">n =</span> <span class="fu">n</span>())</span>
+<span id="cb5-469"><a href="#cb5-469" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 2 × 3</span></span>
+<span id="cb5-470"><a href="#cb5-470" aria-hidden="true" tabindex="-1"></a><span class="do">##   PetalSize  mean     n</span></span>
+<span id="cb5-471"><a href="#cb5-471" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;chr&gt;     &lt;dbl&gt; &lt;int&gt;</span></span>
+<span id="cb5-472"><a href="#cb5-472" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 big       1.24    144</span></span>
+<span id="cb5-473"><a href="#cb5-473" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 small     0.117     6</span></span>
+<span id="cb5-474"><a href="#cb5-474" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-475"><a href="#cb5-475" aria-hidden="true" tabindex="-1"></a><span class="do">## across can do multiple columns at once</span></span>
+<span id="cb5-476"><a href="#cb5-476" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span> </span>
+<span id="cb5-477"><a href="#cb5-477" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric), <span class="sc">~</span>.x <span class="sc">+</span><span class="dv">1</span>)) <span class="co"># add 1 to all numeric columns</span></span>
+<span id="cb5-478"><a href="#cb5-478" aria-hidden="true" tabindex="-1"></a><span class="do">##     Sepal.Length Sepal.Width Petal.Length Petal.Width    Species</span></span>
+<span id="cb5-479"><a href="#cb5-479" aria-hidden="true" tabindex="-1"></a><span class="do">## 1            6.1         4.5          2.4         1.2     setosa</span></span>
+<span id="cb5-480"><a href="#cb5-480" aria-hidden="true" tabindex="-1"></a><span class="do">## 2            5.9         4.0          2.4         1.2     setosa</span></span>
+<span id="cb5-481"><a href="#cb5-481" aria-hidden="true" tabindex="-1"></a><span class="do">## 3            5.7         4.2          2.3         1.2     setosa</span></span>
+<span id="cb5-482"><a href="#cb5-482" aria-hidden="true" tabindex="-1"></a><span class="do">## 4            5.6         4.1          2.5         1.2     setosa</span></span>
+<span id="cb5-483"><a href="#cb5-483" aria-hidden="true" tabindex="-1"></a><span class="do">## 5            6.0         4.6          2.4         1.2     setosa</span></span>
+<span id="cb5-484"><a href="#cb5-484" aria-hidden="true" tabindex="-1"></a><span class="do">## 6            6.4         4.9          2.7         1.4     setosa</span></span>
+<span id="cb5-485"><a href="#cb5-485" aria-hidden="true" tabindex="-1"></a><span class="do">## 7            5.6         4.4          2.4         1.3     setosa</span></span>
+<span id="cb5-486"><a href="#cb5-486" aria-hidden="true" tabindex="-1"></a><span class="do">## 8            6.0         4.4          2.5         1.2     setosa</span></span>
+<span id="cb5-487"><a href="#cb5-487" aria-hidden="true" tabindex="-1"></a><span class="do">## 9            5.4         3.9          2.4         1.2     setosa</span></span>
+<span id="cb5-488"><a href="#cb5-488" aria-hidden="true" tabindex="-1"></a><span class="do">## 10           5.9         4.1          2.5         1.1     setosa</span></span>
+<span id="cb5-489"><a href="#cb5-489" aria-hidden="true" tabindex="-1"></a><span class="do">## 11           6.4         4.7          2.5         1.2     setosa</span></span>
+<span id="cb5-490"><a href="#cb5-490" aria-hidden="true" tabindex="-1"></a><span class="do">## 12           5.8         4.4          2.6         1.2     setosa</span></span>
+<span id="cb5-491"><a href="#cb5-491" aria-hidden="true" tabindex="-1"></a><span class="do">## 13           5.8         4.0          2.4         1.1     setosa</span></span>
+<span id="cb5-492"><a href="#cb5-492" aria-hidden="true" tabindex="-1"></a><span class="do">## 14           5.3         4.0          2.1         1.1     setosa</span></span>
+<span id="cb5-493"><a href="#cb5-493" aria-hidden="true" tabindex="-1"></a><span class="do">## 15           6.8         5.0          2.2         1.2     setosa</span></span>
+<span id="cb5-494"><a href="#cb5-494" aria-hidden="true" tabindex="-1"></a><span class="do">## 16           6.7         5.4          2.5         1.4     setosa</span></span>
+<span id="cb5-495"><a href="#cb5-495" aria-hidden="true" tabindex="-1"></a><span class="do">## 17           6.4         4.9          2.3         1.4     setosa</span></span>
+<span id="cb5-496"><a href="#cb5-496" aria-hidden="true" tabindex="-1"></a><span class="do">## 18           6.1         4.5          2.4         1.3     setosa</span></span>
+<span id="cb5-497"><a href="#cb5-497" aria-hidden="true" tabindex="-1"></a><span class="do">## 19           6.7         4.8          2.7         1.3     setosa</span></span>
+<span id="cb5-498"><a href="#cb5-498" aria-hidden="true" tabindex="-1"></a><span class="do">## 20           6.1         4.8          2.5         1.3     setosa</span></span>
+<span id="cb5-499"><a href="#cb5-499" aria-hidden="true" tabindex="-1"></a><span class="do">## 21           6.4         4.4          2.7         1.2     setosa</span></span>
+<span id="cb5-500"><a href="#cb5-500" aria-hidden="true" tabindex="-1"></a><span class="do">## 22           6.1         4.7          2.5         1.4     setosa</span></span>
+<span id="cb5-501"><a href="#cb5-501" aria-hidden="true" tabindex="-1"></a><span class="do">## 23           5.6         4.6          2.0         1.2     setosa</span></span>
+<span id="cb5-502"><a href="#cb5-502" aria-hidden="true" tabindex="-1"></a><span class="do">## 24           6.1         4.3          2.7         1.5     setosa</span></span>
+<span id="cb5-503"><a href="#cb5-503" aria-hidden="true" tabindex="-1"></a><span class="do">## 25           5.8         4.4          2.9         1.2     setosa</span></span>
+<span id="cb5-504"><a href="#cb5-504" aria-hidden="true" tabindex="-1"></a><span class="do">## 26           6.0         4.0          2.6         1.2     setosa</span></span>
+<span id="cb5-505"><a href="#cb5-505" aria-hidden="true" tabindex="-1"></a><span class="do">## 27           6.0         4.4          2.6         1.4     setosa</span></span>
+<span id="cb5-506"><a href="#cb5-506" aria-hidden="true" tabindex="-1"></a><span class="do">## 28           6.2         4.5          2.5         1.2     setosa</span></span>
+<span id="cb5-507"><a href="#cb5-507" aria-hidden="true" tabindex="-1"></a><span class="do">## 29           6.2         4.4          2.4         1.2     setosa</span></span>
+<span id="cb5-508"><a href="#cb5-508" aria-hidden="true" tabindex="-1"></a><span class="do">## 30           5.7         4.2          2.6         1.2     setosa</span></span>
+<span id="cb5-509"><a href="#cb5-509" aria-hidden="true" tabindex="-1"></a><span class="do">## 31           5.8         4.1          2.6         1.2     setosa</span></span>
+<span id="cb5-510"><a href="#cb5-510" aria-hidden="true" tabindex="-1"></a><span class="do">## 32           6.4         4.4          2.5         1.4     setosa</span></span>
+<span id="cb5-511"><a href="#cb5-511" aria-hidden="true" tabindex="-1"></a><span class="do">## 33           6.2         5.1          2.5         1.1     setosa</span></span>
+<span id="cb5-512"><a href="#cb5-512" aria-hidden="true" tabindex="-1"></a><span class="do">## 34           6.5         5.2          2.4         1.2     setosa</span></span>
+<span id="cb5-513"><a href="#cb5-513" aria-hidden="true" tabindex="-1"></a><span class="do">## 35           5.9         4.1          2.5         1.2     setosa</span></span>
+<span id="cb5-514"><a href="#cb5-514" aria-hidden="true" tabindex="-1"></a><span class="do">## 36           6.0         4.2          2.2         1.2     setosa</span></span>
+<span id="cb5-515"><a href="#cb5-515" aria-hidden="true" tabindex="-1"></a><span class="do">## 37           6.5         4.5          2.3         1.2     setosa</span></span>
+<span id="cb5-516"><a href="#cb5-516" aria-hidden="true" tabindex="-1"></a><span class="do">## 38           5.9         4.6          2.4         1.1     setosa</span></span>
+<span id="cb5-517"><a href="#cb5-517" aria-hidden="true" tabindex="-1"></a><span class="do">## 39           5.4         4.0          2.3         1.2     setosa</span></span>
+<span id="cb5-518"><a href="#cb5-518" aria-hidden="true" tabindex="-1"></a><span class="do">## 40           6.1         4.4          2.5         1.2     setosa</span></span>
+<span id="cb5-519"><a href="#cb5-519" aria-hidden="true" tabindex="-1"></a><span class="do">## 41           6.0         4.5          2.3         1.3     setosa</span></span>
+<span id="cb5-520"><a href="#cb5-520" aria-hidden="true" tabindex="-1"></a><span class="do">## 42           5.5         3.3          2.3         1.3     setosa</span></span>
+<span id="cb5-521"><a href="#cb5-521" aria-hidden="true" tabindex="-1"></a><span class="do">## 43           5.4         4.2          2.3         1.2     setosa</span></span>
+<span id="cb5-522"><a href="#cb5-522" aria-hidden="true" tabindex="-1"></a><span class="do">## 44           6.0         4.5          2.6         1.6     setosa</span></span>
+<span id="cb5-523"><a href="#cb5-523" aria-hidden="true" tabindex="-1"></a><span class="do">## 45           6.1         4.8          2.9         1.4     setosa</span></span>
+<span id="cb5-524"><a href="#cb5-524" aria-hidden="true" tabindex="-1"></a><span class="do">## 46           5.8         4.0          2.4         1.3     setosa</span></span>
+<span id="cb5-525"><a href="#cb5-525" aria-hidden="true" tabindex="-1"></a><span class="do">## 47           6.1         4.8          2.6         1.2     setosa</span></span>
+<span id="cb5-526"><a href="#cb5-526" aria-hidden="true" tabindex="-1"></a><span class="do">## 48           5.6         4.2          2.4         1.2     setosa</span></span>
+<span id="cb5-527"><a href="#cb5-527" aria-hidden="true" tabindex="-1"></a><span class="do">## 49           6.3         4.7          2.5         1.2     setosa</span></span>
+<span id="cb5-528"><a href="#cb5-528" aria-hidden="true" tabindex="-1"></a><span class="do">## 50           6.0         4.3          2.4         1.2     setosa</span></span>
+<span id="cb5-529"><a href="#cb5-529" aria-hidden="true" tabindex="-1"></a><span class="do">## 51           8.0         4.2          5.7         2.4 versicolor</span></span>
+<span id="cb5-530"><a href="#cb5-530" aria-hidden="true" tabindex="-1"></a><span class="do">## 52           7.4         4.2          5.5         2.5 versicolor</span></span>
+<span id="cb5-531"><a href="#cb5-531" aria-hidden="true" tabindex="-1"></a><span class="do">## 53           7.9         4.1          5.9         2.5 versicolor</span></span>
+<span id="cb5-532"><a href="#cb5-532" aria-hidden="true" tabindex="-1"></a><span class="do">## 54           6.5         3.3          5.0         2.3 versicolor</span></span>
+<span id="cb5-533"><a href="#cb5-533" aria-hidden="true" tabindex="-1"></a><span class="do">## 55           7.5         3.8          5.6         2.5 versicolor</span></span>
+<span id="cb5-534"><a href="#cb5-534" aria-hidden="true" tabindex="-1"></a><span class="do">## 56           6.7         3.8          5.5         2.3 versicolor</span></span>
+<span id="cb5-535"><a href="#cb5-535" aria-hidden="true" tabindex="-1"></a><span class="do">## 57           7.3         4.3          5.7         2.6 versicolor</span></span>
+<span id="cb5-536"><a href="#cb5-536" aria-hidden="true" tabindex="-1"></a><span class="do">## 58           5.9         3.4          4.3         2.0 versicolor</span></span>
+<span id="cb5-537"><a href="#cb5-537" aria-hidden="true" tabindex="-1"></a><span class="do">## 59           7.6         3.9          5.6         2.3 versicolor</span></span>
+<span id="cb5-538"><a href="#cb5-538" aria-hidden="true" tabindex="-1"></a><span class="do">## 60           6.2         3.7          4.9         2.4 versicolor</span></span>
+<span id="cb5-539"><a href="#cb5-539" aria-hidden="true" tabindex="-1"></a><span class="do">## 61           6.0         3.0          4.5         2.0 versicolor</span></span>
+<span id="cb5-540"><a href="#cb5-540" aria-hidden="true" tabindex="-1"></a><span class="do">## 62           6.9         4.0          5.2         2.5 versicolor</span></span>
+<span id="cb5-541"><a href="#cb5-541" aria-hidden="true" tabindex="-1"></a><span class="do">## 63           7.0         3.2          5.0         2.0 versicolor</span></span>
+<span id="cb5-542"><a href="#cb5-542" aria-hidden="true" tabindex="-1"></a><span class="do">## 64           7.1         3.9          5.7         2.4 versicolor</span></span>
+<span id="cb5-543"><a href="#cb5-543" aria-hidden="true" tabindex="-1"></a><span class="do">## 65           6.6         3.9          4.6         2.3 versicolor</span></span>
+<span id="cb5-544"><a href="#cb5-544" aria-hidden="true" tabindex="-1"></a><span class="do">## 66           7.7         4.1          5.4         2.4 versicolor</span></span>
+<span id="cb5-545"><a href="#cb5-545" aria-hidden="true" tabindex="-1"></a><span class="do">## 67           6.6         4.0          5.5         2.5 versicolor</span></span>
+<span id="cb5-546"><a href="#cb5-546" aria-hidden="true" tabindex="-1"></a><span class="do">## 68           6.8         3.7          5.1         2.0 versicolor</span></span>
+<span id="cb5-547"><a href="#cb5-547" aria-hidden="true" tabindex="-1"></a><span class="do">## 69           7.2         3.2          5.5         2.5 versicolor</span></span>
+<span id="cb5-548"><a href="#cb5-548" aria-hidden="true" tabindex="-1"></a><span class="do">## 70           6.6         3.5          4.9         2.1 versicolor</span></span>
+<span id="cb5-549"><a href="#cb5-549" aria-hidden="true" tabindex="-1"></a><span class="do">## 71           6.9         4.2          5.8         2.8 versicolor</span></span>
+<span id="cb5-550"><a href="#cb5-550" aria-hidden="true" tabindex="-1"></a><span class="do">## 72           7.1         3.8          5.0         2.3 versicolor</span></span>
+<span id="cb5-551"><a href="#cb5-551" aria-hidden="true" tabindex="-1"></a><span class="do">## 73           7.3         3.5          5.9         2.5 versicolor</span></span>
+<span id="cb5-552"><a href="#cb5-552" aria-hidden="true" tabindex="-1"></a><span class="do">## 74           7.1         3.8          5.7         2.2 versicolor</span></span>
+<span id="cb5-553"><a href="#cb5-553" aria-hidden="true" tabindex="-1"></a><span class="do">## 75           7.4         3.9          5.3         2.3 versicolor</span></span>
+<span id="cb5-554"><a href="#cb5-554" aria-hidden="true" tabindex="-1"></a><span class="do">## 76           7.6         4.0          5.4         2.4 versicolor</span></span>
+<span id="cb5-555"><a href="#cb5-555" aria-hidden="true" tabindex="-1"></a><span class="do">## 77           7.8         3.8          5.8         2.4 versicolor</span></span>
+<span id="cb5-556"><a href="#cb5-556" aria-hidden="true" tabindex="-1"></a><span class="do">## 78           7.7         4.0          6.0         2.7 versicolor</span></span>
+<span id="cb5-557"><a href="#cb5-557" aria-hidden="true" tabindex="-1"></a><span class="do">## 79           7.0         3.9          5.5         2.5 versicolor</span></span>
+<span id="cb5-558"><a href="#cb5-558" aria-hidden="true" tabindex="-1"></a><span class="do">## 80           6.7         3.6          4.5         2.0 versicolor</span></span>
+<span id="cb5-559"><a href="#cb5-559" aria-hidden="true" tabindex="-1"></a><span class="do">## 81           6.5         3.4          4.8         2.1 versicolor</span></span>
+<span id="cb5-560"><a href="#cb5-560" aria-hidden="true" tabindex="-1"></a><span class="do">## 82           6.5         3.4          4.7         2.0 versicolor</span></span>
+<span id="cb5-561"><a href="#cb5-561" aria-hidden="true" tabindex="-1"></a><span class="do">## 83           6.8         3.7          4.9         2.2 versicolor</span></span>
+<span id="cb5-562"><a href="#cb5-562" aria-hidden="true" tabindex="-1"></a><span class="do">## 84           7.0         3.7          6.1         2.6 versicolor</span></span>
+<span id="cb5-563"><a href="#cb5-563" aria-hidden="true" tabindex="-1"></a><span class="do">## 85           6.4         4.0          5.5         2.5 versicolor</span></span>
+<span id="cb5-564"><a href="#cb5-564" aria-hidden="true" tabindex="-1"></a><span class="do">## 86           7.0         4.4          5.5         2.6 versicolor</span></span>
+<span id="cb5-565"><a href="#cb5-565" aria-hidden="true" tabindex="-1"></a><span class="do">## 87           7.7         4.1          5.7         2.5 versicolor</span></span>
+<span id="cb5-566"><a href="#cb5-566" aria-hidden="true" tabindex="-1"></a><span class="do">## 88           7.3         3.3          5.4         2.3 versicolor</span></span>
+<span id="cb5-567"><a href="#cb5-567" aria-hidden="true" tabindex="-1"></a><span class="do">## 89           6.6         4.0          5.1         2.3 versicolor</span></span>
+<span id="cb5-568"><a href="#cb5-568" aria-hidden="true" tabindex="-1"></a><span class="do">## 90           6.5         3.5          5.0         2.3 versicolor</span></span>
+<span id="cb5-569"><a href="#cb5-569" aria-hidden="true" tabindex="-1"></a><span class="do">## 91           6.5         3.6          5.4         2.2 versicolor</span></span>
+<span id="cb5-570"><a href="#cb5-570" aria-hidden="true" tabindex="-1"></a><span class="do">## 92           7.1         4.0          5.6         2.4 versicolor</span></span>
+<span id="cb5-571"><a href="#cb5-571" aria-hidden="true" tabindex="-1"></a><span class="do">## 93           6.8         3.6          5.0         2.2 versicolor</span></span>
+<span id="cb5-572"><a href="#cb5-572" aria-hidden="true" tabindex="-1"></a><span class="do">## 94           6.0         3.3          4.3         2.0 versicolor</span></span>
+<span id="cb5-573"><a href="#cb5-573" aria-hidden="true" tabindex="-1"></a><span class="do">## 95           6.6         3.7          5.2         2.3 versicolor</span></span>
+<span id="cb5-574"><a href="#cb5-574" aria-hidden="true" tabindex="-1"></a><span class="do">## 96           6.7         4.0          5.2         2.2 versicolor</span></span>
+<span id="cb5-575"><a href="#cb5-575" aria-hidden="true" tabindex="-1"></a><span class="do">## 97           6.7         3.9          5.2         2.3 versicolor</span></span>
+<span id="cb5-576"><a href="#cb5-576" aria-hidden="true" tabindex="-1"></a><span class="do">## 98           7.2         3.9          5.3         2.3 versicolor</span></span>
+<span id="cb5-577"><a href="#cb5-577" aria-hidden="true" tabindex="-1"></a><span class="do">## 99           6.1         3.5          4.0         2.1 versicolor</span></span>
+<span id="cb5-578"><a href="#cb5-578" aria-hidden="true" tabindex="-1"></a><span class="do">## 100          6.7         3.8          5.1         2.3 versicolor</span></span>
+<span id="cb5-579"><a href="#cb5-579" aria-hidden="true" tabindex="-1"></a><span class="do">## 101          7.3         4.3          7.0         3.5  virginica</span></span>
+<span id="cb5-580"><a href="#cb5-580" aria-hidden="true" tabindex="-1"></a><span class="do">## 102          6.8         3.7          6.1         2.9  virginica</span></span>
+<span id="cb5-581"><a href="#cb5-581" aria-hidden="true" tabindex="-1"></a><span class="do">## 103          8.1         4.0          6.9         3.1  virginica</span></span>
+<span id="cb5-582"><a href="#cb5-582" aria-hidden="true" tabindex="-1"></a><span class="do">## 104          7.3         3.9          6.6         2.8  virginica</span></span>
+<span id="cb5-583"><a href="#cb5-583" aria-hidden="true" tabindex="-1"></a><span class="do">## 105          7.5         4.0          6.8         3.2  virginica</span></span>
+<span id="cb5-584"><a href="#cb5-584" aria-hidden="true" tabindex="-1"></a><span class="do">## 106          8.6         4.0          7.6         3.1  virginica</span></span>
+<span id="cb5-585"><a href="#cb5-585" aria-hidden="true" tabindex="-1"></a><span class="do">## 107          5.9         3.5          5.5         2.7  virginica</span></span>
+<span id="cb5-586"><a href="#cb5-586" aria-hidden="true" tabindex="-1"></a><span class="do">## 108          8.3         3.9          7.3         2.8  virginica</span></span>
+<span id="cb5-587"><a href="#cb5-587" aria-hidden="true" tabindex="-1"></a><span class="do">## 109          7.7         3.5          6.8         2.8  virginica</span></span>
+<span id="cb5-588"><a href="#cb5-588" aria-hidden="true" tabindex="-1"></a><span class="do">## 110          8.2         4.6          7.1         3.5  virginica</span></span>
+<span id="cb5-589"><a href="#cb5-589" aria-hidden="true" tabindex="-1"></a><span class="do">## 111          7.5         4.2          6.1         3.0  virginica</span></span>
+<span id="cb5-590"><a href="#cb5-590" aria-hidden="true" tabindex="-1"></a><span class="do">## 112          7.4         3.7          6.3         2.9  virginica</span></span>
+<span id="cb5-591"><a href="#cb5-591" aria-hidden="true" tabindex="-1"></a><span class="do">## 113          7.8         4.0          6.5         3.1  virginica</span></span>
+<span id="cb5-592"><a href="#cb5-592" aria-hidden="true" tabindex="-1"></a><span class="do">## 114          6.7         3.5          6.0         3.0  virginica</span></span>
+<span id="cb5-593"><a href="#cb5-593" aria-hidden="true" tabindex="-1"></a><span class="do">## 115          6.8         3.8          6.1         3.4  virginica</span></span>
+<span id="cb5-594"><a href="#cb5-594" aria-hidden="true" tabindex="-1"></a><span class="do">## 116          7.4         4.2          6.3         3.3  virginica</span></span>
+<span id="cb5-595"><a href="#cb5-595" aria-hidden="true" tabindex="-1"></a><span class="do">## 117          7.5         4.0          6.5         2.8  virginica</span></span>
+<span id="cb5-596"><a href="#cb5-596" aria-hidden="true" tabindex="-1"></a><span class="do">## 118          8.7         4.8          7.7         3.2  virginica</span></span>
+<span id="cb5-597"><a href="#cb5-597" aria-hidden="true" tabindex="-1"></a><span class="do">## 119          8.7         3.6          7.9         3.3  virginica</span></span>
+<span id="cb5-598"><a href="#cb5-598" aria-hidden="true" tabindex="-1"></a><span class="do">## 120          7.0         3.2          6.0         2.5  virginica</span></span>
+<span id="cb5-599"><a href="#cb5-599" aria-hidden="true" tabindex="-1"></a><span class="do">## 121          7.9         4.2          6.7         3.3  virginica</span></span>
+<span id="cb5-600"><a href="#cb5-600" aria-hidden="true" tabindex="-1"></a><span class="do">## 122          6.6         3.8          5.9         3.0  virginica</span></span>
+<span id="cb5-601"><a href="#cb5-601" aria-hidden="true" tabindex="-1"></a><span class="do">## 123          8.7         3.8          7.7         3.0  virginica</span></span>
+<span id="cb5-602"><a href="#cb5-602" aria-hidden="true" tabindex="-1"></a><span class="do">## 124          7.3         3.7          5.9         2.8  virginica</span></span>
+<span id="cb5-603"><a href="#cb5-603" aria-hidden="true" tabindex="-1"></a><span class="do">## 125          7.7         4.3          6.7         3.1  virginica</span></span>
+<span id="cb5-604"><a href="#cb5-604" aria-hidden="true" tabindex="-1"></a><span class="do">## 126          8.2         4.2          7.0         2.8  virginica</span></span>
+<span id="cb5-605"><a href="#cb5-605" aria-hidden="true" tabindex="-1"></a><span class="do">## 127          7.2         3.8          5.8         2.8  virginica</span></span>
+<span id="cb5-606"><a href="#cb5-606" aria-hidden="true" tabindex="-1"></a><span class="do">## 128          7.1         4.0          5.9         2.8  virginica</span></span>
+<span id="cb5-607"><a href="#cb5-607" aria-hidden="true" tabindex="-1"></a><span class="do">## 129          7.4         3.8          6.6         3.1  virginica</span></span>
+<span id="cb5-608"><a href="#cb5-608" aria-hidden="true" tabindex="-1"></a><span class="do">## 130          8.2         4.0          6.8         2.6  virginica</span></span>
+<span id="cb5-609"><a href="#cb5-609" aria-hidden="true" tabindex="-1"></a><span class="do">## 131          8.4         3.8          7.1         2.9  virginica</span></span>
+<span id="cb5-610"><a href="#cb5-610" aria-hidden="true" tabindex="-1"></a><span class="do">## 132          8.9         4.8          7.4         3.0  virginica</span></span>
+<span id="cb5-611"><a href="#cb5-611" aria-hidden="true" tabindex="-1"></a><span class="do">## 133          7.4         3.8          6.6         3.2  virginica</span></span>
+<span id="cb5-612"><a href="#cb5-612" aria-hidden="true" tabindex="-1"></a><span class="do">## 134          7.3         3.8          6.1         2.5  virginica</span></span>
+<span id="cb5-613"><a href="#cb5-613" aria-hidden="true" tabindex="-1"></a><span class="do">## 135          7.1         3.6          6.6         2.4  virginica</span></span>
+<span id="cb5-614"><a href="#cb5-614" aria-hidden="true" tabindex="-1"></a><span class="do">## 136          8.7         4.0          7.1         3.3  virginica</span></span>
+<span id="cb5-615"><a href="#cb5-615" aria-hidden="true" tabindex="-1"></a><span class="do">## 137          7.3         4.4          6.6         3.4  virginica</span></span>
+<span id="cb5-616"><a href="#cb5-616" aria-hidden="true" tabindex="-1"></a><span class="do">## 138          7.4         4.1          6.5         2.8  virginica</span></span>
+<span id="cb5-617"><a href="#cb5-617" aria-hidden="true" tabindex="-1"></a><span class="do">## 139          7.0         4.0          5.8         2.8  virginica</span></span>
+<span id="cb5-618"><a href="#cb5-618" aria-hidden="true" tabindex="-1"></a><span class="do">## 140          7.9         4.1          6.4         3.1  virginica</span></span>
+<span id="cb5-619"><a href="#cb5-619" aria-hidden="true" tabindex="-1"></a><span class="do">## 141          7.7         4.1          6.6         3.4  virginica</span></span>
+<span id="cb5-620"><a href="#cb5-620" aria-hidden="true" tabindex="-1"></a><span class="do">## 142          7.9         4.1          6.1         3.3  virginica</span></span>
+<span id="cb5-621"><a href="#cb5-621" aria-hidden="true" tabindex="-1"></a><span class="do">## 143          6.8         3.7          6.1         2.9  virginica</span></span>
+<span id="cb5-622"><a href="#cb5-622" aria-hidden="true" tabindex="-1"></a><span class="do">## 144          7.8         4.2          6.9         3.3  virginica</span></span>
+<span id="cb5-623"><a href="#cb5-623" aria-hidden="true" tabindex="-1"></a><span class="do">## 145          7.7         4.3          6.7         3.5  virginica</span></span>
+<span id="cb5-624"><a href="#cb5-624" aria-hidden="true" tabindex="-1"></a><span class="do">## 146          7.7         4.0          6.2         3.3  virginica</span></span>
+<span id="cb5-625"><a href="#cb5-625" aria-hidden="true" tabindex="-1"></a><span class="do">## 147          7.3         3.5          6.0         2.9  virginica</span></span>
+<span id="cb5-626"><a href="#cb5-626" aria-hidden="true" tabindex="-1"></a><span class="do">## 148          7.5         4.0          6.2         3.0  virginica</span></span>
+<span id="cb5-627"><a href="#cb5-627" aria-hidden="true" tabindex="-1"></a><span class="do">## 149          7.2         4.4          6.4         3.3  virginica</span></span>
+<span id="cb5-628"><a href="#cb5-628" aria-hidden="true" tabindex="-1"></a><span class="do">## 150          6.9         4.0          6.1         2.8  virginica</span></span>
+<span id="cb5-629"><a href="#cb5-629" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-630"><a href="#cb5-630" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-631"><a href="#cb5-631" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span> </span>
+<span id="cb5-632"><a href="#cb5-632" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Species) <span class="sc">|&gt;</span> </span>
+<span id="cb5-633"><a href="#cb5-633" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="fu">across</span>(Sepal.Length<span class="sc">:</span>Petal.Length, mean)) <span class="co"># mean of specific columns</span></span>
+<span id="cb5-634"><a href="#cb5-634" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 3 × 4</span></span>
+<span id="cb5-635"><a href="#cb5-635" aria-hidden="true" tabindex="-1"></a><span class="do">##   Species    Sepal.Length Sepal.Width Petal.Length</span></span>
+<span id="cb5-636"><a href="#cb5-636" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;fct&gt;             &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;</span></span>
+<span id="cb5-637"><a href="#cb5-637" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 setosa             5.01        3.43         1.46</span></span>
+<span id="cb5-638"><a href="#cb5-638" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 versicolor         5.94        2.77         4.26</span></span>
+<span id="cb5-639"><a href="#cb5-639" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 virginica          6.59        2.97         5.55</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="dates-with-lubridate" class="level3">
+<h3 class="anchored" data-anchor-id="dates-with-lubridate">dates with <code>lubridate</code></h3>
+<p><code>lubridate</code> is a package that is apart of the <code>tidyverse</code> that is very useful for dates. Check out the <a href="https://r4ds.hadley.nz/datetimes">R for data science</a> chapter and for the <a href="https://evoldyn.gitlab.io/evomics-2018/ref-sheets/R_lubridate.pdf">R cheat sheet</a> for working with dates.</p>
+<div class="cell" data-hash="ws3_cache/html/unnamed-chunk-6_7e4195b189df7740a4cc4d8611be5b3a">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="do">## lubridate and dates</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">ymd =</span> <span class="fu">c</span>(<span class="st">'1999-01-04'</span>, <span class="st">'2005-04-11'</span>, <span class="st">'2015-10-01'</span>),</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">mdy =</span> <span class="fu">c</span>(<span class="st">'1/4/99'</span>, <span class="st">'4/11/05'</span>, <span class="st">'10/1/15'</span>))</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># turn into dates</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>df <span class="ot">=</span> df <span class="sc">|&gt;</span> </span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">d1 =</span> <span class="fu">ymd</span>(ymd),</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">d2 =</span> <span class="fu">mdy</span>(mdy),</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">d3 =</span> <span class="fu">dmy</span>(mdy)) <span class="co">#functions to turn into dates order matters</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>df</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 3 × 5</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="do">##   ymd        mdy     d1         d2         d3        </span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;chr&gt;      &lt;chr&gt;   &lt;date&gt;     &lt;date&gt;     &lt;date&gt;    </span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 1999-01-04 1/4/99  1999-01-04 1999-01-04 1999-04-01</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 2005-04-11 4/11/05 2005-04-11 2005-04-11 2005-11-04</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 2015-10-01 10/1/15 2015-10-01 2015-10-01 2015-01-10</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="co"># extract information from dates</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>df <span class="ot">=</span> df <span class="sc">|&gt;</span> </span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year =</span> <span class="fu">year</span>(d1),</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>         <span class="at">month =</span> <span class="fu">month</span>(d1))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="purr" class="level3">
+<h3 class="anchored" data-anchor-id="purr"><code>purr</code></h3>
+<p>The newest and new standard package with <code>tidyverse</code> is <code>purr</code> with its set of <code>map()</code> functions. Some similarity to <code>plyr</code> (and base) and <code>dplyr</code> functions but with more consistent names and arguments. Notice that map function can have some specification for the type of output. + <code>map()</code> makes a list. + <code>map_lgl()</code> makes a logical vector. + <code>map_int()</code> makes an integer vector. + <code>map_dbl()</code> makes a double vector. + <code>map_chr()</code> makes a character vector.</p>
+<div class="cell" data-hash="ws3_cache/html/unnamed-chunk-7_1f231f40d2ec00d7c3ef6619232ef124">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">=</span> iris  <span class="sc">|&gt;</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>Species)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">#summary statistics</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">map_dbl</span>(df, mean)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Sepal.Length  Sepal.Width Petal.Length  Petal.Width </span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="do">##     5.843333     3.057333     3.758000     1.199333</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="fu">map_dbl</span>(df, median)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="do">## Sepal.Length  Sepal.Width Petal.Length  Petal.Width </span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="do">##         5.80         3.00         4.35         1.30</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="fu">map_dbl</span>(df, sd)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Sepal.Length  Sepal.Width Petal.Length  Petal.Width </span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="do">##    0.8280661    0.4358663    1.7652982    0.7622377</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>You can also use map in a tibble to apply to a nested column with <code>mutate()</code>. Nested columns are one of the differences between <code>data.frame()</code> and <code>tibble()</code>.</p>
+<div class="cell" data-hash="ws3_cache/html/unnamed-chunk-8_b367829fd1d196dc58f929e7c20787ae">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Creating models by group</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>df_cars <span class="ot">=</span> mtcars <span class="sc">|&gt;</span> </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>      <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">group_by</span>(cyl) <span class="sc">|&gt;</span> </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">nest</span>()</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>df_cars</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 3 × 2</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="do">## # Groups:   cyl [3]</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="do">##     cyl data              </span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;dbl&gt; &lt;list&gt;            </span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 1     6 &lt;tibble [7 × 10]&gt; </span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 2     4 &lt;tibble [11 × 10]&gt;</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 3     8 &lt;tibble [14 × 10]&gt;</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>df_cars<span class="sc">$</span>data[<span class="dv">1</span>]</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="do">## [[1]]</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 7 × 10</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="do">##     mpg  disp    hp  drat    wt  qsec    vs    am  gear  carb</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="do">## 1  21    160    110  3.9   2.62  16.5     0     1     4     4</span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="do">## 2  21    160    110  3.9   2.88  17.0     0     1     4     4</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="do">## 3  21.4  258    110  3.08  3.22  19.4     1     0     3     1</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="do">## 4  18.1  225    105  2.76  3.46  20.2     1     0     3     1</span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="do">## 5  19.2  168.   123  3.92  3.44  18.3     1     0     4     4</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="do">## 6  17.8  168.   123  3.92  3.44  18.9     1     0     4     4</span></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a><span class="do">## 7  19.7  145    175  3.62  2.77  15.5     0     1     5     6</span></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>df_cars <span class="ot">=</span> df_cars <span class="sc">|&gt;</span> </span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">models =</span> <span class="fu">map</span>(data, \(x) <span class="fu">lm</span>(mpg <span class="sc">~</span> wt, <span class="at">data =</span> x)),</span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>             <span class="at">summary =</span> <span class="fu">map</span>(models, summary),</span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>             <span class="at">r_sq =</span> <span class="fu">map_dbl</span>(summary, \(x) x<span class="sc">$</span>r.squared))</span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>df_cars</span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 3 × 5</span></span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a><span class="do">## # Groups:   cyl [3]</span></span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a><span class="do">##     cyl data               models summary     r_sq</span></span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;dbl&gt; &lt;list&gt;             &lt;list&gt; &lt;list&gt;     &lt;dbl&gt;</span></span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a><span class="do">## 1     6 &lt;tibble [7 × 10]&gt;  &lt;lm&gt;   &lt;smmry.lm&gt; 0.465</span></span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a><span class="do">## 2     4 &lt;tibble [11 × 10]&gt; &lt;lm&gt;   &lt;smmry.lm&gt; 0.509</span></span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a><span class="do">## 3     8 &lt;tibble [14 × 10]&gt; &lt;lm&gt;   &lt;smmry.lm&gt; 0.423</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>map()</code> only works with one input argument, but you can use <code>map2()</code> if you want two input arguments or <code>pmap()</code> to have more than two input arguments.</p>
+<div class="cell" data-hash="ws3_cache/html/unnamed-chunk-9_3a3c6cbb5563cebc09bad384e8fb4381">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="do">###</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">#Mapping over multiple arguments</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="do">###</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">=</span> <span class="fu">list</span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="sc">-</span><span class="dv">3</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>mu <span class="sc">|&gt;</span> </span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(rnorm, <span class="at">n =</span> <span class="dv">5</span>) <span class="sc">|&gt;</span> <span class="co">#rnorm - function to extract values from a normal continuous distribution based on some parameters</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str</span>()</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="do">## List of 3</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ : num [1:5] 5.1 3.51 5.93 6.01 4.43</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ : num [1:5] 9.14 10.32 11.35 9.64 9.95</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ : num [1:5] -3.15 -3.56 -3.26 -1.93 -2.37</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; List of 3</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="co">#Adding SD as well</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="do">###</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="co">#map2 or pmap allows you to iterate over two or more vectors in parallel</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="do">###</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>sigma <span class="ot">=</span> <span class="fu">list</span>(<span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">10</span>)</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a><span class="fu">map2</span>(mu, sigma, rnorm, <span class="at">n =</span> <span class="dv">5</span>) <span class="sc">|&gt;</span> <span class="fu">str</span>()</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a><span class="do">## List of 3</span></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ : num [1:5] 3.37 4.13 2.8 4.85 5.27</span></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ : num [1:5] 8.86 19.33 20.84 -3.29 4.17</span></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ : num [1:5] 3.77 5.76 1.95 -8.68 -14.03</span></span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a><span class="co">#or with pmap</span></span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>n <span class="ot">=</span> <span class="fu">list</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>)</span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>args2 <span class="ot">=</span> <span class="fu">list</span>(<span class="at">mean =</span> mu, <span class="at">sd =</span> sigma, <span class="at">n =</span> n)</span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>args2 <span class="sc">|&gt;</span> </span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pmap</span>(rnorm) <span class="sc">|&gt;</span> </span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str</span>()</span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a><span class="do">## List of 3</span></span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ : num 5.87</span></span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ : num [1:3] 11.7 10.1 17</span></span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ : num [1:5] 22.33 -5.45 -7.94 -14.11 9.66</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="quartormardown" class="level2">
+<h2 class="anchored" data-anchor-id="quartormardown">Quarto/rmardown</h2>
+<p>There are times when we want to inbed R into a document to make it easier to read. This can be done with quarto (<code>.qmd</code>) or rmarkdown (<code>.rmd</code>) files. These file types are more similar to word documents, have their own syntax, and can embed programming languages (not just R) into the document. These files can be output as html, pdf, or docx files. These are very flexible and can be used to make single documents, books, websites, and presentations. Resources about <a href="https://quarto.org/docs/reference/">quarto</a> and <a href="https://rmarkdown.rstudio.com/lesson-1.html">rmarkdown</a></p>
+<p>For PDFs in <a href="https://quarto.org/docs/output-formats/pdf-basics.html">Quarto</a> and <a href="https://bookdown.org/yihui/rmarkdown/pdf-document.html">Rmarkdown</a>. You will need to download some form of LaTex to write the PDFs. R recommends the following code</p>
+<div class="cell" data-hash="ws3_cache/html/unnamed-chunk-10_4c7d256bb77b5e5d199b972cc7b60e53">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">'tinytex'</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>tinytex<span class="sc">::</span><span class="fu">install_tinytex</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="exercises" class="level2">
+<h2 class="anchored" data-anchor-id="exercises">Exercises</h2>
+<ol type="1">
+<li><p>Using the iris data create a new tibble or dataframe that calculates the median value of all petal and sepal measurements for each species.</p></li>
+<li><p>Simulate population growth over 25 years of a population that has random growth from a mean of 10 individuals and a sd of 5 individuals that starts at a population size of 100.</p></li>
+<li><p>Plot population size over time</p></li>
+<li><p>Create a quarto or rmarkdown document of the exercises.</p></li>
+</ol>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
