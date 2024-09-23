@@ -31,7 +31,7 @@ For this homework, you will be using a fisheries dataset from Everglades Nationa
 
 6. (2 pts) Classify the CPUE for each species as a below average (< 40% quantile), average (between 40-60% quantile), or above average year.\
 
-7.  (5 pts) Create a conditional (i.e. `TRUE`/`FALSE`) vector to compare if CPUE cover is higher compared to the previous year before for each species.\
+7.  (5 pts) Create a conditional (i.e. `TRUE`/`FALSE`) vector to compare if CPUE is higher compared to the previous year before for each species.\
 ***Hint** - this can be done with a for loop*\
 
 8.  (3 pts) Plot the count of years where CPUE is higher than the previous year and the count of years where CPUE cover is lower than the previous year for each species.\
