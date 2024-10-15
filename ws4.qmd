@@ -1,6 +1,6 @@
 ---
 title: "Workshop 4: Density independent models"
-author: "BSC 6926 B53"
+author: "BSC 6926 B52"
 date: "10/7/2024"
 output: 
   html_document:
