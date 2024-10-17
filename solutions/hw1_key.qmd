@@ -1,0 +1,212 @@
+---
+title: "Homework 1 solutions"
+format: 
+  html:
+    toc: true
+    theme: yeti
+---
+
+## Instructions
+
+Please, using quarto or rmarkdown, answer the questions below. You can use the class notes, the recommended books, and other web materials to help answer the questions. You can work on the homework in groups, but please independently submit pdf or html document containing answers and code.
+
+**In two weeks (09/30/24 by 11:59pm)**, please submit your pdf file to CANVAS using the following filename structure LastName_HW1_Filetype_Date (e.g., Santos_HW1_R_20230927). Again, you can share and work together on the code, but independently, submit your answers to the short answer questions in your own words and as markdown text under each question. Here are links to resources about [quarto](https://r4ds.hadley.nz/quarto) and [rmarkdown](https://rmarkdown.rstudio.com/lesson-1.html).
+
+Please reach out if you have any questions about the hw or how to make a pdf using quarto or rmarkdown.
+
+## Data for questions
+
+For this homework, you will be using a fisheries dataset from Everglades National Park in Florida Bay. The dataset [ENP_catch.csv](https://github.com/SeascapeEcologyLab-workshops/BSC6926-B52_Fall2024/blob/main/data/ENP_catch.csv) contains catch per unit effort (CPUE) data for three species (Red drum, Spotted seatrout, and Crevalle Jack) species in Everglades National Park between between 1980-2017. This data is on github and should be downloaded to complete the homework.
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = T, cache = T)
+```
+
+## Questions
+
+1.  (2 pts) Load the ENP_catch.csv dataset as a dataframe or tibble. Short answer question 1: What are the dimension of the dataset?\
+    *The dimensions of the data are 38 rows x 4 cols*
+
+```{r}
+library(tidyverse)
+
+df = read_csv('data/ENP_catch.csv')
+str(df)
+
+```
+
+2.  (2 pts) Convert the tibble/dataframe so that there is a column for species and one for CPUE.
+
+```{r}
+df_l = df |> 
+      pivot_longer(`Crevalle jack`:`Spotted seatrout`, 
+                   names_to = 'species', values_to = 'CPUE')
+```
+
+3.  (2 pts) Calculate the mean and SD of CPUE for each year. Short answer question 3: What are the years with the highest and lowest CPUE? Is the species with the highest and lowest CPUE the same for each year?\
+
+```{r}
+# calculate the mean and sd of CPUE and extract species with max and min per year
+df_m = df_l |> 
+      group_by(Year) |> 
+      summarize(CPUE_m = mean(CPUE),
+                CPUE_sd = sd(CPUE),
+                max_sp = species[which.max(CPUE)],
+                min_sp = species[which.min(CPUE)])
+
+# year with max CPUE
+df_m$Year[which.max(df_m$CPUE_m)]
+max(df_m$CPUE_m)
+
+#year with min CPUE
+df_m$Year[which.min(df_m$CPUE_m)]
+
+# species with maximum values 
+df_m$max_sp
+
+# species with min values
+df_m$min_sp
+
+```
+
+*Short answer: The year with the highest mean CPUE is `{r} max(df_m$CPUE_m)` in `{r} df_m$Year[which.max(df_m$CPUE_m)]`. The year with the lowest mean CPUE is `{r} min(df_m$CPUE_m)` in `{r} df_m$Year[which.min(df_m$CPUE_m)]`. The species with the highest CPUE is always Spotted seatrout, but the minimum is both Crevalle Jack and Red drum depending on the year*
+
+4.  (4 pts) Add 2 new columns to the dataframe/tibble from question 2. One column should contain the proportion of the yearly total CPUE for each species. The other column should scale CPUE so that the yearly catch is relative to the maximum CPUE for that species.\
+
+```{r}
+df_n = df_l |> 
+      group_by(Year) |> 
+      mutate(prop = CPUE/sum(CPUE)) |> 
+      group_by(species) |> 
+      mutate(sCPUE = CPUE/max(CPUE)) |> 
+      ungroup()
+
+df_n
+```
+
+
+5.  (5 pts) Plot the metrics (proportion of total catch, CPUE, and scaled CPUE) for each species as a multi-panel plot (one metric per panel). The plot should show the distribution of data (e.g. boxplot, point range) and not use the default color scheme.\
+```{r}
+library(viridis)
+
+# using ggarrange
+library(ggpubr)
+
+a = ggplot(df_n, aes(species, CPUE, fill = species))+
+      geom_boxplot()+
+      scale_fill_viridis_d()+
+      labs(x = 'Species', y = 'CPUE')+
+      scale_x_discrete(labels = c('Crevalle \njack',
+                                  'Red \ndrum',
+                                  'Spotted \nseatrout'))+
+      theme_classic()
+      
+b = ggplot(df_n, aes(species, prop, fill = species))+
+      geom_boxplot()+
+      scale_fill_viridis_d()+
+      labs(x = 'Species', y = 'Yearly Proportion of CPUE')+
+      scale_x_discrete(labels = c('Crevalle \njack',
+                                  'Red \ndrum',
+                                  'Spotted \nseatrout'))+
+      theme_classic()
+
+c = ggplot(df_n, aes(species, sCPUE, fill = species))+
+      geom_boxplot()+
+      scale_fill_viridis_d()+
+      labs(x = 'Species', y = 'scaled CPUE')+
+      scale_x_discrete(labels = c('Crevalle \njack',
+                                  'Red \ndrum',
+                                  'Spotted \nseatrout'))+
+      theme_classic()
+
+ggarrange(a,b,c,
+          labels = 'auto',
+          legend = 'none',
+          nrow = 1)
+
+# using facet_wrap
+d = df_n |> 
+      pivot_longer(CPUE:sCPUE, names_to = 'metric', 
+                   values_to = 'value')
+
+
+ggplot(d, aes(species, value, color = species))+
+      stat_summary(fun = mean,
+               fun.min = function(x) mean(x) - sd(x), 
+               fun.max = function(x) mean(x) + sd(x), 
+               geom = "pointrange")+
+      scale_color_viridis_d(option = 'turbo')+
+      scale_x_discrete(labels = c('Crevalle \njack',
+                                  'Red \ndrum',
+                                  'Spotted \nseatrout'))+
+      labs(x = 'Species', y = 'Value')+
+      facet_wrap(~metric)+
+      theme_bw()+
+      theme(legend.position = 'none')
+```
+
+
+6.  (2 pts) Classify the CPUE for each species as a below average (< 40% quantile), average (between 40-60% quantile), or above average year.\
+```{r}
+df_q = df_n |> 
+      group_by(species) |> 
+      mutate(class = case_when(
+            CPUE < quantile(CPUE, 0.4) ~ 'Below average',
+            between(CPUE, 
+                    quantile(CPUE, 0.4), 
+                    quantile(CPUE, 0.6)) ~ 'Average',
+            CPUE > quantile(CPUE, 0.6) ~ 'Above average'
+      ))
+
+df_q
+```
+
+
+7.  (5 pts) Create a conditional (i.e. `TRUE`/`FALSE`) vector to compare if CPUE is higher compared to the previous year before for each species.\
+    ***Hint** - this can be done with a for loop*\
+```{r}
+# for loop 
+df_q$comp_fl = NA
+
+yrs = unique(df_q$Year)
+
+for (i in 2:length(yrs)){
+      df_q$comp_fl[df_q$species == 'Crevalle jack' & df_q$Year == yrs[i]] = 
+            df_q$CPUE[df_q$species == 'Crevalle jack'& df_q$Year == yrs[i]] > 
+            df_q$CPUE[df_q$species == 'Crevalle jack'& df_q$Year == yrs[i-1]]
+      
+       df_q$comp_fl[df_q$species == 'Red drum'& df_q$Year == yrs[i]] = 
+            df_q$CPUE[df_q$species == 'Red drum'& df_q$Year == yrs[i]] > 
+            df_q$CPUE[df_q$species == 'Red drum'& df_q$Year == yrs[i-1]]
+       
+        df_q$comp_fl[df_q$species == 'Spotted seatrout'& df_q$Year == yrs[i]] = 
+            df_q$CPUE[df_q$species == 'Spotted seatrout'& df_q$Year == yrs[i]] > 
+            df_q$CPUE[df_q$species == 'Spotted seatrout'& df_q$Year == yrs[i-1]]
+}
+
+# dplyr
+df_q = df_q |> 
+      group_by(species) |> 
+      mutate(comp_dp = CPUE > lag(CPUE))
+
+df_q
+```
+
+
+8.  (3 pts) Plot the count of years where CPUE is higher than the previous year and the count of years where CPUE is lower than the previous year for each species.\
+```{r}
+d = df_q |> 
+      drop_na() |> 
+      group_by(species) |> 
+      count(comp_dp) 
+
+ggplot(d, aes(comp_dp, n, fill = species))+
+      geom_col(position = 'dodge')+
+      scale_fill_viridis_d(option = 'mako', end = 0.95)+
+      labs(x = 'CPUE greater than previous year',
+           y = 'Number of years', 
+           fill = 'Species')+
+      theme_classic()
+
+```
+
