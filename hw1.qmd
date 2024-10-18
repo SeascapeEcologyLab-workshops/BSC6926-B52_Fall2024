@@ -5,6 +5,8 @@ format:
     toc: true
     theme: yeti
 ---
+[Answer key](solutions/hw1_key.html)\
+
 ## Instructions
 
 Please, using quarto or rmarkdown, answer the questions below. You can use the class notes, the recommended books, and other web materials to help answer the questions. You can work on the homework in groups, but please independently submit pdf or html document containing answers and code.
