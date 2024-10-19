@@ -150,6 +150,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="nav-link" href="../ws5.html"> 
 <span class="menu-text">WS 5</span></a>
   </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../ws6.html"> 
+<span class="menu-text">WS 6</span></a>
+  </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
@@ -430,24 +434,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">quantile</span>(CPUE, <span class="fl">0.4</span>), </span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">quantile</span>(CPUE, <span class="fl">0.6</span>)) <span class="sc">~</span> <span class="st">'Average'</span>,</span>
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>            CPUE <span class="sc">&gt;</span> <span class="fu">quantile</span>(CPUE, <span class="fl">0.6</span>) <span class="sc">~</span> <span class="st">'Above average'</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>      ))</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>df_q</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 114 × 6</span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="do">## # Groups:   species [3]</span></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="do">##     Year species           CPUE  prop sCPUE class        </span></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;dbl&gt; &lt;chr&gt;            &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;        </span></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="do">##  1  1980 Crevalle jack    0.752 0.289 0.740 Above average</span></span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="do">##  2  1980 Red drum         0.818 0.315 0.892 Above average</span></span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="do">##  3  1980 Spotted seatrout 1.03  0.396 0.711 Below average</span></span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="do">##  4  1981 Crevalle jack    0.741 0.271 0.730 Above average</span></span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="do">##  5  1981 Red drum         0.811 0.296 0.885 Above average</span></span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="do">##  6  1981 Spotted seatrout 1.19  0.433 0.820 Above average</span></span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="do">##  7  1982 Crevalle jack    0.847 0.298 0.834 Above average</span></span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="do">##  8  1982 Red drum         0.695 0.245 0.759 Above average</span></span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="do">##  9  1982 Spotted seatrout 1.30  0.458 0.899 Above average</span></span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="do">## 10  1983 Crevalle jack    0.707 0.244 0.696 Above average</span></span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a><span class="do">## # ℹ 104 more rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>      )) <span class="sc">|&gt;</span> </span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">Quantile =</span> <span class="fu">factor</span>(<span class="fu">findInterval</span>(CPUE, <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="fu">quantile</span>(CPUE,</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="at">probs=</span><span class="fu">c</span>(<span class="fl">0.4</span>, .<span class="dv">6</span>)), <span class="cn">Inf</span>)),</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="at">labels=</span><span class="fu">c</span>(<span class="st">"Below average"</span>,<span class="st">"Average"</span>,<span class="st">"Above average"</span>)))</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>df_q</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 114 × 7</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="do">## # Groups:   species [3]</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="do">##     Year species           CPUE  prop sCPUE class         Quantile     </span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;dbl&gt; &lt;chr&gt;            &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;         &lt;fct&gt;        </span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="do">##  1  1980 Crevalle jack    0.752 0.289 0.740 Above average Above average</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="do">##  2  1980 Red drum         0.818 0.315 0.892 Above average Above average</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="do">##  3  1980 Spotted seatrout 1.03  0.396 0.711 Below average Below average</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="do">##  4  1981 Crevalle jack    0.741 0.271 0.730 Above average Above average</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="do">##  5  1981 Red drum         0.811 0.296 0.885 Above average Above average</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a><span class="do">##  6  1981 Spotted seatrout 1.19  0.433 0.820 Above average Above average</span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a><span class="do">##  7  1982 Crevalle jack    0.847 0.298 0.834 Above average Above average</span></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a><span class="do">##  8  1982 Red drum         0.695 0.245 0.759 Above average Above average</span></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a><span class="do">##  9  1982 Spotted seatrout 1.30  0.458 0.899 Above average Above average</span></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a><span class="do">## 10  1983 Crevalle jack    0.707 0.244 0.696 Above average Above average</span></span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a><span class="do">## # ℹ 104 more rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol start="7" type="1">
 <li>(5 pts) Create a conditional (i.e.&nbsp;<code>TRUE</code>/<code>FALSE</code>) vector to compare if CPUE is higher compared to the previous year before for each species.<br>
