@@ -158,7 +158,12 @@ df_q = df_n |>
                     quantile(CPUE, 0.4), 
                     quantile(CPUE, 0.6)) ~ 'Average',
             CPUE > quantile(CPUE, 0.6) ~ 'Above average'
-      ))
+      )) |> 
+      mutate(Quantile = factor(findInterval(CPUE, c(-Inf, quantile(CPUE,
+probs=c(0.4, .6)), Inf)),
+labels=c("Below average","Average","Above average")))
+
+
 
 df_q
 ```
