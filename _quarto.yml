@@ -32,8 +32,8 @@ website:
     right:
     - text: 'HW 1'
       href: hw1.qmd
-    # - text: 'HW 2'
-    #   href: hw2.qmd
+    - text: 'HW 2'
+      href: hw2.qmd
     # - text: 'HW 3'
     #   href: hw3.qmd
 format:
