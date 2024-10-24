@@ -1,5 +1,5 @@
 ---
-title: "Workshop 5: Density independent models"
+title: "Workshop 5: Density dependent models"
 author: "BSC 6926 B52"
 date: "10/14/2024"
 format: 
