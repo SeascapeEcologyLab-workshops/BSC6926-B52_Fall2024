@@ -1,0 +1,191 @@
+---
+format: 
+  html:
+    toc: false
+    theme: yeti
+---
+## Key for workshop 6 exercises
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = T, cache = T)
+```
+
+1. Create a transition matrix for a 2 stage population where the the probability of stage 1 survival and stays in stage 1 = 0, the probability of survival of stage 1 and transition to stage 2 = 0.1, the survival of stage 2 = 0.8, and contribution of stage 2 to stage 1 = 2. 
+
+```{r}
+library(tidyverse)
+p11 = 0
+p21 = 0.8
+p22 = 0.1
+F12 = 2
+
+# set up transition matrix 
+A = matrix(c(p11, F12, p21, p22), byrow = T, ncol = 2)
+A
+```
+
+
+2. Use the transition matrix from exercise 1 to simulate 50 years of a population with a starting population of 50 individuals in stage 1 and 25 individuals in stage 2. Plot the results. 
+
+```{r}
+# manual 
+s1 = 50
+s2 = 25
+
+#matrix of populations
+p = matrix(c(s1, s2), ncol = 1)
+p
+
+years = 50
+
+# place to store data
+pop = tibble(time = 0:years,
+             Nt = NA, 
+             s1 = NA,
+             s2 = NA)
+
+pop$Nt[pop$time == 0] = sum(p)
+pop$s1[pop$time == 0] = p[1]
+pop$s2[pop$time == 0] = p[2]
+
+pop
+
+for(i in 1:years){
+  p = A %*% p
+  pop$Nt[pop$time == i] = sum(p)
+  pop$s1[pop$time == i] = p[1]
+  pop$s2[pop$time == i] = p[2]
+}
+
+df = pop %>% 
+  pivot_longer(Nt:s2, names_to = 'stage', values_to = 'n') %>% 
+  mutate(stage = factor(stage, levels = c('Nt','s1','s2')))
+
+ggplot(df, aes(time, n, color = stage)) +
+  geom_point() +
+  geom_line(size = 1) +
+  labs(x = 'Time', y = 'Population size', color = 'Stage') +
+  scale_color_manual(values = c('black', 'red', 'blue'))+
+  theme_bw()
+
+
+
+# popbio
+library(popbio)
+stages = c("s1", "s2")
+
+# create projection matrix
+A = matrix(c(p11, F12, p21, p22), byrow = T, ncol = 2, dimnames = list(stages, stages))
+
+# vector of population sizes 
+n = c(50,25)
+
+# run model
+p = pop.projection(A = A, n = n, iterations = 50)
+p
+
+stage.vector.plot(p$stage.vectors)
+
+# Plot using ggplot
+
+pp = tibble(time = as.numeric(colnames(p$stage.vectors)),
+            s1 = p$stage.vectors[1,],
+            s2 = p$stage.vectors[2,],
+            total = p$pop.sizes) %>% 
+  pivot_longer(s1:total, names_to = 'stage', values_to = 'n') %>% 
+  mutate(stage = factor(stage, 
+                        levels =c('total','s1','s2')))
+
+ggplot(pp, aes(time, n, color = stage)) +
+  geom_point() +
+  geom_line(size = 1) +
+  labs(x = 'Time', y = 'Population size', color = 'Stage') +
+  scale_color_manual(values = c('black', 'brown', 'pink'))+
+  theme_bw()
+
+```
+
+
+3. _Challenge_: Using the 3 matrices below. Simulate the same population above. Use a probability of 0.5 for average year, 0.3 for poor year, and 0.2 for good year. Plot your results\
+$$ average = \begin{bmatrix}
+0&2 \\
+0.1&0.8 
+\end{bmatrix}$$
+$$
+poor = \begin{bmatrix}
+0&1 \\
+0.1&0.6
+\end{bmatrix}$$
+
+$$ 
+good = \begin{bmatrix}
+0&3 \\
+0.1&0.8
+\end{bmatrix}$$
+
+```{r}
+stages = c("s1", "s2")
+average = matrix(c(0, 2, 0.1, 0.8), byrow = T, ncol = 2, dimnames = list(stages, stages))
+poor = matrix(c(0, 1, 0.1, 0.6), byrow = T, ncol = 2, dimnames = list(stages, stages))
+good = matrix(c(0, 3, 0.1, 0.8), byrow = T, ncol = 2, dimnames = list(stages, stages))
+
+As = list(average, poor, good)
+
+# popbio
+# starting population size
+n = c(50,25)
+names(n) = c('s1','s2')
+
+# unequal probabilities for projection matrices
+pop = stoch.projection(matrices = As, n0 = n, nreps = 100, prob = c(0.5, 0.3, 0.2))%>% 
+  as_tibble() %>% 
+  mutate(time = row_number(),
+         Nt = s1+ s2)
+
+
+ggplot(pop, aes(Nt)) +
+  geom_density() +
+  labs(x = 'Population size') +
+  theme_bw()
+
+# manual with size over time
+s1 = 50
+s2 = 25
+
+#matrix of populations
+p = matrix(c(s1, s2), ncol = 1)
+p
+
+years = 50
+
+# place to store data
+pop = tibble(time = 0:years,
+             Nt = NA, 
+             s1 = NA,
+             s2 = NA)
+
+pop$Nt[pop$time == 0] = sum(p)
+pop$s1[pop$time == 0] = p[1]
+pop$s2[pop$time == 0] = p[2]
+
+pop
+
+for(i in 1:years){
+  A = sample(As, size = 1, prob= c(0.5,0.3,0.2))
+  p = A[[1]] %*% p
+  pop$Nt[pop$time == i] = sum(p)
+  pop$s1[pop$time == i] = p[1]
+  pop$s2[pop$time == i] = p[2]
+}
+
+df = pop %>% 
+  pivot_longer(Nt:s2, names_to = 'stage', values_to = 'n') %>% 
+  mutate(stage = factor(stage, levels = c('Nt','s1','s2')))
+
+ggplot(df, aes(time, n, color = stage)) +
+  geom_point() +
+  geom_line(size = 1) +
+  labs(x = 'Time', y = 'Population size', color = 'Stage') +
+  scale_color_manual(values = c('black', 'red', 'blue'))+
+  theme_bw()
+```
+

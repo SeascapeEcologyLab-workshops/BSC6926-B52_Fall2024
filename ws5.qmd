@@ -324,3 +324,5 @@ Chaos - non random, complex, and non repeating cycles sensitive to initial condi
 3)  Did it reach $K$? If not, how many years does it take based on your $r_d$? Plot the results.
 
 4)  Challenge: Simulate/Project the sparrow based on different $K$ = 25, 30, 40, 50. Plot the results.
+
+[Exercise Solutions](solutions/Key_ws5.html)\

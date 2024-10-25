@@ -627,3 +627,5 @@ ggarrange(ggarrange(a,b, labels = c('A','B'), common.legend = T),c,
 3.    Merge the dataframe/tibbles from exercises 1 and 2. 
 
 4.    Plot the CPUE for each basin both over time and as a summary of the entire year using a different color for each basin. 
+
+[Exercise Solutions](solutions/Key_ws2.html)\

@@ -321,3 +321,5 @@ Slope of line in b is $r$ (intrisic rate of increase)
     *Hint: Look at the `for` loop/dplyr examples above*
 
 3.  *Challenge*: Simulate a population with varying $\lambda$ at each time step.
+
+[Exercise Solutions](solutions/Key_ws4.html)\

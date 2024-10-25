@@ -1,0 +1,101 @@
+---
+format: 
+  html:
+    toc: false
+    theme: yeti
+---
+## Key for workshop 5 exercises
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = T, cache = T)
+```
+
+1)  Using the sparrows dataset from the primer package, plot the population size over time. Calculate the average $\lambda$ (hint: you will need to use the geometric mean) for the sparrow population.
+```{r}
+library(tidyverse)
+library(primer)
+library(DescTools)
+data('sparrows')
+
+ggplot(data=sparrows, aes(x=Year, y=Count)) +
+  geom_line() + 
+  geom_point() +
+  theme_bw()
+
+df = sparrows |>  
+  mutate(lambda = lead(Count)/Count) |> 
+  summarize(mean = Gmean(lambda, na.rm = T),
+            sd = Gsd(lambda, na.rm = T))
+
+```
+
+
+2)  Project the population over the next 50 years for the sparrow population using the average $\lambda$ from exercise 1. For now use the mean sparrow count for $K$, and use the minimum sparrow count as $N_0$. Plot the results.
+```{r}
+lambda = df$mean
+rd = lambda - 1
+K = mean(sparrows$Count)
+N0 = min(sparrows$Count)
+years = 50
+  
+pop = tibble(time = 0:years, Nt = NA) 
+pop$Nt[pop$time == 0] = N0
+
+# for loop
+for(i in 2:length(pop$time)){
+  pop$Nt[i] = pop$Nt[i - 1]  + rd*pop$Nt[i - 1]*(1 - pop$Nt[i - 1] / K)
+}
+
+ggplot(data=pop, aes(x=time, y=Nt)) +
+  geom_line() + 
+  geom_point() +
+  theme_bw()
+```
+
+
+3)  Did it reach $K$? If not, how many years does it take based on your $r_d$? Plot the results.
+```{r}
+lambda = df$mean
+rd = lambda - 1
+K = mean(sparrows$Count)
+N0 = min(sparrows$Count)
+years = 10000
+
+pop = tibble(time = 0:years, Nt = NA) 
+pop$Nt[pop$time == 0] = N0
+
+# for loop
+for(i in 2:length(pop$time)){
+  pop$Nt[i] = pop$Nt[i - 1]  + rd*pop$Nt[i - 1]*(1 - pop$Nt[i - 1] / K)
+}
+
+ggplot(data=pop, aes(x=time, y=Nt)) +
+  geom_line() + 
+  geom_point() +
+  theme_bw()
+```
+
+
+4)  Challenge: Simulate/Project the sparrow based on different $K$ = 25, 30, 40, 50. Plot the results.
+```{r}
+lambda = df$mean
+rd = lambda - 1
+K = c(25,30,40,50)
+N0 = min(sparrows$Count)
+years = 500
+
+pop = tibble(time = rep(0:years, times = length(K)), Nt = NA, K = rep(K, each = years+1)) 
+pop$Nt[pop$time == 0] = N0
+
+# for loop
+for(i in 1:nrow(pop)){
+  if(pop$time[i] > 0){
+    pop$Nt[i] = pop$Nt[i - 1]  + rd*pop$Nt[i - 1]*(1 - pop$Nt[i - 1] / pop$K[i])
+  }
+}
+
+ggplot(data=pop, aes(x=time, y=Nt, color = as.factor(K))) +
+  geom_line() + 
+  geom_point() +
+  theme_bw()
+
+```

@@ -309,3 +309,5 @@ tinytex::install_tinytex()
 3.  Plot population size over time
 
 4.  Create a quarto or rmarkdown document of the exercises.
+
+[Exercise Solutions](solutions/Key_ws3.html)\

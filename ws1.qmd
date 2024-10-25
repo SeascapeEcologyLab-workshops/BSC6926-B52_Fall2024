@@ -305,3 +305,5 @@ d$cyl[1]
 4.    Save the `data.frame`/`tibble` created in exercise 3 as a .csv
 
 5.    Load in files a.csv and b.csv (found on [github](https://github.com/SeascapeEcologyLab-workshops/BSC6926-B52_Fall2024/tree/main/data) and canvas) and assign each as an object.
+
+[Exercise Solutions](solutions/Key_ws1.html)\

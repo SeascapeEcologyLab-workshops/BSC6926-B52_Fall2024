@@ -1,0 +1,54 @@
+---
+format: 
+  html:
+    toc: false
+    theme: yeti
+---
+## Key for workshop 3 exercises
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = T, cache = T)
+```
+
+1. Using the iris data create a new tibble or dataframe that calculates the median value of all petal and sepal measurements for each species. 
+```{r}
+library(tidyverse)
+
+df = iris |> 
+  group_by(Species) |> 
+  summarize(across(where(is.numeric), median))
+
+df = iris |> 
+  group_by(Species) |> 
+  summarize(across(Sepal.Length:Petal.Length, median))
+
+```
+
+
+2. Simulate population growth over 25 years of a population that has random growth from a mean of 10 individuals and a sd of 5 individuals that starts at a population size of 100. 
+```{r}
+start = 100 
+steps = 25
+pop = tibble(time = 0:steps, n = NA) #Output vector size 10
+pop$n[pop$time == 0] = start
+
+for (t in 1:steps){ #sequence 
+  growth = rnorm(n =1, mean = 10, sd = 5) #extracting random value normal dist
+  pop$n[pop$time == t] = growth + pop$n[pop$time == (t-1)]
+}
+```
+
+
+3. Plot population size over time
+```{r}
+ggplot(pop, aes(time, n))+
+  geom_point(size = 2)+
+  geom_line(linewidth = 1)+
+  labs(x = 'Time', y = expression(italic(N[t])))+
+  theme_classic()+
+  theme(axis.text = element_text(size = 12),
+        axis.title = element_text(size = 14))
+
+```
+
+
+4. Create a quarto or rmarkdown document of the exercises.
