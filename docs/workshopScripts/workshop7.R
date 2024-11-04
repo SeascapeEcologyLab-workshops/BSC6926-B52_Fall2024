@@ -1,0 +1,358 @@
+#' """ Workshop 7: Community data: diversity metrics
+#'     @author: BSC 6926 B52
+#'     date: 11/5/24"""
+
+library(tidyverse)
+
+## Community Data
+#Community data can vary in format, but typically involves abundance, biomass, or CPUE data for multiple species collected in each sample. Data can be stored in wide (species ID for each column) or long format. When examining community data, the first step is usually data exploration which can be done by calculating summary statistics or plotting.
+
+
+
+# data in wide format
+marsh_w = read_csv('data/Calcasieu.csv') |> 
+  mutate(site = as.character(site),
+         month = month(date)) 
+
+marsh_w
+
+# convert to long format for plotting
+marsh_l = marsh_w |> 
+  pivot_longer(cols = 4:62, 
+               names_to = "Species", 
+               values_to = "Count") 
+
+marsh_l
+
+# calculate summary statistics
+
+marsh_ss = marsh_l |> 
+  group_by(site) |> 
+  summarise(mean_count = mean(Count, na.rm = TRUE),
+            sd_count = sd(Count, na.rm = TRUE),
+            total = sum(Count, na.rm = TRUE)) 
+
+marsh_ss
+
+
+### Plot density of Abundance
+
+ggplot(marsh_l, aes(x = Count, fill = site))+
+  geom_density(alpha=0.4) +
+  geom_vline(data=marsh_ss, aes(xintercept=mean_count, color=site),
+             linetype="dashed", linewidth = 1) +
+  theme_bw()
+
+# change scale of axis
+ggplot(marsh_l, aes(x = Count, fill = site))+
+  geom_density(alpha=0.4) +
+  geom_vline(data=marsh_ss, aes(xintercept=mean_count, color=site),
+             linetype="dashed", linewidth = 1) +
+  scale_x_log10()+
+  theme_bw()
+
+
+### Violin plot of abundance
+
+
+ggplot(marsh_l, aes(x = site, y = Count, fill = site))+
+  geom_violin(alpha=0.4) +
+  stat_summary(fun.data=mean_sdl, mult=1, 
+               geom="pointrange", color="red") +
+  scale_y_log10()+
+  theme_bw()
+
+
+
+## Summarize and plot by species
+
+marsh_summary2 = marsh_l |> 
+  group_by(site, Species) |> 
+  summarise(mean_count = mean(Count, na.rm = TRUE),
+            sd_count = sd(Count, na.rm = TRUE),
+            total = sum(Count, na.rm = TRUE)) |> 
+  mutate(Species = fct_reorder(Species, mean_count, .desc = TRUE))
+
+ggplot(marsh_summary2, aes(x = Species, y = mean_count, fill = site))+
+  geom_bar(stat = "identity", position=position_dodge()) + 
+  labs(y = 'Mean Count', x = 'Species', fill = 'site')+
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 45, vjust = 0.5))
+
+# filter to only top species
+ggplot(marsh_summary2 |> filter(total > 1000), aes(x = Species, y = mean_count, fill = site))+
+  geom_bar(stat = "identity", position=position_dodge()) + 
+  labs(y = 'Mean Count', x = 'Species', fill = 'site')+
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 45, vjust = 0.5))
+
+## Diversity metrics
+#Community data due to its multidimensionality is difficulty to interpret. Researchers have developed different indices and metrics to provide information about the biodiversity of the community data.
+
+## Species Richness
+#Species richness ($S$) is the total number of species. 
+
+marsh_l |> 
+  group_by(site, month) |> 
+  filter(Count > 0) |> 
+  summarise(richness = length(unique(Species))) |> 
+  ungroup() |> 
+  group_by(site) |> 
+  summarise(mean_richness = mean(richness, na.rm = TRUE),
+            sd_richness = sd(richness, na.rm = TRUE))
+
+## Shannon 
+# The Shannon diversity index ($H'$) is a diversity metric that accounts for species proportions and is calculated with the following formula: 
+# $$H' = -\sum_{i=1}^S p_i \log(p_i)$$
+#   where $p_i$ is the proportion of species $i$. The higher the value of $H'$, the higher the diversity of species in a particular community. The lower the value of H, the lower the diversity. A value of $H'$ = 0 indicates a community that only has one species.
+
+# for loop
+df = unique(marsh_l[c("site","month")])
+df$H = NA
+
+df
+
+for (i in 1:nrow(df)){
+  d = marsh_l |> filter(site == df$site[i],
+                          month == df$month[i],
+                          Count > 0)
+  d = d |> count(Species,wt = Count) |> 
+    mutate(pi = n/sum(n),
+           ln_pi = log(pi),
+           p_ln_pi = pi*ln_pi)
+  
+  df$H[i] = -sum(d$p_ln_pi)
+}
+
+df
+
+df |> 
+  group_by(site) |> 
+  summarise(mean_H = mean(H, na.rm = TRUE),
+            sd_H = sd(H, na.rm = TRUE))
+
+
+# dplyr
+marsh_l |> 
+  group_by(site, month) |> 
+  filter(Count > 0) |> 
+  mutate(Total = sum(Count)) |> 
+  ungroup() |> 
+  group_by(site, month, Species) |>
+  summarise(Count_Spp = sum(Count),
+            Total_Count = max(Total)) |> 
+  mutate(p = Count_Spp/Total_Count, 
+         ln_pi = log(p), 
+         p_ln_pi = p*ln_pi) |> 
+  ungroup() |> 
+  group_by(site, month) |> 
+  summarise(H = -sum(p_ln_pi)) |> 
+  ungroup() |> 
+  group_by(site) |> 
+  summarise(mean_H = mean(H, na.rm = TRUE),
+            sd_H = sd(H, na.rm = TRUE))
+
+## Simpson
+# Another popular set of indices are Simpson's indices. The Simpson index calculated is a dominance metric and is calculated
+# $$D = \sum_{i=1}^S p_i^2$$ It ranges between 0 and 1 with high values indicating that abundance is made up of a few species. Its counter part $1 - D$ is an evenness index. The inverse $1/D$ is an indication of the richness in a community with uniform evenness that would have the same level of diversity.
+
+# for loop
+df$D = NA
+df
+
+for (i in 1:nrow(df)){
+  d = marsh_l |> filter(site == df$site[i],
+                        month == df$month[i],
+                        Count > 0)
+  d = d |> count(Species,wt = Count) |> 
+    mutate(pi = n/sum(n))
+  
+  df$D[i] = sum(d$pi^2)
+}
+df$even = 1 - df$D
+df$inv = 1/df$D
+
+df
+
+df |> 
+  group_by(site) |> 
+  summarize(across(D:inv, list(mean = mean, sd = sd)))
+
+# dplyr
+marsh_l |> 
+  group_by(site, month) |> 
+  filter(Count > 0) |> 
+  mutate(Total = sum(Count)) |> 
+  ungroup() |> 
+  group_by(site, month, Species) |>
+  summarize(Count_Spp = sum(Count),
+            Total_Count = max(Total)) |> 
+  mutate(p = Count_Spp/Total_Count, 
+         p2 = p^2) |> 
+  ungroup() |> 
+  group_by(site, month) |> 
+  summarise(s_dominance = sum(p2),
+            s_evenness = 1 - s_dominance,
+            inverse_s = 1/s_dominance) |> 
+  group_by(site) |> 
+  summarize(across(s_dominance:s_evenness, list(mean = mean, sd = sd)))
+
+## Species accumulation curves
+# Also called rarefaction curve, plots the number of species as a function of the number of samples.
+# add unique ID for each sampling event
+marsh_l = marsh_l |> 
+  group_by(site, date) |> 
+  mutate(sample_ID = cur_group_id()) |> 
+  ungroup()
+
+# curve for site 15
+m15 = marsh_l |> 
+  filter(site == '15')
+
+m15_sample_ID  = unique(m15$sample_ID)
+
+# store data
+sp_m15 = tibble(site = '15', n_samp = 1:length(m15_sample_ID), n_spp = NA)
+
+for (i in 1:length(m15_sample_ID)){
+  # sample ID to include
+  samp = m15_sample_ID[1:i]
+  
+  # include only sample numbers 
+  d = m15 |> 
+    filter(sample_ID %in% samp,
+           Count > 0)
+  
+  sp_m15$n_spp[i] = length(unique(d$Species))
+}
+
+# curve for 30
+m30 = marsh_l |> 
+  filter(site == '30')
+
+m30_sample_ID  = unique(m30$sample_ID)
+
+# store data
+sp_m30 = tibble(site = '30', n_samp = 1:length(m30_sample_ID), n_spp = NA)
+
+for (i in 1:length(m30_sample_ID)){
+  # sample ID to include
+  samp = m30_sample_ID[1:i]
+  
+  # include only sample numbers 
+  d = m30 |> 
+    filter(sample_ID %in% samp,
+           Count > 0)
+  
+  sp_m30$n_spp[i] = length(unique(d$Species))
+}
+
+# bind and plot
+sac = bind_rows(sp_m15, sp_m30)
+
+ggplot(sac, aes(n_samp, n_spp, color = site))+
+  geom_line(linewidth = 1)+
+  labs(x = 'Number of Samples',
+       y = 'Number of Species',
+       color = 'site')+
+  theme_bw()
+
+### Iterate and use based on random samples
+
+
+# curve for site 15
+m15 = marsh_l |> 
+  filter(site == '15')
+
+m15_sample_ID  = unique(m15$sample_ID)
+
+iterations = 50
+
+# store data
+sp_m15 = tibble(site = '15', 
+               n_samp = rep(1:length(m15_sample_ID),times = iterations), 
+               n_spp = NA,
+               i = rep(1:iterations, each = length(m15_sample_ID)))
+
+for (j in 1:iterations) {
+  # create random sample order
+  sID = sample(m15_sample_ID)
+  for (i in 1:length(m15_sample_ID)) {
+    # sample ID to include
+    samp = sID[1:i]
+    
+    # include only sample numbers
+    d = m15 |>
+      filter(sample_ID %in% samp,
+             Count > 0)
+    
+    sp_m15$n_spp[i+((j-1)*length(m15_sample_ID))] = length(unique(d$Species))
+  }
+}
+
+avg = sp_m15 |> 
+  group_by(n_samp) |> 
+  summarize(m_spp = mean(n_spp, na.rm = T),
+            sd_spp = sd(n_spp, na.rm = T))
+
+ggplot(avg, aes(n_samp, m_spp))+
+  geom_ribbon(aes(ymin = m_spp - sd_spp, ymax = m_spp + sd_spp),
+              fill = 'grey')+
+  geom_line(linewidth = 1)+
+  labs(x = 'Number of Samples',
+       y = 'Number of Species',
+       color = 'site')+
+  theme_bw()
+
+
+## Dominance curves / Whittaker curves
+#Dominance as a function of species rank
+
+df = marsh_l |> 
+    group_by(site) |> 
+    filter(Count > 0) |> 
+    mutate(Total = sum(Count)) |> 
+    group_by(site, Species) |>
+    summarise(Count_Spp = sum(Count),
+              Total_Count = max(Total)) |> 
+    mutate(p_i = Count_Spp/Total_Count, 
+           rank = length(unique(Species))-rank(p_i)) |> 
+    ungroup()
+
+ggplot(df, aes(rank, p_i, color = site))+
+  geom_line(size = 1)+
+  labs(x = 'Species rank',
+       y = 'Dominance',
+       color = 'site')+
+  theme_bw()
+
+## K-dominance curves
+# Cumulative dominance by species rank
+
+
+df = marsh_l |> 
+    group_by(site) |> 
+    filter(Count > 0) |> 
+    mutate(Total = sum(Count)) |> 
+    ungroup() |> 
+    group_by(site, Species) |>
+    summarise(Count_Spp = sum(Count),
+              Total_Count = max(Total)) |> 
+    mutate(p_i = Count_Spp/Total_Count, 
+           rank = length(unique(Species))-rank(p_i)) |> 
+    arrange(rank, .by_group = T) |> 
+  mutate(cumsum = cumsum(p_i))
+
+ggplot(df, aes(rank, cumsum, color = site))+
+  geom_line(size = 1)+
+  labs(x = 'Species rank',
+       y = 'Cumulative Dominance',
+       color = 'site')+
+  theme_bw()
+
+# ## Exercises 
+# 1. Using the Calcasieu seine dataset, calculate the species richness for each month at each month and plot over the year. 
+# 
+# 2. Calculate the average Shannon and Simpson indeces for the fall (Sep-Nov) and Spring (March-May) for site 30. 
+# 
+# 3. _Challenge_: Calculate the average species accumulation curve for site 16 and site 28. Plot your results.
