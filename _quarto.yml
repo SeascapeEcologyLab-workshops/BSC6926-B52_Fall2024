@@ -24,8 +24,8 @@ website:
       href: ws6.qmd
     - text: 'WS 7'
       href: ws7.qmd
-    # - text: 'WS 8'
-    #   href: ws8.qmd
+    - text: 'WS 8'
+      href: ws8.qmd
     # - text: 'WS 9'
     #   href: ws9.qmd
     #   
