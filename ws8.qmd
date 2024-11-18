@@ -1,6 +1,6 @@
 ---
 title: "Workshop 8: Community data: vegan and multivariate methods"
-author: "BSC 6926 B53"
+author: "BSC 6926 B52"
 date: "11/12/2024"
 format: 
   html:
