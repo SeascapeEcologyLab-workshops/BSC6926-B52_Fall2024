@@ -1,0 +1,63 @@
+---
+title: "Homework 3"
+format: 
+  html:
+    toc: true
+    theme: yeti
+---
+
+## Instructions
+
+Please, using quarto or rmarkdown, answer the questions below. You can use the class notes, the recommended books, and other web materials to help answer the questions. You can work on the homework in groups, but please independently submit pdf document containing answers and code.
+
+**In two weeks (12/3/24 by 11:59pm)**, please submit your pdf file to CANVAS using the following filename structure LastName_HW2_Filetype_Date (e.g., Santos_HW2_R_20230927). Again, you can share and work together on the code, but independently, submit your answers to the short answer questions in your own words and as markdown text under each question. Here are links to resources about [quarto](https://r4ds.hadley.nz/quarto) and [rmarkdown](https://rmarkdown.rstudio.com/lesson-1.html).
+
+Please reach out if you have any questions about the hw or how to make a pdf using quarto or rmarkdown.
+
+## Data for questions
+
+For this homework, you will use a fish survey dataset from the Moorea Coral Reef (MCR) Long term ecological research (LTER) [site](https://mcr.lternet.edu/). This [dataset](https://portal.edirepository.org/nis/mapbrowse?packageid=knb-lter-mcr.6.62) describes the species abundance and estimated size distributions (total body length to the greatest precision possible) of fishes surveyed as part of MCR LTER's annual reef fish monitoring program. The metadata for this dataset can be found [here](https://portal.edirepository.org/nis/metadataviewer?packageid=knb-lter-mcr.6.62).
+
+## Questions
+
+## Section 1 - Exploratory Analysis of the Community (20 pts)
+1. Upload the MCR fish survey data and calculate the total abundance of each species at each site per year. (5pts) \
+
+2. Identify the species that account for 75% of the abundance across the entire time series. (5 pts).\
+
+3. Calculate the average total abundance per year at each site for each of the species that makes up 75% of the abundance, and plot the average abundance for each species at each site using a heat map (5 pts). 
+*-Hint: `geom_raster()`.*
+
+4. *Short essay question 1.1:* Based on the heatmaps, what can you conclude about the communities/assemblages across sites? (5 pts)
+
+## Section 2 – Univarite metrics of diversity (20 pts)
+1. Using the `vegan` package or a for loop, calculate the species richness, inverse Simpson index, and Shannon index ($H$) per year for each site (5 pts).\
+
+2. Calculate the rarefaction species richness of each site and year. Plot the distribution of points at each site (e.g. boxplot) (5 pts)\
+*-Hint: Make a column that contains both the site and the year to use as rownames of your matrix*
+
+3. Plot each diversity metric from question 1 and for each year and site (3 pts).\
+
+4. *Short essay question 2.1:* Based on species richness, Simpson, and Shannon indices and rarefraction species richness, what is happening to species diversity across sites and years? What can you tell about species evenness by looking at the plot? (7 pts).\
+
+## Section 3 - Community assemblage dissimilarities (20 pts)
+1. Create a community matrix with the total abundance per species per site (5 pts).\
+
+2. Calculate the Jaccard dissimilarity and identify which points have the lowest and highest dissimilarity (5 pts).
+*-Hint: Make a column that contains both the site and the year to use as rownames of your matrix*
+
+3. Project dissimilarity into 2-dimensional space using nonmetric multidimensional scaling and illustrate the results in a biplot (5 pts).
+
+4. *Short essay question 3.1:* Based on the nMDS, what can you conclude about the communities/assemblages across sites? (5 pts)
+
+## Section 4 - Community trajectory (20 pts)
+
+1. Plot the yearly trajectory for each site using bray curtis dissimilarity on the community matrix from question 3.1 (5 pts).\
+
+2. Calculate the total path length for each site (2 pts).
+
+3. Plot the speed of change for each yearly time step at each site (3 pts).\
+
+3. *Short essay question 3.1:* Based on Community trajectory, speed of change, and total path lengths, how does the community trajectory across each site compare? Are there any years where there synchronous change at each site? (5 pts).
+
+

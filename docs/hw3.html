@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>key_ws3 – BSC6926fall2024</title>
+<title>Homework 3 – BSC6926fall2024</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,59 +20,25 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<script src="../site_libs/quarto-html/quarto.js"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -101,18 +67,47 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="../index.html">
+    <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">BSC6926fall2024</span>
     </a>
   </div>
@@ -123,61 +118,61 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../sylb.html"> 
+    <a class="nav-link" href="./sylb.html"> 
 <span class="menu-text">Syllabus</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../comp.html"> 
+    <a class="nav-link" href="./comp.html"> 
 <span class="menu-text">Computer setup</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../ws1.html"> 
+    <a class="nav-link" href="./ws1.html"> 
 <span class="menu-text">WS 1</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../ws2.html"> 
+    <a class="nav-link" href="./ws2.html"> 
 <span class="menu-text">WS 2</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../ws3.html"> 
+    <a class="nav-link" href="./ws3.html"> 
 <span class="menu-text">WS 3</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../ws4.html"> 
+    <a class="nav-link" href="./ws4.html"> 
 <span class="menu-text">WS 4</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../ws5.html"> 
+    <a class="nav-link" href="./ws5.html"> 
 <span class="menu-text">WS 5</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../ws6.html"> 
+    <a class="nav-link" href="./ws6.html"> 
 <span class="menu-text">WS 6</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../ws7.html"> 
+    <a class="nav-link" href="./ws7.html"> 
 <span class="menu-text">WS 7</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../ws8.html"> 
+    <a class="nav-link" href="./ws8.html"> 
 <span class="menu-text">WS 8</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../ws9.html"> 
+    <a class="nav-link" href="./ws9.html"> 
 <span class="menu-text">WS 9</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../hw1.html"> 
+    <a class="nav-link" href="./hw1.html"> 
 <span class="menu-text">HW 1</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../hw2.html"> 
+    <a class="nav-link" href="./hw2.html"> 
 <span class="menu-text">HW 2</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../hw3.html"> 
+    <a class="nav-link active" href="./hw3.html" aria-current="page"> 
 <span class="menu-text">HW 3</span></a>
   </li>  
 </ul>
@@ -191,74 +186,99 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#instructions" id="toc-instructions" class="nav-link active" data-scroll-target="#instructions">Instructions</a></li>
+  <li><a href="#data-for-questions" id="toc-data-for-questions" class="nav-link" data-scroll-target="#data-for-questions">Data for questions</a></li>
+  <li><a href="#questions" id="toc-questions" class="nav-link" data-scroll-target="#questions">Questions</a></li>
+  <li><a href="#section-1---exploratory-analysis-of-the-community-20-pts" id="toc-section-1---exploratory-analysis-of-the-community-20-pts" class="nav-link" data-scroll-target="#section-1---exploratory-analysis-of-the-community-20-pts">Section 1 - Exploratory Analysis of the Community (20 pts)</a></li>
+  <li><a href="#section-2-univarite-metrics-of-diversity-20-pts" id="toc-section-2-univarite-metrics-of-diversity-20-pts" class="nav-link" data-scroll-target="#section-2-univarite-metrics-of-diversity-20-pts">Section 2 – Univarite metrics of diversity (20 pts)</a></li>
+  <li><a href="#section-3---community-assemblage-dissimilarities-20-pts" id="toc-section-3---community-assemblage-dissimilarities-20-pts" class="nav-link" data-scroll-target="#section-3---community-assemblage-dissimilarities-20-pts">Section 3 - Community assemblage dissimilarities (20 pts)</a></li>
+  <li><a href="#section-4---community-trajectory-20-pts" id="toc-section-4---community-trajectory-20-pts" class="nav-link" data-scroll-target="#section-4---community-trajectory-20-pts">Section 4 - Community trajectory (20 pts)</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Homework 3</h1>
+</div>
 
 
 
-<section id="key-for-workshop-3-exercises" class="level2">
-<h2 class="anchored" data-anchor-id="key-for-workshop-3-exercises">Key for workshop 3 exercises</h2>
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="instructions" class="level2">
+<h2 class="anchored" data-anchor-id="instructions">Instructions</h2>
+<p>Please, using quarto or rmarkdown, answer the questions below. You can use the class notes, the recommended books, and other web materials to help answer the questions. You can work on the homework in groups, but please independently submit pdf document containing answers and code.</p>
+<p><strong>In two weeks (12/3/24 by 11:59pm)</strong>, please submit your pdf file to CANVAS using the following filename structure LastName_HW2_Filetype_Date (e.g., Santos_HW2_R_20230927). Again, you can share and work together on the code, but independently, submit your answers to the short answer questions in your own words and as markdown text under each question. Here are links to resources about <a href="https://r4ds.hadley.nz/quarto">quarto</a> and <a href="https://rmarkdown.rstudio.com/lesson-1.html">rmarkdown</a>.</p>
+<p>Please reach out if you have any questions about the hw or how to make a pdf using quarto or rmarkdown.</p>
+</section>
+<section id="data-for-questions" class="level2">
+<h2 class="anchored" data-anchor-id="data-for-questions">Data for questions</h2>
+<p>For this homework, you will use a fish survey dataset from the Moorea Coral Reef (MCR) Long term ecological research (LTER) <a href="https://mcr.lternet.edu/">site</a>. This <a href="https://portal.edirepository.org/nis/mapbrowse?packageid=knb-lter-mcr.6.62">dataset</a> describes the species abundance and estimated size distributions (total body length to the greatest precision possible) of fishes surveyed as part of MCR LTER’s annual reef fish monitoring program. The metadata for this dataset can be found <a href="https://portal.edirepository.org/nis/metadataviewer?packageid=knb-lter-mcr.6.62">here</a>.</p>
+</section>
+<section id="questions" class="level2">
+<h2 class="anchored" data-anchor-id="questions">Questions</h2>
+</section>
+<section id="section-1---exploratory-analysis-of-the-community-20-pts" class="level2">
+<h2 class="anchored" data-anchor-id="section-1---exploratory-analysis-of-the-community-20-pts">Section 1 - Exploratory Analysis of the Community (20 pts)</h2>
 <ol type="1">
-<li>Using the iris data create a new tibble or dataframe that calculates the median value of all petal and sepal measurements for each species.</li>
+<li><p>Upload the MCR fish survey data and calculate the total abundance of each species at each site per year. (5pts)<br>
+</p></li>
+<li><p>Identify the species that account for 75% of the abundance across the entire time series. (5 pts).<br>
+</p></li>
+<li><p>Calculate the average total abundance per year at each site for each of the species that makes up 75% of the abundance, and plot the average abundance for each species at each site using a heat map (5 pts). <em>-Hint: <code>geom_raster()</code>.</em></p></li>
+<li><p><em>Short essay question 1.1:</em> Based on the heatmaps, what can you conclude about the communities/assemblages across sites? (5 pts)</p></li>
 </ol>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="do">## ✔ dplyr     1.1.4     ✔ readr     2.1.5</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">## ✔ forcats   1.0.0     ✔ stringr   1.5.1</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="do">## ✔ ggplot2   3.5.1     ✔ tibble    3.2.1</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="do">## ✔ lubridate 1.9.3     ✔ tidyr     1.3.1</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="do">## ✔ purrr     1.0.2     </span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="do">## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="do">## ✖ dplyr::filter() masks stats::filter()</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="do">## ✖ dplyr::lag()    masks stats::lag()</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="do">## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>df <span class="ot">=</span> iris <span class="sc">|&gt;</span> </span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Species) <span class="sc">|&gt;</span> </span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric), median))</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>df <span class="ot">=</span> iris <span class="sc">|&gt;</span> </span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Species) <span class="sc">|&gt;</span> </span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="fu">across</span>(Sepal.Length<span class="sc">:</span>Petal.Length, median))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ol start="2" type="1">
-<li>Simulate population growth over 25 years of a population that has random growth from a mean of 10 individuals and a sd of 5 individuals that starts at a population size of 100.</li>
+</section>
+<section id="section-2-univarite-metrics-of-diversity-20-pts" class="level2">
+<h2 class="anchored" data-anchor-id="section-2-univarite-metrics-of-diversity-20-pts">Section 2 – Univarite metrics of diversity (20 pts)</h2>
+<ol type="1">
+<li><p>Using the <code>vegan</code> package or a for loop, calculate the species richness, inverse Simpson index, and Shannon index (<span class="math inline">\(H\)</span>) per year for each site (5 pts).<br>
+</p></li>
+<li><p>Calculate the rarefaction species richness of each site and year. Plot the distribution of points at each site (e.g.&nbsp;boxplot) (5 pts)<br>
+<em>-Hint: Make a column that contains both the site and the year to use as rownames of your matrix</em></p></li>
+<li><p>Plot each diversity metric from question 1 and for each year and site (3 pts).<br>
+</p></li>
+<li><p><em>Short essay question 2.1:</em> Based on species richness, Simpson, and Shannon indices and rarefraction species richness, what is happening to species diversity across sites and years? What can you tell about species evenness by looking at the plot? (7 pts).<br>
+</p></li>
 </ol>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>start <span class="ot">=</span> <span class="dv">100</span> </span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>steps <span class="ot">=</span> <span class="dv">25</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>pop <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">time =</span> <span class="dv">0</span><span class="sc">:</span>steps, <span class="at">n =</span> <span class="cn">NA</span>) <span class="co">#Output vector size 10</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>pop<span class="sc">$</span>n[pop<span class="sc">$</span>time <span class="sc">==</span> <span class="dv">0</span>] <span class="ot">=</span> start</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (t <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>steps){ <span class="co">#sequence </span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  growth <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="at">n =</span><span class="dv">1</span>, <span class="at">mean =</span> <span class="dv">10</span>, <span class="at">sd =</span> <span class="dv">5</span>) <span class="co">#extracting random value normal dist</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  pop<span class="sc">$</span>n[pop<span class="sc">$</span>time <span class="sc">==</span> t] <span class="ot">=</span> growth <span class="sc">+</span> pop<span class="sc">$</span>n[pop<span class="sc">$</span>time <span class="sc">==</span> (t<span class="dv">-1</span>)]</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ol start="3" type="1">
-<li>Plot population size over time</li>
+</section>
+<section id="section-3---community-assemblage-dissimilarities-20-pts" class="level2">
+<h2 class="anchored" data-anchor-id="section-3---community-assemblage-dissimilarities-20-pts">Section 3 - Community assemblage dissimilarities (20 pts)</h2>
+<ol type="1">
+<li><p>Create a community matrix with the total abundance per species per site (5 pts).<br>
+</p></li>
+<li><p>Calculate the Jaccard dissimilarity and identify which points have the lowest and highest dissimilarity (5 pts). <em>-Hint: Make a column that contains both the site and the year to use as rownames of your matrix</em></p></li>
+<li><p>Project dissimilarity into 2-dimensional space using nonmetric multidimensional scaling and illustrate the results in a biplot (5 pts).</p></li>
+<li><p><em>Short essay question 3.1:</em> Based on the nMDS, what can you conclude about the communities/assemblages across sites? (5 pts)</p></li>
 </ol>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pop, <span class="fu">aes</span>(time, n))<span class="sc">+</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>)<span class="sc">+</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="dv">1</span>)<span class="sc">+</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">'Time'</span>, <span class="at">y =</span> <span class="fu">expression</span>(<span class="fu">italic</span>(N[t])))<span class="sc">+</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()<span class="sc">+</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>),</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Key_ws3_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<ol start="4" type="1">
-<li>Create a quarto or rmarkdown document of the exercises.</li>
+</section>
+<section id="section-4---community-trajectory-20-pts" class="level2">
+<h2 class="anchored" data-anchor-id="section-4---community-trajectory-20-pts">Section 4 - Community trajectory (20 pts)</h2>
+<ol type="1">
+<li><p>Plot the yearly trajectory for each site using bray curtis dissimilarity on the community matrix from question 3.1 (5 pts).<br>
+</p></li>
+<li><p>Calculate the total path length for each site (2 pts).</p></li>
+<li><p>Plot the speed of change for each yearly time step at each site (3 pts).<br>
+</p></li>
+<li><p><em>Short essay question 3.1:</em> Based on Community trajectory, speed of change, and total path lengths, how does the community trajectory across each site compare? Are there any years where there synchronous change at each site? (5 pts).</p></li>
 </ol>
 
 
