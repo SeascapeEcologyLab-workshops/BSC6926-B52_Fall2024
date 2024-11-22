@@ -64,6 +64,15 @@ ggplot(df, aes(Year, Nt, color = as.factor(Site)))+
 df = df |> 
       group_by(Taxonomy, Site) |> 
       mutate(lambda = lead(Nt)/Nt)
+
+ggplot(df, aes(Year, lambda, color = as.factor(Site)))+
+      geom_hline(aes(yintercept = 1))+
+      geom_point(size = 2)+
+      geom_line(linewidth = 1)+
+      scale_color_viridis_d()+
+      labs(color = 'Site')+
+      theme_bw()+
+      facet_wrap(~Taxonomy, scales = 'free')
 ```
 
 
@@ -76,6 +85,8 @@ g = df |>
       summarize(mean = Gmean(lambda, na.rm = T),
                 sd = Gsd(lambda, na.rm = T),
                 .groups = 'drop')
+
+g
 ```
 
 
@@ -91,6 +102,9 @@ ggplot(g, aes(Taxonomy, mean, color = Taxonomy))+
       coord_flip()+
       theme_bw()+
       theme(legend.position = 'none')
+
+
+      
 ```
 
 
@@ -130,7 +144,7 @@ df_k = df |>
       select(Taxonomy, K)
 
 
-
+df_k
 ```
 
 
@@ -181,6 +195,8 @@ ggplot(pop, aes(time, Nt, color = Taxonomy))+
 
 4.  Short essay question: How do the projections for each species differ? Did the population get as far as the carrying capacity? Why or why not? If not, how many years are required to reach the carrying capacity? When at carrying capacity, do the population fluctuate around K? Why or Why not? (5 pts)\
 
+-Note that *Cephalopholis argus* is way above its carrying capacity so the equation doesn't handle well and the negative rd with the negative value from the 1-Nt/K and it just goes exponentially and is actually prob wrong. 
+
 5.  Project the population of each fish species for 150 years using a discrete density-dependent model with environmental stochasticity. Run the projections 50 times for each species (i.e., 50 projections per species) (5 pts).\
 
     -   Use the 500 as $N_0$, carrying capacity ($K$) values estimated in Q1, and at each time step, use a randomly determined $r_d$ based on the mean and standard deviation of $\lambda$ calculated at the island level -- Hint: rtruncnorm() function in R and for loops (e.g., Wickham and Grolemund Chapter 17).
@@ -216,8 +232,18 @@ pop = df_k |>
 6.  Using ggplot, plot a histogram (or density plot) of the population size after 150 year for each species with a vertical line of the carrying capacity (1 pts).
 
 ```{r}
-ggplot(pop, aes(Taxonomy, N_t150, fill = Taxonomy))+
-      geom_boxplot()
+ggplot(pop, aes(N_t150, fill = Taxonomy))+
+      scale_fill_viridis_d(option = 'turbo')+
+      geom_density(alpha = 0.5)+
+      theme_bw()
+
+met = pop |> group_by(Taxonomy) |> 
+      summarize(Nt_150_mean = mean(N_t150),
+                Nt_150_median = median(N_t150),
+                Nt_150_lci = quantile(N_t150, 0.025),
+                Nt_150_uci = quantile(N_t150, 0.975))
+
+met
 ```
 
 
@@ -229,12 +255,41 @@ ggplot(pop, aes(Taxonomy, N_t150, fill = Taxonomy))+
 
 1.  Convert the loop diagram (life cycle graph) above into a projection matrix (1 pt).
 
+```{r}
+A = matrix(c(0,0,100,0.2,0.3,0,0,0.4,0.1), nrow = 3, byrow = T)
+A
+```
+
+
 2.  Create a starting population vector based on the life stages of this insect species: egg (N = 100), larvae (N = 0), adult (N = 0). Project the population up to 50 years using the starting population vector and the projection matrix you created (hint: A%\*%n(t); See Stevens Chapter 2 pages 34-40) (5 pts).
 
+```{r}
+library(popbio)
+n = c(egg = 100, larvae = 0, adult = 0)
+
+pop = pop.projection(A, n, 50)
+```
+
+
 3.  Plot your results using ggplot, popbio, or base R plotting functions. Plot the projection for each stage class (2 pts).
+
+```{r}
+stage.vector.plot(pop$stage.vectors)
+```
+
 
 4.  Short essay question: Looking at the plot from Q3, did the population projection reach a stable stage distribution? Why or why not? What could you tell about the fate of the population after 50 years? (5 pts).
 
 5.  Based on the project matrix above, calculate lambda and calculate the stable stage distribution (1 pt).
 
+```{r}
+pop$lambda
+```
+
+
 6.  Short essay question: What is the proportion between the stages at SSD? What stage is the dominant stage of the population after the stable stage distribution is reached? Why? (5 pts).
+
+```{r}
+pop$stable.stage
+```
+
